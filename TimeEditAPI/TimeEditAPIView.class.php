@@ -2,24 +2,21 @@
 
 class TimeEditAPIView
 {
-	function getJSON($table)
+	public function getJSON($table)
 	{
 		
 	}
 
-	function getXML($table)
+	public function getXML($table)
 	{
 
 	}
 
-	function getDOM($table)
-	{
+    public function getDOMDocument($table)
+    {
+    }
+    
+    
 
-	}
-
-	function getTimeTable($table)
-	{
-		return $table;
-	}
 }
 ?>

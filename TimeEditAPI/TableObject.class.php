@@ -6,23 +6,23 @@ class TableObject
 	protected $timeStart;
 	protected $timeEnd;
 	protected $courseCodes;
-	protected $rooms;
-	protected $lecturers;
+	protected $room;
+	protected $lecturer;
 	protected $classes;
 	protected $lastChanged;
 
-	__construct($id, $timeStart, $timeEnd, $courseCodes, 
-		$rooms, $lectures, $classes, $lastChanged)
+	/*public function __construct($id, $timeStart, $timeEnd, $courseCodes, 
+		$room, $lecturer, $classes, $lastChanged)
 	{
-		$this->id = $id;
+		$this->id = intval($id);
 		$this->timeStart = $timeStart;
 		$this->timeEnd = $timeEnd;
 		$this->courseCodes = $courseCodes;
-		$this->rooms = $rooms;
-		$this->lectures = $lectures;
+		$this->room = $room;
+		$this->lecturer = $lecturer;
 		$this->classes = $classes;
 		$this->lastChanged = $lastChanged;
-	}
+	}*/
 
 	function getID()
 	{
@@ -31,7 +31,7 @@ class TableObject
 
 	function setID($id)
 	{
-		$this->id = $id;
+		$this->id = intval($id);
 	}
 
 	function getTimeStart()
@@ -64,24 +64,24 @@ class TableObject
 		$this->courseCode = $courseCode;
 	}
 
-	function getRooms()
+	function getRoom()
 	{
-		return $this->rooms;
+		return $this->room;
 	}
 
-	function setRooms($rooms)
+	function setRoom($room)
 	{
-		$this->rooms = $rooms;
+		$this->room = $room;
 	}
 
-	function getLectures()
+	function getLecturer()
 	{
-		return $this->lectures;
+		return $this->lecturer;
 	}
 
-	function setLectures($lectures)
+	function setLecturer($lecturer)
 	{
-		$this->lectures = $lectures;
+		$this->lecturer = $lecturer;
 	}
 
 	function getClasses()
