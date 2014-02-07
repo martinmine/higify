@@ -7,48 +7,35 @@ class TimeEditAPIModel
 {
 	protected $queryURL;
 
-	const LINE_NUM = 5; // The line number we can find the table defintions on in CSV files
+	const LINE_NUM = 4; // The line number we can find the table defintions on in CSV files
 
 	function __construct($queryURL)
 	{
 		$this->queryURL = $queryURL;
 	}
-
+	
 	protected function pullResponse()
 	{
 		return file_get_contents($this->queryURL);
 	}
 
-	protected function getRowDefinitions($line)
+	protected function parseCSVRow($line)
 	{
-		$allRowDefinitions = explode(', ', $line);		// Line of table definitions is on line 4 (- 1)
-		$parsedRowDefitinions = array();				// Paresed result from rowDefinitions
+        $csvRowElements = str_getcsv($line);
+		$rowElements = array();
 
-		foreach ($allRowDefinitions as $rowDefinition)
+		foreach ($csvRowElements as $rowElement)
 		{
-			$rowDefinition = trim($rowDefinition);		// Remove whitespaces on front/beginning
-			$rowStrlen = strlen($rowDefinition);
-
-			if ($rowStrlen > 1)
-			{
-				if (TimeEditAPIModel::hasDefinitions($rowDefinition))
-				{
-					$rowDefinition = substr($rowDefinition, 1, $rowStrlen - 1);		// Remove the " on both ends of the string
-					$parsedRowDefitinions[] = explode(', ', $rowDefinition);		// Then split the data and add to rowdefs
-				}
-				else
-				{
-					$parsedRowDefitinions[] = $rowDefinition;
-				}
-			}
+            $rowElement = trim($rowElement);
+            if (strpos($rowElement, ', ') !== FALSE)
+            {
+                $rowElement = explode(', ', $rowElement);
+            }
+            
+            $rowElements[] = $rowElement;
 		}
         
-        foreach ($parsedRowDefitinions as $t)
-        {
-            echo $t . '</br>';
-        }
-        exit;
-		return $parsedRowDefitinions;
+		return $rowElements;
 	}
 
 	protected function hasDefinitions(& $value)
@@ -56,132 +43,122 @@ class TimeEditAPIModel
 		return ($value[0] == '"' && $value[strlen($value) - 1] == '"');
 	}
 
-	public function parseCSV(& $tale)
+	public function parseCSV(& $table)
 	{
 		$response = TimeEditAPIModel::pullResponse();
 		$lines = explode("\n", $response);
 		$lineCount = count($lines);
 		// Could have been made better by "searching" for a row with a matching amount of ',' 
 		// according to the following rows, requires more resources and therefore I have chosen to use a constant instead
-		$rowDefinitions = TimeEditAPIModel::getRowDefinitions($lines[TimeEditAPIModel::LINE_NUM - 1]);	
+		$rowDefinitions = TimeEditAPIModel::parseCSVRow($lines[TimeEditAPIModel::LINE_NUM - 1]);	
 
 		for ($i = TimeEditAPIModel::LINE_NUM; $i < $lineCount; $i++)
 		{
 			if (strlen($lines[$i]) == 0)	// Yes, I know this is bad, but we want to skip if it is an empty line
 				continue;
 
-			$lineValues = explode(', ', $lines[$i]);	// Every line
-			$lineValueCount = count($lineValues);
-			$tableObject = new TableObject();
-
-			for ($j = 0; $j < $lineValueCount; $j++)	// Every value in the line
-			{
-				$value = trim($lineValues[$j]);
-
-				if (TimeEditAPIModel::hasDefinitions($value) && $rowDefinitions[$j][0] == 'Emne')	// Is room
-				{
-					$values = explode(', ', substr($value, 1, strlen($value) - 1));	// Split value
-					$valueCount = count($rowDefinitions[$j]);
-
-					if ($valueCount == 2) // Is subject
+            $rowItems = TimeEditAPIModel::parseCSVRow($lines[$i]);
+            $lineValueCount = count($rowItems);
+            $tableObject = new TableObject();
+            
+            for ($j = 0; $j < $lineValueCount; $j++)
+            {
+                $item = $rowItems[$j];
+                if (isset($rowDefinitions[$j][0]) && $rowDefinitions[$j][0] == 'Emne')
+                {
+					$subjects = array();
+					$valueCount = count($item);
+					$k = 0;
+					
+					while ($k < $valueCount)
 					{
-						$k = 0;
-						$subjects = array();
-						
-						// Every subject is like courseCode => course description, courseCode => courseDescription ...
-						while ($k > $valueCount)
-						{
-							$subjects[] = array($values[$k++] => $values[$k++]);
-						}
-
-						$tableObject->setCourseCodes($subjects);
+						$subjects[] = array($item[$k++] => $item[$k++]);
 					}
-					else
-					{
-						trigger_error('Unknown row definition for line ' . $i . ' column ' . $j);
-					}
-				}
-				else
-				{
+					
+					$tableObject->setClasses($subjects);
+                }
+                else
+                {
 					switch ($rowDefinitions[$j]) 
 					{
 						case 'Begin date':
-						{
-							if (isset($timeBegin))
 							{
-								throw new Exception('Date begin has to come before begin time: line ' . $i . ' column ' . $j);
-							}
+								if (isset($timeBegin))
+								{
+										throw new Exception('Date begin has to come before begin time: line ' . $i . ' column ' . $j);
+								}
 
-							$timeBegin = $value;
-							break;
-						}
+								$timeBegin = $item;
+								break;
+							}
 
 						case 'Begin time':
-						{
-							if (!isset($timeBegin))
 							{
-								throw new Exception('Begin date has to come before begin time: line ' . $i . ' column ' . $j);
+								if (!isset($timeBegin))
+								{
+										throw new Exception('Begin date has to come before begin time: line ' . $i . ' column ' . $j);
+								}
+
+								$tableObject->setTimeStart(date_parse($timeBegin . ' ' . $item));
+								unset($timeBegin);
+
+								break;
 							}
-
-							$tableObject->setTimeStart(date_parse($timeBegin . ' ' . $value));
-							unset($timeBegin);
-
-							break;
-						}
 
 						case 'End date':
-						{
-							if (isset($endTime))
 							{
-								throw new Exception('Missing end time before line ' . $i . ' column ' . $j);
-							}
+								if (isset($endTime))
+								{
+										throw new Exception('Missing end time before line ' . $i . ' column ' . $j);
+								}
 
-							$endTime = $value;
-							break;
-						}
+								$endTime = $item;
+								break;
+							}
 
 						case 'End time':
-						{
-							if (!isset($endTime))
 							{
-								throw new Exception('Missing end date, has to come before end time, line ' . $i . ' column ' . $j);
+								if (!isset($endTime))
+								{
+										throw new Exception('Missing end date, has to come before end time, line ' . $i . ' column ' . $j);
+								}
+
+								$tableObject->setTimeEnd(date_parse($endTime . ' ' . $item));
+								unset($endTime);
+								break;
 							}
 
-							$tableObject->setTimeEnd(date_parse($endTime . ' ' . $value));
-							unset($endTime);
-							break;
-						}
-
 						case 'Rom':
-						{
-							$tableObject->setRoom($value);
-							break;
-						}
+							{
+								$tableObject->setRoom($item);
+								break;
+							}
 
 						case 'Ansatte':
-						{
-							$tableObject->setLecturer($value);
-							break;
-						}
+							{
+								$tableObject->setLecturer($item);
+								break;
+							}
 
 						case 'Kull':
-						{
-							$tableObject->setClasses(explode(', ', $value));
-						}
+							{
+								$tableObject->setClasses($item);
+							}
 						
+						case '':
 						case 'info':	// Ignore
-						{
-							break;
-						}
+							{
+								break;
+							}
 						default:
-						{
-							trigger_error('Column ' . $j . '=>' . $rowDefinitions[$j] . ' is unknown');
-							// Show warning?
-							break;
-						}
+							{
+								trigger_error('Column ' . $j . '=>' . $rowDefinitions[$j] . ' is unknown');
+								// Show warning?
+								break;
+							}
 					}
-				}
-			}
+                }
+            }
 
 			$table->addObject($tableObject);
 		}
@@ -243,7 +220,6 @@ class TimeEditAPIModel
 	{
 
 	}
-
 }
 
 ?>
