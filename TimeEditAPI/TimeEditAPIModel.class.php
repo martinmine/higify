@@ -6,7 +6,8 @@ require_once('TimeTable.class.php');
 class TimeEditAPIModel
 {
 	protected $queryURL;
-
+	
+	const TIME_ZONE = 'UTC+1';
 	const LINE_NUM = 4; // The line number we can find the table defintions on in CSV files
 
 	function __construct($queryURL)
@@ -14,9 +15,9 @@ class TimeEditAPIModel
 		$this->queryURL = $queryURL;
 	}
 	
-	protected function pullResponse()
+	protected function pullResponse($format)
 	{
-		return file_get_contents($this->queryURL);
+		return file_get_contents(sprintf($this->queryURL, $format));
 	}
 
 	protected function parseCSVRow($line)
@@ -38,14 +39,14 @@ class TimeEditAPIModel
 		return $rowElements;
 	}
 
-	protected function hasDefinitions(& $value)
+	protected function hasDefinitions(&$value)
 	{
 		return ($value[0] == '"' && $value[strlen($value) - 1] == '"');
 	}
 
-	public function parseCSV(& $table)
+	public function parseCSV(&$table)
 	{
-		$response = TimeEditAPIModel::pullResponse();
+		$response = TimeEditAPIModel::pullResponse('csv');
 		$lines = explode("\n", $response);
 		$lineCount = count($lines);
 		// Could have been made better by "searching" for a row with a matching amount of ',' 
@@ -75,7 +76,8 @@ class TimeEditAPIModel
 						$subjects[] = array($item[$k++] => $item[$k++]);
 					}
 					
-					$tableObject->setClasses($subjects);
+					$tableObject->setCourseCodes($subjects);
+					
                 }
                 else
                 {
@@ -85,7 +87,7 @@ class TimeEditAPIModel
 							{
 								if (isset($timeBegin))
 								{
-										throw new Exception('Date begin has to come before begin time: line ' . $i . ' column ' . $j);
+									throw new Exception('Date begin has to come before begin time: line ' . $i . ' column ' . $j);
 								}
 
 								$timeBegin = $item;
@@ -96,12 +98,14 @@ class TimeEditAPIModel
 							{
 								if (!isset($timeBegin))
 								{
-										throw new Exception('Begin date has to come before begin time: line ' . $i . ' column ' . $j);
+									throw new Exception('Begin date has to come before begin time: line ' . $i . ' column ' . $j);
 								}
 
-								$tableObject->setTimeStart(date_parse($timeBegin . ' ' . $item));
+								$tableObject->setTimeStart(TimeEditAPIModel::parseCSVDateTime($timeBegin . ' ' . $item));
+								
+								
 								unset($timeBegin);
-
+								
 								break;
 							}
 
@@ -109,7 +113,7 @@ class TimeEditAPIModel
 							{
 								if (isset($endTime))
 								{
-										throw new Exception('Missing end time before line ' . $i . ' column ' . $j);
+									throw new Exception('Missing end time before line ' . $i . ' column ' . $j);
 								}
 
 								$endTime = $item;
@@ -120,10 +124,10 @@ class TimeEditAPIModel
 							{
 								if (!isset($endTime))
 								{
-										throw new Exception('Missing end date, has to come before end time, line ' . $i . ' column ' . $j);
+									throw new Exception('Missing end date, has to come before end time, line ' . $i . ' column ' . $j);
 								}
 
-								$tableObject->setTimeEnd(date_parse($endTime . ' ' . $item));
+								$tableObject->setTimeEnd(TimeEditAPIModel::parseCSVDateTime($endTime . ' ' . $item));
 								unset($endTime);
 								break;
 							}
@@ -153,20 +157,19 @@ class TimeEditAPIModel
 						default:
 							{
 								trigger_error('Column ' . $j . '=>' . $rowDefinitions[$j] . ' is unknown');
-								// Show warning?
 								break;
 							}
 					}
                 }
             }
-
+			
 			$table->addObject($tableObject);
 		}
 	}	
 
-	public function parseICS(& $table)
+	public function parseICS(&$table)
 	{
-		$response = TimeEditAPIModel::pullResponse();
+		$response = TimeEditAPIModel::pullResponse('ics');
 		$lines = explode("\n", $response);
 		$lineCount = count($lines);
 		$currentObject;
@@ -174,51 +177,136 @@ class TimeEditAPIModel
 		for ($i = 0; $i < $lineCount; $i++)
 		{
 			$args = explode(':', $lines[$i]);
-			switch ($args[0]) 
+			switch (trim($args[0])) 
 			{
 				case 'BEGIN':
 					$currentObject = new TableObject();
 					break;
 
 				case 'DTSTART':
-					$currentObject->setTimeStart(date_parse($args[1]));
+				
+					$currentObject->setTimeStart(TimeEditAPIModel::parseICSDateTime(trim($args[1])));
 					break;
 
 				case 'DTEND':
-					$currentObject->setTimeEnd(date_parse($args[1]));
+					$currentObject->setTimeEnd(TimeEditAPIModel::parseICSDateTime(trim($args[1])));
 					break;
 
 				case 'LAST-MODIFIED':
-					$currentObject->setLastChanged(date_parse($args[1]));
+					$currentObject->setLastChanged(TimeEditAPIModel::parseICSDateTime(trim($args[1])));
 					break;
 
 				case 'SUMMARY':
-					$currentObject->setCourseCodes(array($args[1]));
+					$currentObject->setCourseCodes(array(trim($args[1])));
 					break;
 
 				case 'LOCATION':
-					$currentObject->setRooms(array($args[1]));
+					$currentObject->setRoom(trim($args[1]));
 					break;
 
 				case 'DESCRIPTION':
-					$currentObject->setID(str_replace('ID ', '', $arg[1]));
+					$currentObject->setID(str_replace('ID ', '', trim($args[1])));
 					break;
 
 				case 'END':
-					$table->addObjectWithID($currentObject, $currentObject->getID());
-					unset($currentObject);
+					if (trim($args[1]) == 'VEVENT')
+					{
+						$objectID = $currentObject->getID();
+						$table->addObjectWithID($currentObject, $objectID);
+						unset($currentObject);
+					}
 					break;
 
+				case 'VERSION':
+				case 'METHOD':
+				case 'X-WR-CALNAME':
+				case 'CALSCALE':
+				case 'PRODID':
+				case 'UID':
+				case 'DTSTAMP':
+				case '': // ICS always ends with an empty line
+					break;
+					
 				default:
 					trigger_error($args[0] . ' is an known ICS entry');
 					break;
 			}	
 		}
 	}
+	
+	// Associated = ICS, indexed = CVS
+	protected function mergeTables(&$associatedTable, &$indexedTable)
+	{
+		$keyContainer = $associatedTable->getTableKeys();
+		$keyCount = count($keyContainer);
+
+		for ($i = 0; $i < $keyContainer; $i++)
+		{
+			
+			$itemID = $keyContainer[$i];	// Time Object ID, can be used as key in associatedTable
+			$CSVElement = NULL;
+			$ICSElement = $associatedTable->getItem($itemID);
+			
+			$padding = $i;
+			
+			do
+			{
+				$CSVElement = $indexedTable->getItem($padding++);
+			}
+			while (!$CSVElement->match($ICSElement) && $padding < $keyCount);
+			
+			if ($CSVElement !== NULL)
+			{
+				$ICSElement->setCourseCodes($CSVElement->getCourseCodes());
+				$ICSElement->setLecturer($CSVElement->getLecturer());
+				$ICSElement->setClasses($CSVElement->getClasses());
+			}
+			/*
+			Lecturer
+			Classes
+			
+			ICS:
+			Har ID
+			Mangler fagkoder etc
+			CSV:
+			
+			CSV => ICS
+			
+			
+			*/
+			
+			print_r($CSVElement);
+			echo "<br>";
+			print_r($ICSElement);
+			die();
+			
+		}
+	}
+	
+	protected function parseCSVDateTime($time)
+	{
+		return DateTime::createFromFormat('Y-m-d h:i', $time, new DateTimeZone('Europe/Berlin'));
+	}
+	
+	protected function parseICSDateTime($time)
+	{
+		return DateTime::createFromFormat('Ymd?His?', $time, new DateTimeZone('UTC'));
+	}
 
 	public function fillMissingData($type, &$table)
 	{
-
+		$tableDiff = new TimeTable();
+		if ($type == 'ICS')
+		{
+			TimeEditAPIModel::parseCSV($tableDiff);
+			TimeEditAPIModel::mergeTables($table, $tableDiff);
+		}
+		else
+		{
+			TimeEditAPIModel::parseICS($tableDiff);
+			
+		}
+		
 	}
 }
 

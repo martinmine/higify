@@ -24,7 +24,7 @@ class TableObject
 		$this->lastChanged = $lastChanged;
 	}*/
 
-	function getID()
+	public function getID()
 	{
 		return $this->id;
 	}
@@ -61,7 +61,7 @@ class TableObject
 
 	function setCourseCodes($courseCode)
 	{
-		$this->courseCode = $courseCode;
+		$this->courseCodes = $courseCode;
 	}
 
 	function getRoom()
@@ -102,6 +102,21 @@ class TableObject
 	function setLastChanged($lastChanged)
 	{
 		$this->lastChanged = $lastChanged;
+	}
+	
+	function match($tableObject)
+	{
+		$keys = array_keys($this->courseCodes[0]);
+		
+		if ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
+			&& $tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
 

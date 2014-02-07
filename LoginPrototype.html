@@ -2,28 +2,34 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="./Static/index.css" />
+		<link rel="stylesheet" type="text/css" href="./Static/slideshow.css" />
 		<title>Higify - Login</title>
 	</head>
-	<body>
+	<body id="page">
+		<ul class="cb-slideshow">
+			<li class="cb-slideshowelement"><span></span></li>
+			<li class="cb-slideshowelement"><span></span></li>
+			<li class="cb-slideshowelement"><span></span></li>
+		</ul>
 		<div class="pageContainer">
 			<div class="centerContainer">
 				<form action="LoginPrototype.html" method="POST">
-				<div class="pageTitle">Welcome to Higify</div>
+				<div class="pageTitle">Sign in to Higify</div>
 				<div class="loginContainer">
-					<div class="messageContainer"><div class="error">
-						Invalid username or password
-					</div></div><br/>
-					<div class="criticalError">
-						FATAL SYSTEM ERROR! CRITICAL CORE MELTDOWN!
-					</div>
+				
 					<label for="username">Username</label><br/>
 					<input class="inputfield" type="text" name="username"/><br/>
 					<label for="password">Password</label><br/>
 					<input class="inputfield" type="password" name="password"/><br/>
 					<a href="" class="reglink">Forgotten password&raquo;<a/><br/>
-					<a href="" class="reglink">Register user&raquo;</a><br>
+					
 				</div>
-				<input class="loginbtn" type="submit" value="Login">
+				<div>
+					<input class="loginbtn" type="submit" value="Sign in">
+				</div>
+				<div><button class="registerbtn" onclick="window.location.href='register.php'">
+				Sign up
+				</button></div>
 				</form>
 			</div>
 		</div>

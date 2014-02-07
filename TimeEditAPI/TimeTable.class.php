@@ -13,12 +13,18 @@ class TimeTable implements Iterator
 
 	public function addObject($object)
 	{
-		$this->tableObjects[] = $object;
+		$this->tableObjects[$this->count++] = $object;
 	}
 
 	public function addObjectWithID($object, $objectID)
 	{
 		$this->tableObjects[$objectID] = $object;
+		$this->count++;
+	}
+	
+	public function getTableKeys()
+	{
+		return array_keys($this->tableObjects);
 	}
 
 	public function getItem($objectID)
@@ -61,8 +67,10 @@ class TimeTable implements Iterator
 	{
 		return key($this->var);
 	}
-
-
-
+	
+	public function printTHIS()
+	{
+		print_r($this->tableObjects);
+	}
 }
 ?>
