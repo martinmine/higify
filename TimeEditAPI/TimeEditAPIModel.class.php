@@ -13,27 +13,42 @@ class TimeEditAPIModel
 	
 	const CSV_LINE_NUM = 4; // The line number we can find the table defintions on in CSV files
 
-	function __construct($queryURL)
+	public function __construct($queryURL)
 	{
 		$this->queryURL = $queryURL;
 	}
 	
-	protected function pullResponse($format)
+	private function pullResponse($format)
 	{
-		return file_get_contents(sprintf($this->queryURL, $format));
+		$cURL = curl_init();
+		curl_setopt($cURL, CURLOPT_HEADER, 0);
+		curl_setopt($cURL, CURLOPT_VERBOSE, 1);
+		curl_setopt($cURL, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($cURL, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($cURL, CURLOPT_FAILONERROR, 0);
+		curl_setopt($cURL, CURLOPT_URL, sprintf($this->queryURL, $format));
+		
+		try
+		{
+			return curl_exec($cURL);
+		}
+		finally
+		{
+			curl_close($cURL);
+		}
 	}
 
-	protected function parseCSVDateTime($time)
+	private function parseCSVDateTime($time)
 	{
 		return DateTime::createFromFormat('Y-m-d H:i', $time, new DateTimeZone(TimeEditAPIModel::CSV_TIME_ZONE));
 	}
 	
-	protected function parseICSDateTime($time)
+	private function parseICSDateTime($time)
 	{
 		return DateTime::createFromFormat('Ymd?His?', $time, new DateTimeZone(TimeEditAPIModel::ICS_TIME_ZONE));
 	}
 	
-	protected function parseCSVRow($line)
+	private function parseCSVRow($line)
 	{
         $csvRowElements = str_getcsv($line);
 		$rowElements = array();
@@ -226,7 +241,7 @@ class TimeEditAPIModel
 	}
 	
 	// Associated = ICS, indexed = CVS
-	protected function mergeTables(&$source, &$destination)
+	private function mergeTables(&$source, &$destination)
 	{
 		$keyContainer = $destination->getTableKeys();
 		$keyCount = count($keyContainer);

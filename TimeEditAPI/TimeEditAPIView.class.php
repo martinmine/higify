@@ -6,12 +6,12 @@ require_once('TableObject.class.php');
 
 class TimeEditAPIView
 {
-	private function getJSON($table)
+	private static function getJSON($table)
 	{
 		return json_encode($table);
 	}
 	
-	private function createElementWithText($document, $elementName, $text)
+	private static function createElementWithText($document, $elementName, $text)
 	{
 		$element = $document->createElement($elementName);
 		$textNode = $document->createTextNode($text);
@@ -20,14 +20,14 @@ class TimeEditAPIView
 		return $element;
 	}
 
-	private function appendAttribute($document, $mother, $name, $value)
+	private static function appendAttribute($document, $mother, $name, $value)
 	{
 		$attribute = $document->createAttribute($name);
 		$attribute->value = $value;
 		$mother->appendChild($attribute);
 	}	
 
-    private function getDOMDocument($table)
+    private static function getDOMDocument($table)
     {
 		$doc = new DOMDocument();
 		$timeSchedule = $doc->createElement('TimeSchedule');
@@ -117,12 +117,12 @@ class TimeEditAPIView
 		return $doc;
     }
 	
-	private function getXML($table)
+	private static function getXML($table)
 	{
 		return TimeEditAPIView::getDOMDocument($table)->saveXML();
 	}
     
-    public function render($timeTable, $outputFormat)
+    public static function render($timeTable, $outputFormat)
 	{
         switch ($outputFormat)
         {

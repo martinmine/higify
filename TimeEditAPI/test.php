@@ -8,5 +8,4 @@ $table = TimeEditAPIController::getTimeTable(161569, 182, PullFormat::ICS, Outpu
 header('Content-Type: text/json; charset=utf-8');
 echo $table;
 
-
 ?>
