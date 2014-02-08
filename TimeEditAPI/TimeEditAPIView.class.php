@@ -1,5 +1,4 @@
 <?php
-
 require_once('OutputType.class.php');
 require_once('TimeTable.class.php');
 require_once('TableObject.class.php');
@@ -147,7 +146,7 @@ class TimeEditAPIView
 	{
         switch ($outputFormat)
         {
-            case OutputType::XMLDocument: 
+            case OutputType::XML_DOCUMENT: 
                 {
                     return TimeEditAPIView::getXML($timeTable);
                 }
@@ -155,11 +154,11 @@ class TimeEditAPIView
                 {
                     return TimeEditAPIView::getJSON($timeTable);
                 }
-            case OutputType::DOMDocument:
+            case OutputType::DOM_DOCUMENT:
                 {
                     return TimeEditAPIView::getDOMDocument($timeTable);
                 }
-            case OutputType::TimeTable:
+            case OutputType::TIME_TABLE:
                 {
                     return $timeTable;
                 }

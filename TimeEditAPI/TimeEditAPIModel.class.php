@@ -2,6 +2,7 @@
 require_once('TableObject.class.php');
 require_once('TimeTable.class.php');
 require_once('PullFormat.class.php');
+require_once('SearchResult.class.php');
 
 class TimeEditAPIModel
 {
@@ -43,16 +44,17 @@ class TimeEditAPIModel
 	private function pullResponse($format)
 	{
 		$cURL = curl_init();
+		
 		curl_setopt($cURL, CURLOPT_HEADER, 0);
 		curl_setopt($cURL, CURLOPT_VERBOSE, 1);
 		curl_setopt($cURL, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($cURL, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($cURL, CURLOPT_FAILONERROR, 0);
 		curl_setopt($cURL, CURLOPT_URL, sprintf($this->queryURL, $format));
+		curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
 		
 		$response = curl_exec($cURL);
 		curl_close($cURL);
-		
 		return $response;
 	}
 
@@ -122,14 +124,14 @@ class TimeEditAPIModel
             for ($j = 0; $j < $lineValueCount; $j++)
             {
                 $item = $rowItems[$j];
-                if (isset($rowDefinitions[$j][0]) && $rowDefinitions[$j][0] == 'Emne')
+                if (isset($rowDefinitions[$j][0]) && $rowDefinitions[$j][0] == 'Emne')	// Parse course code data
                 {
 					$subjects = array();
 					$valueCount = count($item);
 					$k = 0;
 					
 					while ($k < $valueCount)
-						$subjects[] = array($item[$k++] => $item[$k++]);
+						$subjects[] = array($item[$k++] => $item[$k++]);	// Course code => Course name
 					
 					$tableObject->setCourseCodes($subjects);
                 }
@@ -342,6 +344,37 @@ class TimeEditAPIModel
 			TimeEditAPIModel::mergeTables($table, $tableDiff);
 			return $tableDiff;
 		}
+	}
+	
+	/**
+	 * Sends a JSON request to TimeEdit with the search parameters defined
+	 * by the controller and parses the result into an array of SearchResult
+	 * @return Array Array containing all the SearchResult objects from JSON
+	 */
+	public function parseJSON()
+	{
+		$response = self::pullResponse(PullFormat::JSON);
+		$decodedJSON = json_decode($response);
+		$results = array();
+		
+		foreach ($decodedJSON->records as $jsonResult)
+		{
+			$typeID = $jsonResult->typeId;
+			$id = $jsonResult->id;
+			$info = '';
+			$description = '';
+			
+			if (isset($jsonResult->fields[0]))	// If has something in fields[0]
+				$info = $jsonResult->fields[0]->values[0];
+			
+			if (isset($jsonResult->fields[1]))	// and something in fields[1]
+				$description = $jsonResult->fields[1]->values[0];
+			
+			if ($typeID > 0)	// TypeID = 0 is a dummy-item at the end of the JSON file
+				$results[] = new SearchResult($typeID, $id, $info, $description);
+		}
+		
+		return $results;
 	}
 }
 

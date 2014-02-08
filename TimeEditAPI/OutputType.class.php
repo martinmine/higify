@@ -1,20 +1,23 @@
 <?php
+/**
+ * Enum specifying what type shall be returned to the user through the view
+ */
 class OutputType
 {
 	/**
 	 * Will return a TimeTable object
 	 */
-	const TimeTable = 0;
+	const TIME_TABLE = 0;
 
 	/**
 	 * Will return a DOMDocument object
 	 */
-	const DOMDocument = 1;
+	const DOM_DOCUMENT = 1;
 
 	/**
 	 * Will return a XMLObject as a string
 	 */
-	const XMLDocument = 2;
+	const XML_DOCUMENT = 2;
 
 	/**
 	 * Will return a JSON object as a string
