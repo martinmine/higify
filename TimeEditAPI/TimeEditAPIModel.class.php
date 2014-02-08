@@ -5,19 +5,41 @@ require_once('PullFormat.class.php');
 
 class TimeEditAPIModel
 {
-	protected $queryURL;
+	/**
+	 * The base URL used for performing a lookup towards TimeEdit
+	 * @var [type]
+	 */
+	private $queryURL;
 	
+	/**
+	 * What time zone format is in the CSV file format from TimeEdit
+	 */
 	const CSV_TIME_ZONE = 'Europe/Berlin';
+
+	/**
+	 * What time format it is the ICS formats file format from TimeEdit
+	 */
 	const ICS_TIME_ZONE = 'UTC';
-	
-	
+
+	/**
+	 * At which line number the table headers are in the CSV file
+	 */
 	const CSV_LINE_NUM = 4; // The line number we can find the table defintions on in CSV files
 
+	/**
+	 * Prepares a new TimeEditAPIModel
+	 * @param string $queryURL The base URL used for lookup
+	 */
 	public function __construct($queryURL)
 	{
 		$this->queryURL = $queryURL;
 	}
 	
+	/**
+	 * Pulls the server response from the base URL using cURL
+	 * @param  string $format Which format to look up (JSON/ICS/CSV)
+	 * @return string         The resposne from the server
+	 */
 	private function pullResponse($format)
 	{
 		$cURL = curl_init();
@@ -34,16 +56,32 @@ class TimeEditAPIModel
 		return $response;
 	}
 
+	/**
+	 * Parses the time string formated according to the CSV_TIME_ZONE const
+	 * @param  string $time   The date/time string from a CSV file
+	 * @return DateTime       Parsed DateTime object
+	 */
 	private function parseCSVDateTime($time)
 	{
 		return DateTime::createFromFormat('Y-m-d H:i', $time, new DateTimeZone(TimeEditAPIModel::CSV_TIME_ZONE));
 	}
 	
+	/**
+	 * Parses the time string formated according to the ICS_TIME_ZONE const
+	 * @param  string   $time The the date7Time string from an ICS file
+	 * @return DateTime       Parsed DateTime
+	 */
 	private function parseICSDateTime($time)
 	{
 		return DateTime::createFromFormat('Ymd?His?', $time, new DateTimeZone(TimeEditAPIModel::ICS_TIME_ZONE));
 	}
 	
+	/**
+	 * Parses one CSV row from a CSV file format with the , split into arrays and the "element1, element2" are added
+	 * as an array in the colum in the array
+	 * @param  string $line Line to parse from the CSV file
+	 * @return Array        The parsed data as an array
+	 */
 	private function parseCSVRow($line)
 	{
         $csvRowElements = str_getcsv($line);
@@ -61,6 +99,10 @@ class TimeEditAPIModel
 		return $rowElements;
 	}
 
+	/**
+	 * Pulls the request form the server and parses the CSV file into the table object
+	 * @param  TimeTable $table Table to parse data into
+	 */
 	public function parseCSV(&$table)
 	{
 		$response = TimeEditAPIModel::pullResponse(PullFormat::CSV);
@@ -169,6 +211,10 @@ class TimeEditAPIModel
 		}
 	}	
 
+	/**
+	 * Pulls an ICS file from TimeEdit and parses it into a TimeTable object
+	 * @param  TimeTable $table table to put data into
+	 */
 	public function parseICS(&$table)
 	{
 		$response = TimeEditAPIModel::pullResponse(PullFormat::ICS);
@@ -236,7 +282,11 @@ class TimeEditAPIModel
 		}
 	}
 	
-	// Associated = ICS, indexed = CVS
+	/**
+	 * Merges two data sets, can be described as union between two data sets
+	 * @param  TimeTable $source      Where to compare the information
+	 * @param  TimeTable $destination Where to update the information
+	 */
 	private function mergeTables(&$source, &$destination)
 	{
 		$keyContainer = $destination->getTableKeys();
@@ -262,6 +312,21 @@ class TimeEditAPIModel
 		}
 	}
 
+	/**
+	 * Gets all the missing data which are available on the TimeEdit server
+	 * but is not available in the first request sent to the server.
+	 * If the first format request was an ICS request, there will be made a CSV
+	 * request as the ICS doesn't contain full course data. Entered table given 
+	 * to the function will be used as destination when mergin and also returned
+	 * when the merging is completed.
+	 * Otherwise (Not ICS at first request), an ICS request will be made 
+	 * (As ICS contains all the IDs for the TableObjects), and the new 
+	 * TimeTable will be returned.
+	 * @param  TimeTable $tableType  TimeTable returned from the first parsing
+	 * @param  PullFormat $table     What format was originally given when the 
+	 *                               first request was made 
+	 * @return TimeTable             TimeTable with all available data
+	 */
 	public function fillMissingData($tableType, &$table)
 	{
 		$tableDiff = new TimeTable();

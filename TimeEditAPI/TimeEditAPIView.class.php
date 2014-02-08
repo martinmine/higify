@@ -6,11 +6,23 @@ require_once('TableObject.class.php');
 
 class TimeEditAPIView
 {
+	/**
+	 * Creates a JSON presentation of the TimeTable
+	 * @param  TimeTable $table TimeTable to view as JSON
+	 * @return string           The TimeTable as JSON text in a string
+	 */
 	private static function getJSON($table)
 	{
 		return json_encode($table);
 	}
 	
+	/**
+	 * Creates a new element with a given name and content
+	 * @param  DOMDocument $document    The root DOMDocument
+	 * @param  string      $elementName Name of the new element
+	 * @param  string      $text        Content of the new node
+	 * @return DOMElement               The new element
+	 */
 	private static function createElementWithText($document, $elementName, $text)
 	{
 		$element = $document->createElement($elementName);
@@ -20,13 +32,11 @@ class TimeEditAPIView
 		return $element;
 	}
 
-	private static function appendAttribute($document, $mother, $name, $value)
-	{
-		$attribute = $document->createAttribute($name);
-		$attribute->value = $value;
-		$mother->appendChild($attribute);
-	}	
-
+	/**
+	 * Puts all the data from the TimeTable into a DOMDocument
+	 * @param  TimeTable   $table The table to put into the DOMDocument
+	 * @return DOMDocument        The TimeTable as a DOMDOcument
+	 */
     private static function getDOMDocument($table)
     {
 		$doc = new DOMDocument();
@@ -117,11 +127,22 @@ class TimeEditAPIView
 		return $doc;
     }
 	
+	/**
+	 * Gets the XML data for the TimeTable
+	 * @param  TimeTable $table The TimeTable we want as XML data
+	 * @return string           The XML data
+	 */
 	private static function getXML($table)
 	{
 		return TimeEditAPIView::getDOMDocument($table)->saveXML();
 	}
     
+    /**
+     * Creates a view and returns it according to the output format
+     * @param  TimeTable             $timeTable    The source time table we want to view
+     * @param  OutputType            $outputFormat The output type the user wants returned
+     * @return string or DOMDOcument               Depends on the OutputType
+     */
     public static function render($timeTable, $outputFormat)
 	{
         switch ($outputFormat)
