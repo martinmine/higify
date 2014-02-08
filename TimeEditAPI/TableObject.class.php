@@ -1,113 +1,117 @@
 <?php
 
-class TableObject
+class TableObject implements JsonSerializable
 {
-	protected $id;
-	protected $timeStart;
-	protected $timeEnd;
-	protected $courseCodes;
-	protected $room;
-	protected $lecturer;
-	protected $classes;
-	protected $lastChanged;
+	private $id;
+	private $timeStart;
+	private $timeEnd;
+	private $courseCodes;
+	private $room;
+	private $lecturer;
+	private $classes;
+	private $lastChanged;
 
-	/*public function __construct($id, $timeStart, $timeEnd, $courseCodes, 
-		$room, $lecturer, $classes, $lastChanged)
-	{
-		$this->id = intval($id);
-		$this->timeStart = $timeStart;
-		$this->timeEnd = $timeEnd;
-		$this->courseCodes = $courseCodes;
-		$this->room = $room;
-		$this->lecturer = $lecturer;
-		$this->classes = $classes;
-		$this->lastChanged = $lastChanged;
-	}*/
-
+	const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+	
 	public function getID()
 	{
 		return $this->id;
 	}
 
-	function setID($id)
+	public function setID($id)
 	{
 		$this->id = intval($id);
 	}
 
-	function getTimeStart()
+	public function getTimeStart()
 	{
 		return $this->timeStart;
 	}
+	
+	public function getTimeStartFormated()
+	{
+		return $this->timeStart->format(self::DATE_TIME_FORMAT);
+	}
 
-	function setTimeStart($timeStart)
+	public function setTimeStart($timeStart)
 	{
 		$this->timeStart = $timeStart;
 	}
 
-	function getTimeEnd()
+	public function getTimeEnd()
 	{
 		return $this->timeEnd;
 	}
 
-	function setTimeEnd($timeEnd)
+	public function getTimeEndFormated()
+	{
+		return $this->timeEnd->format(self::DATE_TIME_FORMAT);
+	}
+	
+	public function setTimeEnd($timeEnd)
 	{
 		$this->timeEnd = $timeEnd;
 	}
 
-	function getCourseCodes()
+	public function getCourseCodes()
 	{
 		return $this->courseCodes;
 	}
 
-	function setCourseCodes($courseCode)
+	public function setCourseCodes($courseCode)
 	{
 		$this->courseCodes = $courseCode;
 	}
 
-	function getRoom()
+	public function getRoom()
 	{
 		return $this->room;
 	}
 
-	function setRoom($room)
+	public function setRoom($room)
 	{
 		$this->room = $room;
 	}
 
-	function getLecturer()
+	public function getLecturer()
 	{
 		return $this->lecturer;
 	}
 
-	function setLecturer($lecturer)
+	public function setLecturer($lecturer)
 	{
 		$this->lecturer = $lecturer;
 	}
 
-	function getClasses()
+	public function getClasses()
 	{
 		return $this->classes;
 	}
 
-	function setClasses($classes)
+	public function setClasses($classes)
 	{
 		$this->classes = $classes;
 	}
 	
-	function getLastChanged()
+	public function getLastChanged()
 	{
 		return $this->lastChanged;
 	}
+	
+	public function getLastChangedFormated()
+	{
+		return $this->lastChanged->format(self::DATE_TIME_FORMAT);
+	}
 
-	function setLastChanged($lastChanged)
+	public function setLastChanged($lastChanged)
 	{
 		$this->lastChanged = $lastChanged;
 	}
 	
-	function match($tableObject)
+	public function match($tableObject)
 	{
 		$keys = array_keys($this->courseCodes[0]);
-		
+				
 		if ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
 			&& $tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room)
 		{
@@ -117,6 +121,20 @@ class TableObject
 		{
 			return false;
 		}
+	}
+	
+	public function jsonSerialize()
+	{
+		return array(
+			'id' => $this->id,
+			'timeStart' => $this->getTimeStartFormated(),
+			'timeEnd' => $this->getTimeEndFormated(),
+			'lastChanged' => $this->getLastChangedFormated(),
+			'courseCodes' => $this->courseCodes,
+			'room' => $this->room,
+			'lecturer' => $this->lecturer,
+			'classes' => $this->classes
+			);
 	}
 }
 

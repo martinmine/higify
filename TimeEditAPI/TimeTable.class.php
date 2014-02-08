@@ -1,10 +1,10 @@
 <?php
-
-class TimeTable implements Iterator
+require_once('TimeTableIterator.class.php');
+class TimeTable implements JsonSerializable
 {
-	protected $tableObjects;
-	protected $count;
-
+	private $tableObjects;
+	private $count;
+	
 	public function __construct()
 	{
 		$this->tableObjects = Array();
@@ -41,36 +41,23 @@ class TimeTable implements Iterator
 	{
 		return $this->count;
 	}
-
-	// Functions which are required to be implemented by Iterator 
-	public function rewind()
+	
+	public function isValid($i)
 	{
-		reset($this->var);
-	}
-
-	public function current()
-	{
-		return current($this->var);
-	}
-
-	public function key() 
-	{
-		return key($this->var);
-	}
-
-	public function next() 
-	{
-		return next($this->var);
-	}
-
-	public function valid()
-	{
-		return key($this->var);
+		return isset($this->tableObjects[$i]);
 	}
 	
-	public function printTHIS()
+	public function getIterator()
 	{
-		print_r($this->tableObjects);
+		return new TimeTableIterator($this);
 	}
+	
+	public function jsonSerialize()
+	{
+		return array(
+			'count' => $this->count, 
+			'objects' => $this->tableObjects
+			);
+    }
 }
 ?>

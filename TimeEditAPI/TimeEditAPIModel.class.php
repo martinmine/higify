@@ -1,14 +1,17 @@
 <?php
-
 require_once('TableObject.class.php');
 require_once('TimeTable.class.php');
+require_once('PullFormat.class.php');
 
 class TimeEditAPIModel
 {
 	protected $queryURL;
 	
-	const TIME_ZONE = 'UTC+1';
-	const LINE_NUM = 4; // The line number we can find the table defintions on in CSV files
+	const CSV_TIME_ZONE = 'Europe/Berlin';
+	const ICS_TIME_ZONE = 'UTC';
+	
+	
+	const CSV_LINE_NUM = 4; // The line number we can find the table defintions on in CSV files
 
 	function __construct($queryURL)
 	{
@@ -20,6 +23,16 @@ class TimeEditAPIModel
 		return file_get_contents(sprintf($this->queryURL, $format));
 	}
 
+	protected function parseCSVDateTime($time)
+	{
+		return DateTime::createFromFormat('Y-m-d H:i', $time, new DateTimeZone(TimeEditAPIModel::CSV_TIME_ZONE));
+	}
+	
+	protected function parseICSDateTime($time)
+	{
+		return DateTime::createFromFormat('Ymd?His?', $time, new DateTimeZone(TimeEditAPIModel::ICS_TIME_ZONE));
+	}
+	
 	protected function parseCSVRow($line)
 	{
         $csvRowElements = str_getcsv($line);
@@ -29,9 +42,7 @@ class TimeEditAPIModel
 		{
             $rowElement = trim($rowElement);
             if (strpos($rowElement, ', ') !== FALSE)
-            {
                 $rowElement = explode(', ', $rowElement);
-            }
             
             $rowElements[] = $rowElement;
 		}
@@ -39,23 +50,16 @@ class TimeEditAPIModel
 		return $rowElements;
 	}
 
-	protected function hasDefinitions(&$value)
-	{
-		return ($value[0] == '"' && $value[strlen($value) - 1] == '"');
-	}
-
 	public function parseCSV(&$table)
 	{
-		$response = TimeEditAPIModel::pullResponse('csv');
+		$response = TimeEditAPIModel::pullResponse(PullFormat::CSV);
 		$lines = explode("\n", $response);
 		$lineCount = count($lines);
-		// Could have been made better by "searching" for a row with a matching amount of ',' 
-		// according to the following rows, requires more resources and therefore I have chosen to use a constant instead
-		$rowDefinitions = TimeEditAPIModel::parseCSVRow($lines[TimeEditAPIModel::LINE_NUM - 1]);	
+		$rowDefinitions = TimeEditAPIModel::parseCSVRow($lines[TimeEditAPIModel::CSV_LINE_NUM - 1]);	
 
-		for ($i = TimeEditAPIModel::LINE_NUM; $i < $lineCount; $i++)
+		for ($i = TimeEditAPIModel::CSV_LINE_NUM; $i < $lineCount; $i++)
 		{
-			if (strlen($lines[$i]) == 0)	// Yes, I know this is bad, but we want to skip if it is an empty line
+			if (strlen($lines[$i]) == 0)	// Yes, I know this is bad (For the sake of indent)
 				continue;
 
             $rowItems = TimeEditAPIModel::parseCSVRow($lines[$i]);
@@ -72,12 +76,9 @@ class TimeEditAPIModel
 					$k = 0;
 					
 					while ($k < $valueCount)
-					{
 						$subjects[] = array($item[$k++] => $item[$k++]);
-					}
 					
 					$tableObject->setCourseCodes($subjects);
-					
                 }
                 else
                 {
@@ -86,9 +87,7 @@ class TimeEditAPIModel
 						case 'Begin date':
 							{
 								if (isset($timeBegin))
-								{
 									throw new Exception('Date begin has to come before begin time: line ' . $i . ' column ' . $j);
-								}
 
 								$timeBegin = $item;
 								break;
@@ -97,24 +96,17 @@ class TimeEditAPIModel
 						case 'Begin time':
 							{
 								if (!isset($timeBegin))
-								{
 									throw new Exception('Begin date has to come before begin time: line ' . $i . ' column ' . $j);
-								}
 
 								$tableObject->setTimeStart(TimeEditAPIModel::parseCSVDateTime($timeBegin . ' ' . $item));
-								
-								
 								unset($timeBegin);
-								
 								break;
 							}
 
 						case 'End date':
 							{
 								if (isset($endTime))
-								{
 									throw new Exception('Missing end time before line ' . $i . ' column ' . $j);
-								}
 
 								$endTime = $item;
 								break;
@@ -123,9 +115,7 @@ class TimeEditAPIModel
 						case 'End time':
 							{
 								if (!isset($endTime))
-								{
 									throw new Exception('Missing end date, has to come before end time, line ' . $i . ' column ' . $j);
-								}
 
 								$tableObject->setTimeEnd(TimeEditAPIModel::parseCSVDateTime($endTime . ' ' . $item));
 								unset($endTime);
@@ -150,11 +140,12 @@ class TimeEditAPIModel
 							}
 						
 						case '':
-						case 'info':	// Ignore
+						case 'info':	// Ignore this element
 							{
 								break;
 							}
-						default:
+							
+						default:		// Unknown element
 							{
 								trigger_error('Column ' . $j . '=>' . $rowDefinitions[$j] . ' is unknown');
 								break;
@@ -163,13 +154,13 @@ class TimeEditAPIModel
                 }
             }
 			
-			$table->addObject($tableObject);
+			$table->addObject($tableObject);	// We are done adding data to this object, add it to the table
 		}
 	}	
 
 	public function parseICS(&$table)
 	{
-		$response = TimeEditAPIModel::pullResponse('ics');
+		$response = TimeEditAPIModel::pullResponse(PullFormat::ICS);
 		$lines = explode("\n", $response);
 		$lineCount = count($lines);
 		$currentObject;
@@ -197,7 +188,7 @@ class TimeEditAPIModel
 					break;
 
 				case 'SUMMARY':
-					$currentObject->setCourseCodes(array(trim($args[1])));
+					$currentObject->setCourseCodes(explode('\\, ', trim($args[1])));
 					break;
 
 				case 'LOCATION':
@@ -235,78 +226,46 @@ class TimeEditAPIModel
 	}
 	
 	// Associated = ICS, indexed = CVS
-	protected function mergeTables(&$associatedTable, &$indexedTable)
+	protected function mergeTables(&$source, &$destination)
 	{
-		$keyContainer = $associatedTable->getTableKeys();
+		$keyContainer = $destination->getTableKeys();
 		$keyCount = count($keyContainer);
-
-		for ($i = 0; $i < $keyContainer; $i++)
+		for ($i = 0; $i < $keyCount; $i++)
 		{
-			
-			$itemID = $keyContainer[$i];	// Time Object ID, can be used as key in associatedTable
-			$CSVElement = NULL;
-			$ICSElement = $associatedTable->getItem($itemID);
-			
-			$padding = $i;
+			$srcElement = NULL;
+			$dstElement = $destination->getItem($keyContainer[$i]); // Get item number i from destination table
+			$padding = $i;		// At which item in the source array to compare dstElement with
 			
 			do
 			{
-				$CSVElement = $indexedTable->getItem($padding++);
+				$srcElement = $source->getItem($padding++);						// Get the next element from table
 			}
-			while (!$CSVElement->match($ICSElement) && $padding < $keyCount);
+			while (!$srcElement->match($dstElement) && $padding < $keyCount);	// While no match found and within array bounds
 			
-			if ($CSVElement !== NULL)
+			if ($srcElement != NULL && $srcElement->match($dstElement))			// If a match was found, set data
 			{
-				$ICSElement->setCourseCodes($CSVElement->getCourseCodes());
-				$ICSElement->setLecturer($CSVElement->getLecturer());
-				$ICSElement->setClasses($CSVElement->getClasses());
+				$dstElement->setCourseCodes($srcElement->getCourseCodes());
+				$dstElement->setLecturer($srcElement->getLecturer());
+				$dstElement->setClasses($srcElement->getClasses());
 			}
-			/*
-			Lecturer
-			Classes
-			
-			ICS:
-			Har ID
-			Mangler fagkoder etc
-			CSV:
-			
-			CSV => ICS
-			
-			
-			*/
-			
-			print_r($CSVElement);
-			echo "<br>";
-			print_r($ICSElement);
-			die();
-			
 		}
 	}
-	
-	protected function parseCSVDateTime($time)
-	{
-		return DateTime::createFromFormat('Y-m-d h:i', $time, new DateTimeZone('Europe/Berlin'));
-	}
-	
-	protected function parseICSDateTime($time)
-	{
-		return DateTime::createFromFormat('Ymd?His?', $time, new DateTimeZone('UTC'));
-	}
 
-	public function fillMissingData($type, &$table)
+	public function fillMissingData($tableType, &$table)
 	{
 		$tableDiff = new TimeTable();
-		if ($type == 'ICS')
+		if ($tableType == PullFormat::ICS)
 		{
 			TimeEditAPIModel::parseCSV($tableDiff);
-			TimeEditAPIModel::mergeTables($table, $tableDiff);
+			TimeEditAPIModel::mergeTables($tableDiff, $table);
+			return $table;
 		}
 		else
 		{
 			TimeEditAPIModel::parseICS($tableDiff);
-			
+			TimeEditAPIModel::mergeTables($table, $tableDiff);
+			return $tableDiff;
 		}
-		
 	}
 }
 

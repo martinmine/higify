@@ -1,6 +1,7 @@
 <?php
 require_once('TimeEditAPIModel.class.php');
 require_once('TimeEditAPIView.class.php');
+require_once('PullFormat.class.php');
 
 class TimeEditAPIController
 {
@@ -26,45 +27,27 @@ class TimeEditAPIController
         
         switch ($format)
         {
-            case 'ICS':
+            case PullFormat::ICS:
                 {
                     $model->parseICS($timeTable);
                     break;   
                 }
             
-            case 'CSV':
+            case PullFormat::CSV:
                 {
                     $model->parseCSV($timeTable);
                     break;
                 }
             default:
                 {
-                    throw new Exception('Invalid argument ' . $outputFormat);
+                    throw new Exception("The output format $outputFormat is unknown or not supported ");
                 }
         }
         
         if ($getAllData)
-            $model->fillMissingData($format, $timeTable);
-        
-        switch ($outputFormat)
-        {
-            /*case 'XML': Not yet implemented
-                {
-                    return TimeEditAPIView::getXML($timeTable);
-                }
-            case 'JSON':
-                {
-                    return TimeEditAPIView::getJSON($timeTable);
-                }
-            case 'DOM':
-                {
-                    return TimeEditAPIView::getDOMDocument($timeTable);
-                }*/
-            case 'TimeTable':
-                {
-                    return $timeTable;
-                }
-        }
+            $timeTable = $model->fillMissingData($format, $timeTable);
+       
+		return TimeEditAPIView::render($timeTable, $outputFormat);
     }
 }
 ?>
