@@ -28,14 +28,10 @@ class TimeEditAPIModel
 		curl_setopt($cURL, CURLOPT_FAILONERROR, 0);
 		curl_setopt($cURL, CURLOPT_URL, sprintf($this->queryURL, $format));
 		
-		try
-		{
-			return curl_exec($cURL);
-		}
-		finally
-		{
-			curl_close($cURL);
-		}
+		$response = curl_exec($cURL);
+		curl_close($cURL);
+		
+		return $response;
 	}
 
 	private function parseCSVDateTime($time)
