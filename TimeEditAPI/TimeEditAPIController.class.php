@@ -45,7 +45,6 @@ class TimeEditAPIController
     {
         $queryURL = sprintf(TimeEditAPIController::BASE_TIME_TABLE_URL, '%s',
 							$from->serialize(), $to->serialize(), $objectID, $type);
-		die($queryURL);
         $model = new TimeEditAPIModel($queryURL);
         $timeTable = new TimeTable();
         
