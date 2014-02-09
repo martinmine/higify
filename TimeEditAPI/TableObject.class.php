@@ -243,15 +243,8 @@ class TableObject implements JsonSerializable
 	{
 		$keys = array_keys($this->courseCodes[0]);
 				
-		if ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
-			&& $tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
+			&& $tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room);
 	}
 	
 	/**

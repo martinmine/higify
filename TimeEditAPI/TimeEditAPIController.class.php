@@ -21,7 +21,7 @@ class TimeEditAPIController
      * @param integer $objectType Defines what we are searching for (room, lecturer, course code, etc.), defined in ObjectType class
      * @param string  $searchText The input search streng for match, for example 'dev'   
      * @param integer $maxResult  Max amounts of results to be returned from the server
-     * @return Array All the SearchResult objects which was found
+     * @return Array All the SearchResult objects which was found 
      */
     public static function search($objectType, $searchText, $maxResult)
     {

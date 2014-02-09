@@ -15,12 +15,12 @@ class TimeEditAPIModel
 	/**
 	 * What time zone format is in the CSV file format from TimeEdit
 	 */
-	const CSV_TIME_ZONE = 'Europe/Berlin';
+	private $CSV_TIME_ZONE;
 
 	/**
 	 * What time format it is the ICS formats file format from TimeEdit
 	 */
-	const ICS_TIME_ZONE = 'UTC';
+	private $ICS_TIME_ZONE;
 
 	/**
 	 * At which line number the table headers are in the CSV file
@@ -33,6 +33,8 @@ class TimeEditAPIModel
 	 */
 	public function __construct($queryURL)
 	{
+		$this->CSV_TIME_ZONE = new DateTimeZone('Europe/Berlin'); 
+		$this->ICS_TIME_ZONE = new DateTimeZone('UTC');
 		$this->queryURL = $queryURL;
 	}
 	
@@ -51,7 +53,7 @@ class TimeEditAPIModel
 		curl_setopt($cURL, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($cURL, CURLOPT_FAILONERROR, 0);
 		curl_setopt($cURL, CURLOPT_URL, sprintf($this->queryURL, $format));
-		curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);	// For whatever reason, response got printed without this
 		
 		$response = curl_exec($cURL);
 		curl_close($cURL);
@@ -65,7 +67,7 @@ class TimeEditAPIModel
 	 */
 	private function parseCSVDateTime($time)
 	{
-		return DateTime::createFromFormat('Y-m-d H:i', $time, new DateTimeZone(TimeEditAPIModel::CSV_TIME_ZONE));
+		return DateTime::createFromFormat('Y-m-d H:i', $time, $this->CSV_TIME_ZONE);
 	}
 	
 	/**
@@ -75,7 +77,7 @@ class TimeEditAPIModel
 	 */
 	private function parseICSDateTime($time)
 	{
-		return DateTime::createFromFormat('Ymd?His?', $time, new DateTimeZone(TimeEditAPIModel::ICS_TIME_ZONE));
+		return DateTime::createFromFormat('Ymd?His?', $time, $this->ICS_TIME_ZONE);
 	}
 	
 	/**
@@ -176,7 +178,7 @@ class TimeEditAPIModel
 								unset($endTime);
 								break;
 							}
-
+						
 						case 'Rom':
 							{
 								$tableObject->setRoom($item);
@@ -226,8 +228,8 @@ class TimeEditAPIModel
 
 		for ($i = 0; $i < $lineCount; $i++)
 		{
-			$args = explode(':', $lines[$i]);
-			switch (trim($args[0])) 
+			$args = explode(':', trim($lines[$i]));
+			switch ($args[0]) 
 			{
 				case 'BEGIN':
 					$currentObject = new TableObject();
@@ -235,31 +237,31 @@ class TimeEditAPIModel
 
 				case 'DTSTART':
 				
-					$currentObject->setTimeStart(TimeEditAPIModel::parseICSDateTime(trim($args[1])));
+					$currentObject->setTimeStart(TimeEditAPIModel::parseICSDateTime($args[1]));
 					break;
 
 				case 'DTEND':
-					$currentObject->setTimeEnd(TimeEditAPIModel::parseICSDateTime(trim($args[1])));
+					$currentObject->setTimeEnd(TimeEditAPIModel::parseICSDateTime($args[1]));
 					break;
 
 				case 'LAST-MODIFIED':
-					$currentObject->setLastChanged(TimeEditAPIModel::parseICSDateTime(trim($args[1])));
+					$currentObject->setLastChanged(TimeEditAPIModel::parseICSDateTime($args[1]));
 					break;
 
 				case 'SUMMARY':
-					$currentObject->setCourseCodes(explode('\\, ', trim($args[1])));
+					$currentObject->setCourseCodes(explode('\\, ', $args[1]));
 					break;
 
 				case 'LOCATION':
-					$currentObject->setRoom(trim($args[1]));
+					$currentObject->setRoom($args[1]);
 					break;
 
 				case 'DESCRIPTION':
-					$currentObject->setID(str_replace('ID ', '', trim($args[1])));
+					$currentObject->setID(str_replace('ID ', '', $args[1]));
 					break;
 
 				case 'END':
-					if (trim($args[1]) == 'VEVENT')
+					if ($args[1] == 'VEVENT')
 					{
 						$objectID = $currentObject->getID();
 						$table->addObjectWithID($currentObject, $objectID);
