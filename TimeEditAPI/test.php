@@ -7,7 +7,10 @@ require_once('ITimeParameter.class.php');
 //$response = TimeEditAPIController::search(ObjectType::ROOM, 'K', 10);
 //echo count($response);
 
-//$table = TimeEditAPIController::getTimeTable(161569, 182, PullFormat::ICS, OutputType::TIME_TABLE, Minute::now(), new Month(2));
+$xml = TimeEditAPIController::getTimeTable(161569, 182, PullFormat::ICS, OutputType::XML_DOCUMENT, Minutes::now(), new Months(2));
 //print_r($table);
+header('Content-Type: text/xml; charset=utf-8');
+echo $xml;
+
 
 ?>

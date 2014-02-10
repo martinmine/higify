@@ -1,20 +1,8 @@
 <?php
-require_once('OutputType.class.php');
-require_once('TimeTable.class.php');
-require_once('TableObject.class.php');
+require_once('ITimeTableView.interface.php');
 
-class TimeEditAPIView
+class DOMDocumentView implements ITimeTableView
 {
-	/**
-	 * Creates a JSON presentation of the TimeTable
-	 * @param  TimeTable $table TimeTable to view as JSON
-	 * @return string           The TimeTable as JSON text in a string
-	 */
-	private static function getJSON($table)
-	{
-		return json_encode($table);
-	}
-	
 	/**
 	 * Creates a new element with a given name and content
 	 * @param  DOMDocument $document    The root DOMDocument
@@ -30,14 +18,14 @@ class TimeEditAPIView
 		
 		return $element;
 	}
-
+	
 	/**
 	 * Puts all the data from the TimeTable into a DOMDocument
 	 * @param  TimeTable   $table The table to put into the DOMDocument
 	 * @return DOMDocument        The TimeTable as a DOMDOcument
 	 */
-    private static function getDOMDocument($table)
-    {
+	public function render($table)
+	{
 		$doc = new DOMDocument();
 		$timeSchedule = $doc->createElement('TimeSchedule');
 		
@@ -51,13 +39,13 @@ class TimeEditAPIView
 			$timeEndFormated = $timeObject->getTimeStartFormated();
 			$lastChangedFormated = $timeObject->getLastChangedFormated();
 			
-			$id = TimeEditAPIView::createElementWithText($doc, 'ID', $timeObject->getID());
-			$timeBeginElement = TimeEditAPIView::createElementWithText($doc, 'BeginTime', $timeBeginFormated);
-			$timeEndElement = TimeEditAPIView::createElementWithText($doc, 'EndTime', $timeEndFormated);
-			$lastChangedElement = TimeEditAPIView::createElementWithText($doc, 'LastChanged', $lastChangedFormated);
+			$id = DOMDocumentView::createElementWithText($doc, 'ID', $timeObject->getID());
+			$timeBeginElement = DOMDocumentView::createElementWithText($doc, 'BeginTime', $timeBeginFormated);
+			$timeEndElement = DOMDocumentView::createElementWithText($doc, 'EndTime', $timeEndFormated);
+			$lastChangedElement = DOMDocumentView::createElementWithText($doc, 'LastChanged', $lastChangedFormated);
 			
 			$location = $timeObject->getRoom();
-			$locationElement = TimeEditAPIView::createElementWithText($doc, 'Location', $location);
+			$locationElement = DOMDocumentView::createElementWithText($doc, 'Location', $location);
 			
 			$attendanceElement = $doc->createElement('Attendance');
 			
@@ -65,7 +53,7 @@ class TimeEditAPIView
 			{
 				foreach ($timeObject->getClasses() as $attending) 
 				{
-					$attendingElement = TimeEditAPIView::createElementWithText($doc, 'Attending', $attending);
+					$attendingElement = DOMDocumentView::createElementWithText($doc, 'Attending', $attending);
 					$attendanceElement->appendChild($attendingElement);
 				}
 			}
@@ -75,13 +63,13 @@ class TimeEditAPIView
 			{
 				foreach ($timeObject->getLecturer() as $lecturer) 
 				{
-					$nameElement = TimeEditAPIView::createElementWithText($doc, 'Name', $lecturer);
+					$nameElement = DOMDocumentView::createElementWithText($doc, 'Name', $lecturer);
 					$lecturerElement->appendChild($nameElement );
 				}
 			}
 			else if (strlen($timeObject->getLecturer()) > 0)
 			{
-				$nameElement = TimeEditAPIView::createElementWithText($doc, 'Name', $timeObject->getLecturer());
+				$nameElement = DOMDocumentView::createElementWithText($doc, 'Name', $timeObject->getLecturer());
 				$lecturerElement->appendChild($nameElement);
 			}
 			
@@ -95,8 +83,8 @@ class TimeEditAPIView
 				{
 					foreach ($courseCode as $code => $desc)
 					{
-						$codeElement = TimeEditAPIView::createElementWithText($doc, 'Code', $code);
-						$descElement = TimeEditAPIView::createElementWithText($doc, 'Description', $desc);
+						$codeElement = DOMDocumentView::createElementWithText($doc, 'Code', $code);
+						$descElement = DOMDocumentView::createElementWithText($doc, 'Description', $desc);
 						
 						$courseInfo->appendChild($codeElement);
 						$courseInfo->appendChild($descElement);
@@ -104,7 +92,7 @@ class TimeEditAPIView
 				}
 				else
 				{
-					$codeElement = TimeEditAPIView::createElementWithText($doc, 'Code', $courseCode);
+					$codeElement = DOMDocumentView::createElementWithText($doc, 'Code', $courseCode);
 					$courseInfo->appendChild($codeElement);
 				}
 				$courseCodesElement->appendChild($courseInfo);
@@ -124,45 +112,6 @@ class TimeEditAPIView
 		
 		$doc->appendChild($timeSchedule);
 		return $doc;
-    }
-	
-	/**
-	 * Gets the XML data for the TimeTable
-	 * @param  TimeTable $table The TimeTable we want as XML data
-	 * @return string           The XML data
-	 */
-	private static function getXML($table)
-	{
-		return TimeEditAPIView::getDOMDocument($table)->saveXML();
-	}
-    
-    /**
-     * Creates a view and returns it according to the output format
-     * @param  TimeTable             $timeTable    The source time table we want to view
-     * @param  OutputType            $outputFormat The output type the user wants returned
-     * @return string or DOMDOcument               Depends on the OutputType
-     */
-    public static function render($timeTable, $outputFormat)
-	{
-        switch ($outputFormat)
-        {
-            case OutputType::XML_DOCUMENT: 
-                {
-                    return TimeEditAPIView::getXML($timeTable);
-                }
-            case OutputType::JSON:
-                {
-                    return TimeEditAPIView::getJSON($timeTable);
-                }
-            case OutputType::DOM_DOCUMENT:
-                {
-                    return TimeEditAPIView::getDOMDocument($timeTable);
-                }
-            case OutputType::TIME_TABLE:
-                {
-                    return $timeTable;
-                }
-        }
 	}
 }
 ?>

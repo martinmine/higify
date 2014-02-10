@@ -39,7 +39,7 @@ class Minutes implements ITimeParameter
 	 */
 	public function serialize()
 	{
-		return sprintf('%d.m', $this->minutes);
+		return sprintf('%d.minutes', $this->minutes);
 	}
 }
 
@@ -66,7 +66,7 @@ class Hours implements ITimeParameter
 	 */
 	public function serialize()
 	{
-		return sprintf('%d.h', $this->hours);
+		return sprintf('%d.hours', $this->hours);
 	}
 }
 
@@ -93,7 +93,7 @@ class Days implements ITimeParameter
 	 */
 	public function serialize()
 	{
-		return sprintf('%d.d', $this->days);
+		return sprintf('%d.days', $this->days);
 	}
 }
 
@@ -120,7 +120,7 @@ class Weeks implements ITimeParameter
 	 */
 	public function serialize()
 	{
-		return sprintf('%d.w', $this->weeks);
+		return sprintf('%d.weeks', $this->weeks);
 	}
 }
 
@@ -147,7 +147,7 @@ class Months implements ITimeParameter
 	 */
 	public function serialize()
 	{
-		return sprintf('%d.n', $this->months);
+		return sprintf('%d.months', $this->months);
 	}
 }
 
@@ -174,7 +174,7 @@ class Date implements ITimeParameter
 	 */
 	public function serialize()
 	{
-		return $this->date->format('Ymd');
+		return $this->date->format('Ymd') . '.x';
 	}
 }
 ?>
