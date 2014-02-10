@@ -107,6 +107,16 @@ class UserModel
         {
             return false;                                                               // Username is taken
         }
-    }   
+    }
+    
+    /**
+     * Summary of newPassword
+     */
+    public function newPassword($userID, $oldPassword, $newPassword)
+    {
+            
+    }
 }
+
+
 ?>
