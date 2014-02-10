@@ -51,16 +51,24 @@ class UserModel
             $query = "SELECT userID, username, email                                    
                       FROM user
                       WHERE username = :username AND password = :password";
+            
+            $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY);        // Hashing password
            
-            $hashedPassword = hash_hmac('sha512', $password, UserModel::SITEKEY);        // Hashing password
             $stmt = $this->db->prepare($query);                                          // Preparing query
             $stmt->bindparam(':username', $username);                                   
             $stmt->bindparam(':password', $hashedPassword);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);                                    // Fetching associated
             
-            $user = new User($result['userID'], $result['username'], $result['email']);  // Creating new user object
-            return $user;                                                                // Returns the user object
+            if(isset($result['userID']) && isset($result['username']) && isset($result['email']))
+            {
+                $user = new User($result['userID'], $result['username'], $result['email']); // Creating new user object
+                return $user;                                                               // Returns the user object
+            }
+            else
+            {
+                return NULL;                                                             // Something went wrong!
+            }
         }   
         else
         {
@@ -82,9 +90,9 @@ class UserModel
             $query = "INSERT INTO user(username, password, email, emailActivated, publicTimeSchedule)
                       VALUES (:username, :password, :email, :emailActivated, :publicTimeSchedule)";
             
-            $hashedPassword = hash_hmac('sha512', $password, UserModel::SITEKEY);       // Hashing password
+            $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
             
-            $stmt = $this->db->prepare($query);                                               // Preparing database
+            $stmt = $this->db->prepare($query);                                         // Preparing database
             $stmt->bindparam(':username', $username);                                   // Binding variables
             $stmt->bindparam(':password', $hashedPassword);
             $stmt->bindparam(':email', $email);

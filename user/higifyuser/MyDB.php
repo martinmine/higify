@@ -6,6 +6,7 @@
 * @return PDO the PDO object connecting to the MySQL database.
 * @throws PDOException
 */
+
 function openDB() {
     $db = new PDO('mysql:host=phpmyadmin.obbahhost.com;dbname=higify;charset=utf8',
                   'higifydev', '6DLqsad9rbmFjcL7abvYDnzy');

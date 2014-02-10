@@ -4,7 +4,7 @@ require_once "UserModel.php";
 
 $userModel = new UserModel();
 
-// Legger inn Joakim som bruker
+
 if($test = $userModel->registerUser('Joakim','12345','jjoereng@gmail.com','0','0'))
 {
     if($test)

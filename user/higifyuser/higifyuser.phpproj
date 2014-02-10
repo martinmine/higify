@@ -19,5 +19,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="index.php" />
+    <Compile Include="testingUserClass.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="User.class.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserModel.php">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

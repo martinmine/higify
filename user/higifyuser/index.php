@@ -7,7 +7,7 @@
 	<body>
 		<div class="pageContainer">
 			<div class="centerContainer">
-				<form action="test.php" method="POST">
+				<form action="testingUserClass.php" method="POST">
 				<div class="pageTitle">Welcome to Higify</div>
 				<div class="loginContainer">
 					<div class="messageContainer"><div class="error">
