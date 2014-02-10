@@ -10,7 +10,7 @@ class UserModel
     
     /**
      * Sends a query to the database to see if the
-     * value of x$username has a match.
+     * value of $username has a match.
      * @param $username
      * @return true,false 
      */
@@ -20,7 +20,7 @@ class UserModel
                   FROM user
                   WHERE username = :username";
         $db = DatabaseManager::getDB();
-        $stmt = $db->prepare($query);             // Preparing database
+        $stmt = $db->prepare($query);                   // Preparing database
         $stmt->bindparam(':username', $username);   
         $stmt->execute();                               // executing query
         $result = $stmt->fetch(PDO::FETCH_ASSOC);       // fetching result 
@@ -42,19 +42,19 @@ class UserModel
     public function getUser($username, $password)       
     {
         if(UserModel::userExists($username))
-        {                                                                                // SQL query
+        {                                                                                           // SQL query
             $query = "SELECT userID, username, email                                    
                       FROM user
                       WHERE username = :username AND password = :password";
             
-            $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY);        // Hashing password
+            $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
            
             $db = DatabaseManager::getDB();
-            $stmt = $db->prepare($query);                                          // Preparing query
+            $stmt = $db->prepare($query);                                                           // Preparing query
             $stmt->bindparam(':username', $username);                                   
             $stmt->bindparam(':password', $hashedPassword);
             $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);                                    // Fetching associated
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);                                            // Fetching associated
             
             if(isset($result['userID']) && isset($result['username']) && isset($result['email']))
             {
@@ -81,23 +81,23 @@ class UserModel
      * @return $user obj 
      */
     public function getUserByID($userID)
-    {
-        $query = "SELECT username, email
+    {                                                                                        // SQL query
+        $query = "SELECT username, email                                                   
                   FROM user
                   WHERE userID = :userID";
         
-        $db = DatabaseManager::getDB();
-        $stmt = $db->prepare($query);
-        $stmt->bindparam(':userID',$userID);
-        $stmt->execute();
-        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        $db = DatabaseManager::getDB();                                                      // connects to db
+        $stmt = $db->prepare($query);                                                        // preparing db
+        $stmt->bindparam(':userID',$userID);                                                 // binding userID
+        $stmt->execute();                                                                    // executing query
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);                                               // fetching results
         
-        if(isset($res['username']) && isset($res['email']))
+        if(isset($res['username']) && isset($res['email']))                                  // if needed results
         {
-            $user = new User($userID, $res['username'], $res['email']); 
-            return $user;
+            $user = new User($userID, $res['username'], $res['email']);                      // create new user
+            return $user;                                                                    
         }
-        else
+        else                                                                                // Needed data not achieved
         {
             return NULL;
         }
@@ -120,7 +120,7 @@ class UserModel
             $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
             
             $db = DatabaseManager::getDB();
-            $stmt = $db->prepare($query);                                         // Preparing database
+            $stmt = $db->prepare($query);                                               // Preparing database
             $stmt->bindparam(':username', $username);                                   // Binding variables
             $stmt->bindparam(':password', $hashedPassword);
             $stmt->bindparam(':email', $email);
@@ -144,7 +144,7 @@ class UserModel
      * If they match the users promt to a new password is accepted.
      * The new password overwrites the old in $db
      * 
-     * TODO: TEST IT!
+     * Status: tested
      * 
      */
     public function newPassword($userID, $oldPassword, $newPassword)
@@ -158,25 +158,29 @@ class UserModel
         $stmt->bindparam(':userID',$userID);                                    // binding parameters
         $stmt->execute();                                                       // executing query
         $res = $stmt->fetch(PDO::FETCH_ASSOC);                                  // fetching results
-        
+     
         if(isset($res['password']))
         {
             $oldPassword = hash_hmac('sha512', $oldPassword . UserModel::SALT, UserModel::SITEKEY);
-            
-            if(0 < strcmp($oldPassword,$res['password']))                        // If current PW matches the one in db
+                                               
+            if(strcmp($oldPassword,$res['password']) == 0)                       // If current PW matches the one in db
             {                                                                    // Query for updating password
                 $query2 = "UPDATE user                                       
-                           SET(password = :newpassword)
+                           SET password = :newPassword
                            WHERE userID = :userID";
                                                                                  // Hashing new PW with salt
                 $hashedNewPassword = hash_hmac('sha512', $newPassword . UserModel::SALT, UserModel::SITEKEY);
                 $db = DatabaseManager::getDB();
                 $stmt2 = $db->prepare($query2);                                  // Preparing database for query
-                $stmt2->bindparam(':userID', $userID);                           // Binding parameters
-                $stmt2->bindparam(':userID', $newPassword);
+                $stmt2->bindparam(':newPassword', $hashedNewPassword);                 // Binding parameters
+                $stmt2->bindparam(':userID', $userID);
                 $stmt2->execute();                                               // Executing query
+                
+                return true;                                                     // The password was changed
             }
         }
+       
+        return false;
     }     
 }
 

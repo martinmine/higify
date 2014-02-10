@@ -18,6 +18,9 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DatabaseManager.class.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="index.php" />
     <Compile Include="testingUserClass.php">
       <SubType>Code</SubType>
@@ -25,7 +28,7 @@
     <Compile Include="User.class.php">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UserModel.php">
+    <Compile Include="UserModel.class.php">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

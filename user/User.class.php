@@ -14,6 +14,11 @@ class User
       $this->email = $email;
     }
     
+    /**
+     * Summary of display
+     * TEST FUNCTION
+     * TODO: DELETE IT
+     */
     public function display()
     {
         $res = 'id: ' . $this->userID . '   username: ' . $this->username 
