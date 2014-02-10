@@ -1,8 +1,8 @@
 <?php
 require_once('TimeEditAPIModel.class.php');
-require_once('TimeEditAPIView.class.php');
 require_once('PullFormat.class.php');
 require_once('ObjectType.class.php');
+require_once('TimeTableViewFactory.class.php');
 
 class TimeEditAPIController
 {
@@ -69,8 +69,9 @@ class TimeEditAPIController
         
         if ($getAllData)
             $timeTable = $model->fillMissingData($format, $timeTable);
-       
-		return TimeEditAPIView::render($timeTable, $outputFormat);
+		
+		$view = TimeTableViewFactory::getView($outputFormat);
+        return $view->render($timeTable);
     }
 }
 ?>
