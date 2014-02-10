@@ -74,7 +74,26 @@ class ActivationModel
      */
     public static function sendEmail($receiver, $content)
     {
-       
+        $mail = new PHPMailer();
+
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = 'mail.dongsecurity.com';                // Specify main and backup server
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = 'activation@obbahhost.com';         // SMTP username
+        $mail->Password = 'Vtft32XRp8FVZQGvETu4vpmM';         // SMTP password
+        $mail->Port = 94;
+
+        $mail->From = 'activation@obbahhost.com';
+        $mail->FromName = 'The Higify Team';
+        $mail->addAddress($receiver);                         // Name is optional
+
+        $mail->WordWrap = 50;                                 // Set word wrap to 50 characters
+        $mail->isHTML(true);                                  // Set email format to HTML
+
+        $mail->Subject = 'Activation';
+        $mail->Body    = $content;
+        
+        $mail->send();
     }
 }
 

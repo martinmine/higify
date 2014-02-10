@@ -1,4 +1,7 @@
 <?php
+/**
+ * String builder meant for email content.
+ */
 class StringBuilder
 {
     /**
@@ -17,12 +20,12 @@ class StringBuilder
     }
     
     /**
-     * Appends one line to the string builder with a newline
+     * Appends one line to the string builder with a newline+br-tag
      * @param string $txt 
      */
     public function appendLine($txt = '')
     {
-        $this->content .= $txt . "\n";
+        $this->content .= $txt . "\n<br/>";
     }
     
     /**
