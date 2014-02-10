@@ -1,5 +1,5 @@
 <?php
-require_once "MyDB.php";
+require_once "DatabaseManager.class.php";
 require_once "User.class.php";
 
 class UserModel
@@ -8,16 +8,9 @@ class UserModel
     
     const SITEKEY = 'bbdsadacode';
     
-    protected $db;                                        // PDO object handling database connection
-    
-    public function __construct()                         // Constructor
-    {
-        $this->db = openDB();                             // Connects to database
-    }
-    
     /**
      * Sends a query to the database to see if the
-     * value of $username has a match.
+     * value of x$username has a match.
      * @param $username
      * @return true,false 
      */
@@ -26,7 +19,8 @@ class UserModel
         $query = "SELECT username               
                   FROM user
                   WHERE username = :username";
-        $stmt = $this->db->prepare($query);             // Preparing database
+        $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);             // Preparing database
         $stmt->bindparam(':username', $username);   
         $stmt->execute();                               // executing query
         $result = $stmt->fetch(PDO::FETCH_ASSOC);       // fetching result 
@@ -36,8 +30,6 @@ class UserModel
        else
             return false;                               // User does not exist in database
     }
-    
-    
     
     
     /**
@@ -57,7 +49,8 @@ class UserModel
             
             $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY);        // Hashing password
            
-            $stmt = $this->db->prepare($query);                                          // Preparing query
+            $db = DatabaseManager::getDB();
+            $stmt = $db->prepare($query);                                          // Preparing query
             $stmt->bindparam(':username', $username);                                   
             $stmt->bindparam(':password', $hashedPassword);
             $stmt->execute();
@@ -79,14 +72,22 @@ class UserModel
         }
     }
     
+    /**
+     * Summary of getUserByID
+     * 
+     * Looks up userID and returns the user as a user object
+     * 
+     * @param $userID
+     * @return $user obj 
+     */
     public function getUserByID($userID)
     {
         $query = "SELECT username, email
                   FROM user
                   WHERE userID = :userID";
         
-        
-        $stmt = $this->db->prepare($query);
+        $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);
         $stmt->bindparam(':userID',$userID);
         $stmt->execute();
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -118,7 +119,8 @@ class UserModel
             
             $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
             
-            $stmt = $this->db->prepare($query);                                         // Preparing database
+            $db = DatabaseManager::getDB();
+            $stmt = $db->prepare($query);                                         // Preparing database
             $stmt->bindparam(':username', $username);                                   // Binding variables
             $stmt->bindparam(':password', $hashedPassword);
             $stmt->bindparam(':email', $email);
@@ -142,47 +144,40 @@ class UserModel
      * If they match the users promt to a new password is accepted.
      * The new password overwrites the old in $db
      * 
-     *//*
+     * TODO: TEST IT!
+     * 
+     */
     public function newPassword($userID, $oldPassword, $newPassword)
-    {
-        
-        $query = "SELECT password
+    {                                                                           // SQL query 
+        $query = "SELECT password                                               
                   FROM user
                   WHERE userID = :userID";
         
-        $stmt = $this->db->prepare($query);
-        $stmt->bindparam(':userID',$userID);
-        $stmt->execute();
-        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        $db = DatabaseManager::getDB();                                         // sets up db connection
+        $stmt = $db->prepare($query);                                           // preparing db for query
+        $stmt->bindparam(':userID',$userID);                                    // binding parameters
+        $stmt->execute();                                                       // executing query
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);                                  // fetching results
         
         if(isset($res['password']))
         {
             $oldPassword = hash_hmac('sha512', $oldPassword . UserModel::SALT, UserModel::SITEKEY);
             
-            if(0 < strcmp($oldPassword,$res['password']))
-            {
-                
+            if(0 < strcmp($oldPassword,$res['password']))                        // If current PW matches the one in db
+            {                                                                    // Query for updating password
+                $query2 = "UPDATE user                                       
+                           SET(password = :newpassword)
+                           WHERE userID = :userID";
+                                                                                 // Hashing new PW with salt
+                $hashedNewPassword = hash_hmac('sha512', $newPassword . UserModel::SALT, UserModel::SITEKEY);
+                $db = DatabaseManager::getDB();
+                $stmt2 = $db->prepare($query2);                                  // Preparing database for query
+                $stmt2->bindparam(':userID', $userID);                           // Binding parameters
+                $stmt2->bindparam(':userID', $newPassword);
+                $stmt2->execute();                                               // Executing query
             }
         }
-        
-        
-        
-        
-        
-                                                                            // Query for updating password
-        $query2 = "UPDATE user                                       
-                  SET(password = :newpassword)
-                  WHERE userID = :userID";
-                                                                           // Hashing new PW with salt
-        $hashedNewPassword = hash_hmac('sha512', $newPassword . UserModel::SALT, UserModel::SITEKEY);
-        
-        $stmt2 = $this->db->prepare($query2);                                // Preparing database for query
-        $stmt2->bindparam(':userID', $userID);                              // Binding parameters
-        $stmt2->bindparam(':userID', $newPassword);
-        $stmt2->execute();                                                  // Executing query
-    }
-        * */
+    }     
 }
-
 
 ?>
