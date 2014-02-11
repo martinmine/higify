@@ -37,13 +37,13 @@ class UserModel
      * if the username exists in the database.
      * 
      * @param $username, $password
-     * @return User-object 
+     * @return User A User from the database with the username and password 
      */
     public static function getUser($username, $password)       
     {
-        if(UserModel::userExists($username))
+        if (UserModel::userExists($username))
         {                                                                                           // SQL query
-            $query = "SELECT userID, username, email                                    
+            $query = "SELECT userID, username, email, emailActivated                                   
                       FROM user
                       WHERE username = :username AND password = :password";
             
@@ -56,9 +56,10 @@ class UserModel
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);                                            // Fetching associated
             
-            if(isset($result['userID']) && isset($result['username']) && isset($result['email']))
+            if ($result)
             {
-                $user = new User($result['userID'], $result['username'], $result['email']); // Creating new user object
+                $user = new User($result['userID'], $result['username'], 
+                                 $result['email'], $result['emailActivated']);              // Creating new user object
                 return $user;                                                               // Returns the user object
             }
             else
@@ -78,11 +79,11 @@ class UserModel
      * Looks up userID and returns the user as a user object
      * 
      * @param $userID
-     * @return $user obj 
+     * @return User from database 
      */
     public static function getUserByID($userID)
     {                                                                                        // SQL query
-        $query = "SELECT username, email                                                   
+        $query = "SELECT username, email, emailActivated                                                   
                   FROM user
                   WHERE userID = :userID";
         
@@ -94,7 +95,7 @@ class UserModel
         
         if(isset($res['username']) && isset($res['email']))                                  // if needed results
         {
-            $user = new User($userID, $res['username'], $res['email']);                      // create new user
+            $user = new User($userID, $res['username'], $res['email'], $res['emailActivated']); // create new user
             return $user;                                                                    
         }
         else                                                                                // Needed data not achieved
@@ -103,6 +104,11 @@ class UserModel
         }
     }
     
+    /**
+     * Gets the ID of a user with a specified username
+     * @param string $username A username
+     * @return integer The user ID
+     */
     public static function getUserID($username)
     {
         $query = "SELECT userID 
