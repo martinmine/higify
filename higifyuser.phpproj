@@ -28,6 +28,9 @@
     <Compile Include="User.class.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UserController.class.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UserModel.class.php">
       <SubType>Code</SubType>
     </Compile>

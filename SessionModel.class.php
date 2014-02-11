@@ -86,6 +86,7 @@ class SessionModel
     public static function setLoginID($userID, $rememberPassword = false)
     {
         $_SESSION['LOGIN_ID'] = $userID;
+        echo "Bruker med id: " . $_SESSION['LOGIN_ID'] . " er logget inn</br>";// test
         
         if ($rememberPassword)
         {
