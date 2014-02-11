@@ -1,0 +1,27 @@
+#Container
+{
+  border-style: dotted;
+  height: 99%;
+}
+
+h1
+{
+  border-style: dotted solid double;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 200px;
+}
+
+#Form
+{
+  border-style: solid;
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
+}
+
+label[for="isPublic"]
+{
+  float: left;
+}
