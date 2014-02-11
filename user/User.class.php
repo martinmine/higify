@@ -18,6 +18,15 @@ class User
     }
     
     /**
+     * Gets the user ID
+     * @return integer User ID
+     */
+    public function getUserID()
+    {
+        return $this->userID;   
+    }
+    
+    /**
      * Returns true/false i the user has activated the email address
      * @return boolean Email is activated
      */

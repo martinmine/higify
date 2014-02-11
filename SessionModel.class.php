@@ -18,6 +18,8 @@ class SessionModel
      */
     const SITE_DOMAIN = 'localhost';
     
+    
+    private static $sessionStarted = false;
     /**
      * Creates a new token from the key
      * @param string Can be old token or the user's password hash
@@ -34,6 +36,8 @@ class SessionModel
      */
     public static function getLoggedinID()
     {
+        self::prepareSession();
+        
         if (isset($_SESSION['LOGIN_ID']))
         {
             return $_SESSION['LOGIN_ID'];
@@ -85,8 +89,8 @@ class SessionModel
      */
     public static function setLoginID($userID, $rememberPassword = false)
     {
+        self::prepareSession();
         $_SESSION['LOGIN_ID'] = $userID;
-        echo "Bruker med id: " . $_SESSION['LOGIN_ID'] . " er logget inn</br>";// test
         
         if ($rememberPassword)
         {
@@ -101,6 +105,15 @@ class SessionModel
             setcookie('USR_ID', $userID, 60*60*24*30, '/', self::SITE_DOMAIN);
             setcookie('TOKEN', $newToken, 60*60*24*30, '/', self::SITE_DOMAIN);
         }
+    }
+    
+    private static function prepareSession()
+    {
+        if (!self::$sessionStarted)
+        {
+            session_start();
+            self::$sessionStarted = true;
+        }   
     }
 }
 ?>

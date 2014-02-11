@@ -18,7 +18,7 @@ class LoginController implements IPageController
             
             if ($user !== NULL && $user->hasEmailActivated())
             {
-                SessionController::setLoggedIn($user->userID);
+                SessionController::setLoggedIn($user->getUserID());
             }
             else if ($user !== NULL && !$user->hasEmailActivated())
             {
