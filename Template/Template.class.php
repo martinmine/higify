@@ -54,7 +54,7 @@ class Template
      */
     public function setValue($key, $value)
     {
-        $values[$key] = $value;
+        $this->values[$key] = $value;
     }
     
     /**

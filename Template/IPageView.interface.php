@@ -3,12 +3,18 @@
 /**
  * Every view that shall be displayed in a template file implements this interface
  */
-interface IPageView
+abstract class IPageView
 {
     /**
-     * Generates an associate array of key => value pairs to be set in the template
+     * When called, would print the contents of the view and the content would be appended to the template
      */
-    public function generateHTML();
+    public function __toString()
+    {
+        $this->generateHTML();
+        return '';
+    }
+    
+    public abstract function generateHTML();
 }
 
 ?>

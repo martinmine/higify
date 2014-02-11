@@ -45,6 +45,7 @@ div.loginContainer
 input.inputfield
 {
 	width: 100%;
+	border-radius: 0px;
 	border-color: rgb(200, 200, 200);
 	border-style: solid;
 	border-width: 1px;
@@ -64,6 +65,7 @@ input.loginbtn
 	border-style:solid;
 	border-color: rgb(68, 9, 108);
 	border-width:1px;
+	border-radius: 0px;
 
 	color: white;
 	font-size: 20px;
@@ -126,25 +128,27 @@ div.messageContainer
 	width:100%;
 	height:auto;
 }
-div.error
+
+div.warning
 {
 	background-color: rgb(255,255,168);
 	border-color: rgb(240,240,0);
 	border-style: solid;
 	border-width: 1px;
 	padding: 5px;
-	width: 100%;
+	width: auto;
+	position: relative;
 	height: auto;
 }
 
-div.criticalError
+div.error
 {
 	background-color: rgb(255,138,138);
 	border-color: rgb(255,34,34);
 	border-style: solid;
 	border-width: 1px;
 	padding: 5px;
-	width: 100%;
+	width: auto;
 	height: auto;
 }
 

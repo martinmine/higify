@@ -1,9 +1,9 @@
 		<div class="pageContainer">
 			<div class="centerContainer">
-				<form action="LoginPrototype.html" method="POST">
+				<form action="login.php" method="POST">
 				<div class="pageTitle">Sign in to Higify</div>
 				<div class="loginContainer">
-				
+					<?php if (isset($ERROR_MSG)) echo $ERROR_MSG; ?>
 					<label for="username">Username</label><br/>
 					<input class="inputfield" type="text" name="username"/><br/>
 					<label for="password">Password</label><br/>
