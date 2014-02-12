@@ -7,6 +7,10 @@ require_once('WarningMessageView.class.php');
 
 class LoginController implements IPageController
 {
+    /**
+     * Set all the values which are going to be displayed on the login page
+     * @return Associated array of values to be shown on login page
+     */
     public function onDisplay()
     {
         $user = SessionController::acquireSession(true);
@@ -22,7 +26,7 @@ class LoginController implements IPageController
             }
             else if ($user !== NULL && !$user->hasEmailActivated())
             {
-                $warningView = new WarningMessageView('Please activate your email address');
+                $vals['ERROR_MSG'] = new WarningMessageView('Please activate your email address');
             }
             else
             {
