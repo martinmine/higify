@@ -1,12 +1,12 @@
 <?php
-require_once "DatabaseManager.class.php";
-require_once "User.class.php";
+require_once ('DatabaseManager.class.php');
+require_once ('User.class.php');
 
 class UserModel
 {
     const SALT = 'abcfds11jhG';
     
-    const SITEKEY = 'bbdsadacode';
+    const SITEKEY = 'verycodedwowsutchsecret';
     
     /**
      * Sends a query to the database to see if the
@@ -14,7 +14,7 @@ class UserModel
      * @param $username
      * @return true,false 
      */
-    public static function userExists($username)               // Boolean, checks if username is listed in database
+    public static function userExists($username)        // Boolean, checks if username is listed in database
     {                                                   // SQL query
         $query = "SELECT username               
                   FROM user
