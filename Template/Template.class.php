@@ -1,6 +1,6 @@
 <?php
 require_once('IPageController.interface.php');
-require_once('IPageView.interface.php');
+require_once('WebPageElement.class.php');
 
 class Template
 {

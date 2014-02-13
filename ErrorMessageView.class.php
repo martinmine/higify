@@ -1,8 +1,8 @@
 <?php
-include_once('Template/IPageView.interface.php');
+include_once('Template/WebPageElement.class.php');
 include_once('Template/Template.class.php');
 
-class ErrorMessageView extends IPageView
+class ErrorMessageView extends WebPageElement
 {
     private $message;
     
