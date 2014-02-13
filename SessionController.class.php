@@ -1,7 +1,7 @@
 <?php
 require_once('SessionModel.class.php');
 require_once('SessionView.class.php');
-require_once('UserController.class.php');
+require_once('user/UserController.class.php');
 require_once('user/UserModel.class.php');
 
 /**
