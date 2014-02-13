@@ -5,6 +5,9 @@ require_once('DOMDocumentView.class.php');
 require_once('XMLDocumentView.class.php');
 require_once('JSONView.class.php');
 
+/**
+ * Manages views that are to be created for different output types
+ */
 class TimeTableViewFactory
 {
 	/**

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Iterator for iterating through all the TableObjects in a TimeTable
+ */
 class TimeTableIterator implements Iterator
 {
 	/**
