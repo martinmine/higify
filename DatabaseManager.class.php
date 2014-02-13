@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Manages and configures the PDO object used for database interaction
+ */
 class DatabaseManager
 {
     /**

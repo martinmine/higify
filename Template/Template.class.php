@@ -2,6 +2,11 @@
 require_once('IPageController.interface.php');
 require_once('WebPageElement.class.php');
 
+/**
+ * A set of templates names and template values to be displayed in the website which
+ * the user shall see. Upon fetching of the template output, the template values are 
+ * inserted into the template files.
+ */
 class Template
 {
     /**
