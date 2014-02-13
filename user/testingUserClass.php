@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -25,7 +28,12 @@
 	</body>
 </html>
 <?php
+session_start();
+
+require_once 'SessionController.class.php';
 require_once "user/UserModel.class.php";
+
+UserController::loginUser($_POST['username']);
 
 
 $userModel = new UserModel();

@@ -18,7 +18,7 @@ class LoginController implements IPageController
         
         if ($user == NULL && isset($_POST['username']) && isset($_POST['password']))
         {
-            $user = UserModel::getUser($_POST['username'], $_POST['password']);
+            $user = UserController::requestUser($_POST['username'], $_POST['password']);
             
             if ($user !== NULL && $user->hasEmailActivated())
             {
@@ -30,7 +30,7 @@ class LoginController implements IPageController
             }
             else
             {
-                $vals['ERROR_MSG'] = new ErrorMessageView('Unknown username or password');    
+                $vals['ERROR_MSG'] = new ErrorMessageView('Unknown username or password');
             }
         }
         

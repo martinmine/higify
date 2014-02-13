@@ -1,3 +1,3 @@
-					<div class="warning">
+					<div class="error">
 						<?php echo $MSG; ?>
 					</div>

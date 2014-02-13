@@ -14,18 +14,18 @@ class SessionController
      */
     public static function acquireSession($disableRedirect = false)
     {
-         $userID = SessionModel::getLoggedinID();
+         $userID = SessionModel::getLoggedinID();                        // Fetches logged in user
          
-         if ($userID === false)
+         if ($userID === false)                                          // If there is no logged in user
          {
-             if (!$disableRedirect)
-                 header('Location: index.php');
+             if (!$disableRedirect)                                      // Redirect to login page
+                 header('Location: index.php');             
              else
-                 return NULL;
+                 return NULL;                                            // If disable redirect is false return NULL
          }
          else
          {
-             return UserModel::getUserByID($userID);
+             return UserController::getUserByID($userID);                // User in session! Fetch userdata from db
          }
     }
     

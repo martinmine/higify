@@ -7,32 +7,11 @@ class User
     
     private $email;     // type: string, containing unique email adress
     
-    private $emailActivated; // type: boolean, if a user has activated the email
-    
-    public function __construct($userID, $username, $email, $emailActivated) // Constructor
+    public function __construct($userID, $username, $email) // Constructor
     {
       $this->userID = $userID;
       $this->username = $username;
       $this->email = $email;
-      $this->emailActivated = $emailActivated;
-    }
-    
-    /**
-     * Gets the user ID
-     * @return integer User ID
-     */
-    public function getUserID()
-    {
-        return $this->userID;   
-    }
-    
-    /**
-     * Returns true/false i the user has activated the email address
-     * @return boolean Email is activated
-     */
-    public function hasEmailActivated()
-    {
-        return $this->emailActivated;
     }
     
     /**
