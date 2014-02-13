@@ -1,6 +1,9 @@
 <?php
 require_once('ITimeTableView.interface.php');
 
+/**
+ * Describes how a TimeTable shall be represented as JSON
+ */
 class JSONView implements ITimeTableView
 {
 	/**

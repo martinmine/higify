@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Holds all the data for a search result
+ */
 class SearchResult
 {
 	/**

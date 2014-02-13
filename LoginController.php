@@ -5,6 +5,9 @@ require_once('user/UserModel.class.php');
 require_once('ErrorMessageView.class.php');
 require_once('WarningMessageView.class.php');
 
+/**
+ * Reads the post data and sets the template variables
+ */
 class LoginController implements IPageController
 {
     /**

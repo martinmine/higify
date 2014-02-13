@@ -4,6 +4,9 @@ require_once('SessionView.class.php');
 require_once('UserController.class.php');
 require_once('user/UserModel.class.php');
 
+/**
+ * Manages the users session data and wether a user is logged in or not
+ */
 class SessionController
 {
     /**
