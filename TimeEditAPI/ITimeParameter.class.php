@@ -1,4 +1,8 @@
 <?php
+/**
+ * A parameter used for specifying the time when 
+ * getting a time-table from within a specified range
+ */
 interface ITimeParameter
 {
 	/**
@@ -7,6 +11,9 @@ interface ITimeParameter
 	public function serialize();
 }
 
+/**
+ * Describes amount of minutes
+ */
 class Minutes implements ITimeParameter
 {
 	/**
@@ -43,6 +50,9 @@ class Minutes implements ITimeParameter
 	}
 }
 
+/**
+ * Describes amount of hours
+ */
 class Hours implements ITimeParameter
 {
 	/**
@@ -70,6 +80,9 @@ class Hours implements ITimeParameter
 	}
 }
 
+/**
+ * Describes amount of days
+ */
 class Days implements ITimeParameter
 {
 	/**
@@ -97,6 +110,9 @@ class Days implements ITimeParameter
 	}
 }
 
+/**
+ * Describes amount of weeks
+ */
 class Weeks implements ITimeParameter
 {
 	/**
@@ -124,6 +140,9 @@ class Weeks implements ITimeParameter
 	}
 }
 
+/**
+ * Describes amount of months
+ */
 class Months implements ITimeParameter
 {
 	/**
@@ -151,6 +170,9 @@ class Months implements ITimeParameter
 	}
 }
 
+/**
+ * Describes a given date
+ */
 class Date implements ITimeParameter
 {
 	/**

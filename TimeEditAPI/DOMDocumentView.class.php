@@ -1,6 +1,9 @@
 <?php
 require_once('ITimeTableView.interface.php');
 
+/**
+ * Describes how a TimeTable shall be displayed as a DOMDocument
+ */
 class DOMDocumentView implements ITimeTableView
 {
 	/**

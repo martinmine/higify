@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Holds all the data for one TableObject
+ */
 class TableObject implements JsonSerializable
 {
 	/**
