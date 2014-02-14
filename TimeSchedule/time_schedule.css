@@ -1,0 +1,128 @@
+body
+{
+	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+div.scheduleContainer
+{
+	display: inline-block; /*To be auto*/
+	height: auto; /*To be auto*/
+}
+
+div.timeStamps
+{
+	display: inline-block;
+	height: auto;
+	float: left;
+}
+
+div.weekIdentifier
+{
+	width: 50px;
+	height: 25px;
+	border-width: 1px;
+	border-color: black;
+	border-style: solid;
+	padding: 0px;		
+	font-weight: bold;
+	text-align: center;
+
+}
+
+div.timeIdentifier
+{
+	width: 50px;
+	height: 25px;
+	border-width: 1px;
+	border-color: black;
+	border-style: solid;
+	padding: 0px;		
+	text-align: right;
+	margin-top: -1px;
+}
+
+div.dayContainer
+{
+	position: inherit;
+	display: inline-block;
+	height: auto;
+	padding: 0px;		
+	text-align: center;
+	float: left;
+	margin-left: -1px;
+
+}
+
+div.dayHeader
+{
+
+	width: 100px;
+	height: 25px;
+	border-width: 1px;
+	border-color: black;
+	border-style: solid;
+	padding: 0px;		
+	text-align: center;
+	background-color: rgb(195, 195, 195);
+}
+
+div.singleHour
+{
+	width: 100px;
+	height: 25px;
+	border-width: 1px;
+	border-color: black;
+	border-style: solid;
+	margin-top: -1px;
+}
+
+div.timeObjectContainer
+{
+	width: 92px; /*100 - (2*Padding(3)) - (2*BorderWidth(1))*/
+	padding: 3px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-style: none;
+	font-size: 10px;
+	text-align: left;
+	position: absolute;
+	border-width: 1px;
+	border-style: solid;
+	border-color: purple;
+}
+
+div.yellowTimeObject
+{
+	background-color: rgb(255,255,98);
+	border-color: rgb(244,233,0);
+}
+
+div.blueTimeObject
+{
+	background-color:rgb(177,184,255);
+	border-color: rgb(0,105,151);
+}
+
+div.greenTimeObject
+{
+	background-color: rgb(45,215,96);
+	border-color: rgb(27,141,61);
+}
+
+div.grayTimeObject
+{
+	background-color:rgb(201,201,201);
+	border-color: rgb(155,155,155);
+}
+
+div.redTimeObject
+{
+	background-color:rgb(244,119,125);
+	border-color: rgb(237,24,35);
+}
+
+div.orangeTimeObject
+{
+	background-color: rgb(255,162,100);
+	border-color: rgb(230,91,0);
+}
