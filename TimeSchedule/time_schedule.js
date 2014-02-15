@@ -29,6 +29,11 @@ function setTimeObjects(xpathExpression, width, height)
 		var offset = Math.floor(element.getAttribute('offset') * (height / 60));
 		var length = Math.floor(element.getAttribute('duration') * (height / 60));
 
+		if (length > height)	// If cross a border
+		{
+			length += Math.floor(length / height) * 3; // Add the size of the borders we crossed
+		}
+
 		element.style.height = length + "px";
 		element.style.width = width + "px";
 		element.style.marginTop = offset + "px";
@@ -49,14 +54,14 @@ function setHeight(xpathExpression, height)
 
 function formatTimeTable(CELL_HEIGHT, CELL_WIDTH, CELL_DAY_HEADER_HEIGHT, CELL_DAY_PADDING_HEGIHT, CELL_TIME_WIDTH)
 {
-	setHeightAndWidth('//div[@class="weekIdentifier"]', CELL_TIME_WIDTH, CELL_DAY_HEADER_HEIGHT);
+	setHeightAndWidth('//div[@class="weekIdentifier"]', CELL_TIME_WIDTH - 4, CELL_DAY_HEADER_HEIGHT);
 	setHeightAndWidth('//div[@class="timeIdentifier"]', CELL_TIME_WIDTH - 4, CELL_HEIGHT);
 	setHeightAndWidth('//div[@class="dayHeader"]', CELL_WIDTH, CELL_DAY_HEADER_HEIGHT);
 	setHeightAndWidth('//div[@class="singleHour"]', CELL_WIDTH, CELL_HEIGHT);
 	
-	setTimeObjects('//div[contains(@class, "timeObjectContainer")]', CELL_WIDTH - 8, CELL_HEIGHT);
+	setTimeObjects('//div[contains(@class, "timeObjectContainer")]', CELL_WIDTH - 8, CELL_HEIGHT - 2);
 	setHeightAndWidth('//div[contains(@class, "dayPadding")]', CELL_WIDTH, CELL_DAY_PADDING_HEGIHT);
-	setHeightAndWidth('//div[contains(@class, "weekPadding")]', CELL_TIME_WIDTH, CELL_DAY_PADDING_HEGIHT);
+	setHeightAndWidth('//div[contains(@class, "weekPadding")]', CELL_TIME_WIDTH - 4, CELL_DAY_PADDING_HEGIHT);
 }
 
 window.onload = function()
