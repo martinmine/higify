@@ -1,8 +1,7 @@
-
-
 function runXpath(xpathExpression)
 {
-	return document.evaluate(xpathExpression, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+	var ORDERED_NODE_SNAPSHOT_TYPE = 7;
+	return document.evaluate(xpathExpression, document, null, ORDERED_NODE_SNAPSHOT_TYPE, null);
 }
 
 function setHeightAndWidth(xpathExpression, width, height)
@@ -27,8 +26,8 @@ function setTimeObjects(xpathExpression, width, height)
 	{
 		element = elements.snapshotItem(i);
 
-		var offset = element.getAttribute('offset') * (height / 60);
-		var length = element.getAttribute('duration') * (height / 60);
+		var offset = Math.floor(element.getAttribute('offset') * (height / 60));
+		var length = Math.floor(element.getAttribute('duration') * (height / 60));
 
 		element.style.height = length + "px";
 		element.style.width = width + "px";
@@ -64,6 +63,7 @@ window.onload = function()
 {
 	try
 	{
+		wgxpath.install();	// Wicked-good-xpath: Ensure document.evaluate is working
 		var CELL_HEIGHT = 50;	// Height of all the cells in the time table
 		var CELL_WIDTH = 200;	// Width of all the cells expect the time identifiers
 		var CELL_DAY_HEADER_HEIGHT = 30;	// Height of the day labels
@@ -74,6 +74,6 @@ window.onload = function()
 	}
 	catch (ex)
 	{
-		all(ex.message);
+		alert(ex.message);
 	}
 };
