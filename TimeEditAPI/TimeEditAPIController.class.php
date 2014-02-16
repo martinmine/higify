@@ -4,6 +4,10 @@ require_once('PullFormat.class.php');
 require_once('ObjectType.class.php');
 require_once('TimeTableViewFactory.class.php');
 
+/**
+ * API Towards TimeEdit, all the calls for getting data from TimeEdit 
+ * is managed by this class from outside the API
+ */
 class TimeEditAPIController
 {
     /**

@@ -1,6 +1,9 @@
 <?php
 require_once('ITimeTableView.interface.php');
 
+/**
+ * Describes how a TimeTable shall be represented when handed to the suer
+ */
 class TimeTableView implements ITimeTableView
 {
 	/**

@@ -1,5 +1,9 @@
 <?php
 require_once('TimeTableIterator.class.php');
+
+/**
+ * A TimeTable, manages all the TableObjects
+ */
 class TimeTable implements JsonSerializable
 {
 	/**

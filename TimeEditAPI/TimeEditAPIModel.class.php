@@ -4,6 +4,9 @@ require_once('TimeTable.class.php');
 require_once('PullFormat.class.php');
 require_once('SearchResult.class.php');
 
+/**
+ * Holds all the functions responsible for parsing and merging data from TimeEdit
+ */
 class TimeEditAPIModel
 {
 	/**
