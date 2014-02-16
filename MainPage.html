@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="maincsstest.css">
+<title>index</title>
+</head>
+
+
+<body>
+<div id="container">
+
+	<div class="top">
+		<p>Top</p>
+	</div>
+
+	<div class="left">
+		<!-- <p>Left</p> -->
+		<div class="profile">
+			<h3>Navn Etternavn</h3>
+			<div class="profileImage">
+				<img src="img.jpg" height="160" width="160">
+			</div>
+		</div>
+		
+		<div class="searchProfile">
+		<form>
+			<span><input type="text" value="Search..."/></span>
+		</form>
+		</div>
+		
+		<div class="links">
+			<ul>
+			<li><a href="https://fronter.com/hig/index.phtml">Fonter</a></li>
+			<li><a href="http://www.hig.no">Hig</a></li>
+			<li><a href="https://www.studweb.no/as/WebObjects/studentweb2?inst=HiG">Studentweb</a></li>
+			<li><a href="http://www.google.no">Timeplan</a></li>
+			</ul>
+		</div>	
+	</div>
+
+	<div class="center">
+		<!-- <p>Center</p> -->
+		<h3>Publish a new note</h3>
+		<div class="AddNewNote">
+			<form action="#" method="post">
+			<textarea style="resize:none" name="content" rows="8" cols="60"></textarea></br>
+			<label for="isPublic">Make Public</label><input type="checkbox" name="isPublic" value="1"/>
+			<input type="submit" value="Publish">
+			</form>
+		</div>
+		</br></br>
+		<div id="notes">
+			<div class="note">
+				<div class="info">
+					Username (owner)<span>18:01 15.02.14</span></br>
+				</div>
+				<div class="content">
+					<p>Content</p>
+				</div>
+			</div>
+			</br>
+			<div class="note">
+				<div class="info">
+					Username (owner)<span>20:01 16.02.14</span></br>
+				</div>
+				<div class="content">
+					<p>Content number 2 :)</p>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div class="right">
+		<!-- Right -->
+		<h3>Daily schedule</h3>
+		<div class="hour">	
+			<ul>
+			<li><b>WWW-Teknologi</b></li>
+			<li><b>Room</b> G223</li>
+			<li><b>Start</b> 08:15</li>
+			<li><b>Ends </b> 11:00</li>
+			</ul>
+		</div>
+		</br>
+		<div class="hour">	
+			<ul>
+			<li><b>Statistikk</b></li>
+			<li><b>Room</b> K105</li>
+			<li><b>Start</b> 11:15</li>
+			<li><b>Ends </b> 12:00</li>
+			</ul>
+		</div>
+		</br>
+		<div class="hour">	
+			<ul>
+			<li><b>Operativsystemer</b></li>
+			<li><b>Room</b> E208</li>
+			<li><b>Start</b> 14:15</li>
+			<li><b>Ends </b> 16:00</li>
+			</ul>
+		</div>
+		
+	</div>
+	
+</div>
+</body>
+
+</html>
