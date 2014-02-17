@@ -89,5 +89,20 @@ class UserController
     {
         UserModel::activateEmail($userID);
     }
+    
+    /**
+     * Requests a profilepicture by userID
+     * @param $userID
+     * @return
+     */
+    public static function requestProfilePicture($userID)
+    {
+        if($picture = UserModel::fetchProfilePicture($userID))
+        {
+            return $picture;
+        }
+        
+        return false;
+    }
 }
 ?>
