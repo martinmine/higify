@@ -1,4 +1,7 @@
-<!DOCTYPE HTML>
+<?php
+header('Location: login.php');
+exit;
+?><!DOCTYPE HTML>
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="./Static/index.css" />

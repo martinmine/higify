@@ -8,7 +8,7 @@
 						<input class="inputfield" type="password" id="password" name="password"/><br/>
 						<input type="checkbox" name="rememberPassword" id="rememberPassword" value="Remember password"/> 
 						<label for="rememberPassword">Remember password</label><br/>
-						<a href="" class="reglink">Forgotten password&raquo;</a><br/>
+						<a href="forgotten.php" class="reglink">Forgotten password&raquo;</a><br/>
 					</div>
 					<div>
 						<input class="purplebtn" type="submit" value="Sign in"/>
