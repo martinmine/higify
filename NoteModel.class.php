@@ -1,4 +1,6 @@
 <?php
+require_once('db.php');
+require_once('NoteType.class.php');
 require_once('Note.class.php');
 
 /**
@@ -20,29 +22,54 @@ class NoteModel
    * @uses Note
    * @throws PDOException
    */
-	public function getNotesFromOwner($ownerID, $condition)
+	public static function getNotesFromOwner($ownerID, $condition)
 	{
-		$db = DatabaseManager::getDB();
-		$res = array();
-		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished
-					FROM note, user
-					WHERE userID = :ownerID';
-					
-		if ($condition === 
-					
-		$stmt = $this->db->prepare($query);
+		if ($condition === NoteType::NONE)
+			return NULL;
 		
-		$stmt->bindParam(':ownerID', $ownerID);
-		
-		$stmt->execute();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+		else
 		{
-			$res[] = new Note($row['noteID'], $row['ownerID'],
-							$row['content'], $row['isPublic'],
-							$row['timePublished']);
+			$db = openDB();
+			//$db = DatabaseManager::getDB();
+			$res = array();
+			$query = 'SELECT noteID, ownerID, content, isPublic, timePublished
+						FROM note
+						WHERE ownerID = :ownerID';
+
+			if ($condition !== NoteType::ALL)
+			{
+				$query .= ' AND isPublic = ';
+				$query .= ($condition === NoteType::PUBLIC_ONLY)? '1': '0';
+			}
+			
+			echo '</br>' . $query . '</br>';
+			
+			$stmt = $db->prepare($query);
+			$stmt->bindParam(':ownerID', $ownerID);
+			$stmt->execute();
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+			{
+				$res[] = new Note($row['noteID'], $row['ownerID'],
+								$row['content'], $row['isPublic'],
+								$row['timePublished']);
+			}
+			return $res;
 		}
-		return $res;
 	}
+	
+	/**
+	 *
+	 */
+	public function getAllPublicNotes($condition = NULL)
+	{
+		
+		
+		
+	}
+	
+	
+	
+	// Work below is under construction:
   
 	/**
 	 * Adds a new Note object with data int the library to the database

@@ -1,10 +1,26 @@
 <?php
+require_once('Template/Template.class.php');
 require_once('NoteType.class.php');
 
 
 class NoteListView
 {
-
+	
+	public function generateDocument()
+	{
+		$tpl = new Template();
+		$tpl->appendTemplate('');
+		$tpl->registerController(new LoginController());
+		$tpl->appendTemplate('');
+		$tpl->appendTemplate('');
+		$tpl->display();
+	}
+	
+	
+	
+	
+	//	CODE BELOW  -  KEPT FOR LOOKING AT - DELETE WHEN DONE!
+	
 	public function generateDocument($noteList, $filter, $cssFile)
 	{
 		$res = "<html>\n"
