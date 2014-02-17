@@ -17,10 +17,11 @@
 				
 					<label for="username">UserID</label><br/>
 					<input class="inputfield" type="text" name="userID"/><br/>
-					
+                    <label for="image">Bilde</label><input type="file" name="image" title="Vises sammen med notatblokksider når andre viser dine offentlige notater"><br/>
+                    <input class="loginbtn" type="submit" value="Submit">
 				</div>
 				<div>
-					<input class="loginbtn" type="submit" value="Submit">
+					
 				</div>
 				</form>
 			</div>
@@ -30,9 +31,9 @@
 <?php
 session_start();
 
-require_once 'SessionController.class.php';
-require_once "user/UserModel.class.php";
 
+require_once "UserController.class.php";
+/*
 UserController::loginUser($_POST['username']);
 
 
@@ -87,10 +88,12 @@ if(isset($_POST['userID']))
     else
         echo "getUserByID FAILED!";
     
-}
+}*/
 
+print_r($_FILES);
 
-
+if(isset($_FILES['image']))
+UserController::requestPictureSubmit(5,$_FILES['image']);
 
 
 ?>

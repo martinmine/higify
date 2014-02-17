@@ -1,5 +1,5 @@
 <?php
-require_once('user/UserModel.class.php');
+require_once('UserModel.class.php');
 require_once('SessionController.class.php');
 
 class UserController
@@ -38,6 +38,22 @@ class UserController
         }
         
         return NULL;
+    }
+    
+    
+    /**
+     * Takes in a picture e.g  $_FILES['picture'] and tests for
+     * availability. Requests picturesubmit from usermodel. 
+     * 
+     * @param $picture
+     */
+    public static function requestPictureSubmit($userID,$picture)
+    {
+       // if (is_uploaded_file($picture))
+      //  {
+       //     $userID = SessionController::requestLoggedinID();
+            UserModel::submitPicture($userID, $picture);
+     //   }
     }
 }
 ?>
