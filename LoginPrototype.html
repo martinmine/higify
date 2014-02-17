@@ -1,9 +1,10 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
+		<meta charset="UTF-8"/>
+		<title>Higify - Login</title>
 		<link rel="stylesheet" type="text/css" href="./Static/index.css" />
 		<link rel="stylesheet" type="text/css" href="./Static/slideshow.css" />
-		<title>Higify - Login</title>
 	</head>
 	<body id="page">
 		<ul class="cb-slideshow">
@@ -14,28 +15,28 @@
 		<div class="pageContainer">
 			<div class="centerContainer">
 				<form action="LoginPrototype.html" method="POST">
-				<div class="pageTitle">Sign in to Higify</div>
-				<div class="loginContainer">
-					<div class="warning">
-						TEST
+					<div class="pageTitle">Sign in to Higify</div>
+					<div class="loginContainer">
+						<div class="warning">
+							TEST
+						</div>
+						<label for="username">Username</label><br/>
+						<input class="inputfield" type="text" id="username" name="username"/><br/>
+						<label for="password">Password</label><br/>
+						<input class="inputfield" type="password" id="password" name="password"/><br/>
+						<a href="" class="reglink">Forgotten password&raquo;</a><br/>
+						
 					</div>
-					<label for="username">Username</label><br/>
-					<input class="inputfield" type="text" name="username"/><br/>
-					<label for="password">Password</label><br/>
-					<input class="inputfield" type="password" name="password"/><br/>
-					<a href="" class="reglink">Forgotten password&raquo;<a/><br/>
-					
-				</div>
-				<div>
-					<input class="loginbtn" type="submit" value="Sign in">
-				</div>
-				<div><button class="registerbtn" onclick="window.location.href='register.php'">
-				Sign up
-				</button></div>
+					<div>
+						<input class="purplebtn" type="submit" value="Sign in"/>
+					</div>
+					<div>
+						<button class="greenbtn" onclick="window.location.href='register.php'">
+							Sign up
+						</button>
+					</div>
 				</form>
 			</div>
 		</div>
 	</body>
-
-
 </html>

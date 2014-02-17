@@ -5,8 +5,9 @@ body
 
 div.scheduleContainer
 {
-	display: inline-block; /*To be auto*/
-	height: auto; /*To be auto*/
+	display: inline-block; 
+	height: auto;
+	overflow: hidden;
 }
 
 div.timeStamps
