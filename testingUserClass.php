@@ -4,7 +4,6 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-
 		<title>Higify - Login</title>
 	</head>
 	<body id="page">
@@ -12,11 +11,6 @@
 		<div class="pageContainer">
 			<div class="centerContainer">
 				<form action="testingUserClass.php" method="POST">
-				<div class="pageTitle">change password</div>
-				<div class="loginContainer">
-				
-					<label for="username">UserID</label><br/>
-					<input class="inputfield" type="text" name="userID"/><br/>
                     <label for="image">Bilde</label><input type="file" name="image" title="Vises sammen med notatblokksider når andre viser dine offentlige notater"><br/>
                     <input class="loginbtn" type="submit" value="Submit">
 				</div>
@@ -90,6 +84,7 @@ if(isset($_POST['userID']))
     
 }*/
 
+print_r($_POST);
 print_r($_FILES);
 
 if(isset($_FILES['image']))

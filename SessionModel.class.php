@@ -1,5 +1,5 @@
 <?php
-require('DatabaseManager.class.php');
+require_once('DatabaseManager.class.php');
 
 class SessionModel
 {
