@@ -209,6 +209,13 @@ class UserModel
         return false;
     }     
     
+    /**
+     * Scales a picture and submits to database 
+     * Picture format: .PNG
+     * 
+     * @param $userID
+     * @param $picture
+     */
     public static function submitPicture($userID, $picture)
     {
         $height = 200;
@@ -242,6 +249,13 @@ class UserModel
         $stmt->bindparam(':userID',$userID);
         $stmt->execute();
     }
+    
+    /**
+     * Selects the profilepicture from user matching userID
+     * 
+     * @param $userID
+     * @return picture
+     */
     public static function fetchProfilePicture($userID)
     {
         $query = "SELECT profilePicture
@@ -257,6 +271,7 @@ class UserModel
         $picture = $stmt->fetch(PDO::FETCH_ASSOC);
         if (isset($picture['profilePicture']))
             return $picture['profilePicture'];
+        
         return NULL;
     }
 }
