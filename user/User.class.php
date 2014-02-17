@@ -14,6 +14,40 @@ class User
       $this->email = $email;
     }
     
+	/**
+	 *	Retrieves the usersID.
+	 *
+	 *	@return $userID integer.
+	 */
+	public function getUserID()
+	{
+		return $this->userID;
+	}
+	
+	/**
+	 * Retrieves the username.
+	 *
+	 * @return $username varchar(30). 
+	 */
+	public function getUsername()
+	{
+		return $this->username;
+	}
+	
+	/**
+	 * Retrieves the users email address.
+	 *
+	 * @returns $email varchar(50).
+	 */
+	public function getEmail()
+	{
+		return $this->email;
+	}
+	
+	
+	
+	
+	
     /**
      * Summary of display
      * TEST FUNCTION
