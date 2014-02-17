@@ -17,22 +17,21 @@ $view = new NoteAddFormView();
 
 if (count($_POST) < 1)
 {
-  echo $view->generateDocument('NoteAddForm.php', 'post');  
+	echo $view->generateDocument('NoteAddForm.php', 'post');  
 }
 else
 {
-  /** 
-   *  Controller have to retrieve ownerID and ownerName from user
-   *  to send to this function, both to fill database and for displaying 
-   *  the username (owner) for the note.
-   */
-  $note = $view->createNoteFromInput($_POST, 1, 'tomknot');
-  $model = new NoteModel($note);
-  if ($model->addNote($note) > 0)
-  {
-    header('Location: Notedrawer.php');     //  Redirecting
-  }
-  
+	/** 
+	 *  Controller have to retrieve ownerID and ownerName from user
+	 *  to send to this function, both to fill database and for displaying 
+	 *  the username (owner) for the note.
+	 */
+	$note = $view->createNoteFromInput($_POST, 1, 'tomknot');
+	$model = new NoteModel($note);
+	if ($model->addNote($note) > 0)
+	{
+		header('Location: Notedrawer.php');     //  Redirecting
+	}  
 }
 
 ?>

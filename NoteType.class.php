@@ -12,10 +12,10 @@
  */
 
 class NoteType {
-  const NONE = 0;
-  const ALL = 1;
-  const PUBLIC_ONLY = 2;
-  const PRIVATE_ONLY = 3;
+	const NONE = 0;
+	const ALL = 1;
+	const PUBLIC_ONLY = 2;
+	const PRIVATE_ONLY = 3;
 }
 
 ?>
