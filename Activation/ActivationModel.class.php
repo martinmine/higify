@@ -72,7 +72,7 @@ class ActivationModel
                 }
                 else
                 {
-                    //to-do
+                    // Generate a new password for the user and send this on email to the user
                 }
             }
             

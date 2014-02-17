@@ -37,9 +37,9 @@
 						<?php if (isset($ERROR_CAPTCHA)) echo $ERROR_CAPTCHA; ?>
 						<input class="inputfield" type="text" id="recaptcha_response_field" name="recaptcha_response_field"/>
 						
-						<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=<?php echo $RECAPTCHA_PUBLIC_KEY; ?>"></script>
+						<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6Lfis-4SAAAAAKnGTAWkuCwryfiHKK0OlNM0MjIe"></script>
 						<noscript>
-							<iframe src="http://www.google.com/recaptcha/api/noscript?k=<?php echo $RECAPTCHA_PUBLIC_KEY; ?>"
+							<iframe src="http://www.google.com/recaptcha/api/noscript?k=your_public_key"
 							 height="300" width="500" style="border:none;"></iframe><br>
 							<textarea name="recaptcha_challenge_field" rows="3" cols="40">
 							</textarea>
