@@ -62,15 +62,8 @@ class UserModel
                                  $result['email'], $result['emailActivated']);              // Creating new user object
                 return $user;                                                               // Returns the user object
             }
-            else
-            {
-                return NULL;                                                             // Something went wrong!
-            }
-        }   
-        else
-        {
-            return NULL;                                                                 // User does not exist
-        }
+                 
+         return NULL;                                                                       // Something went wrong!
     }
     
     /**
