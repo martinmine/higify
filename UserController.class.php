@@ -42,6 +42,21 @@ class UserController
         return NULL;
     }
     
+    /**
+     * Sends a query to database asking if a user with 
+     * parameter username exists
+     * 
+     * @param $username
+     * @return true if user exists in database, else false.
+     */
+    public static function userExists($username)
+    {
+        if(UserModel::userExists($username))
+            return true;
+        
+        return false;
+    }
+    
     
     /**
      * Takes in a picture e.g  $_FILES['picture'] and tests for
