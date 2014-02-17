@@ -77,7 +77,7 @@ class RegistrationController implements IPageController
                 $registrationFailure = true;
                 $vals['ERROR_EMAIL'] = new ErrorMessageView('Please specify a valid email address');
             }
-            else if (true) // A user already exists with this email [TODO]
+            else if (UserController::requestUserByEmail($email) !== NULL) // A user already exists with this email [TODO]
             {
                 $registrationFailure = true;
                 $vals['ERROR_EMAIL'] = new ErrorMessageView('An user with this email already exists');
