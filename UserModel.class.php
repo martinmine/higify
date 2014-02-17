@@ -54,17 +54,49 @@ class UserModel
             $stmt->bindparam(':username', $username);                                   
             $stmt->bindparam(':password', $hashedPassword);
             $stmt->execute();
+            
+            $result = array();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);                                            // Fetching associated
             
-            if ($result)
+            if ($result['userID'] && $result['username'])
             {
                 $user = new User($result['userID'], $result['username'], 
-                                 $result['email'], $result['emailActivated']);              // Creating new user object
+                                 $result['email'],  $result['emailActivated']);             // Creating new user object
                 return $user;                                                               // Returns the user object
             }
         }
                  
         return NULL;                                                                       // Something went wrong!
+    }
+    
+    /**
+     * Fetches a user using the unique email adress
+     * 
+     * @param $email
+     * @return
+     */
+    public static function getUserByEmail($email)
+    {
+        $query = "SELECT userID, username, email, emailActivated                                   
+                      FROM user
+                      WHERE email = :email";
+        
+        $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        
+        $result = array();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($result['userID'] && $result['username'])
+        {
+            $user = new User($result['userID'], $result['username'], 
+                             $result['email'],  $result['emailActivated']);
+            return $user;
+        }
+        
+        return NULL;
     }
     
     /**

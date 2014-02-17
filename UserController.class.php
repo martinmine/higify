@@ -42,6 +42,22 @@ class UserController
         return NULL;
     }
     
+    
+    /**
+     * Looks up user using email adress, returns user object
+     * @param $email
+     * @return
+     */
+    public static function requestUserByEmail($email)
+    {
+        if ($user = UserModel::getUserByEmail($email))
+        {
+            return $user;
+        }
+        
+        return NULL;
+    }
+    
     /**
      * Sends a query to database asking if a user with 
      * parameter username exists
