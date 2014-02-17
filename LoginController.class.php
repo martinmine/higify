@@ -19,7 +19,11 @@ class LoginController implements IPageController
         $user = SessionController::acquireSession(true);
         $vals = array();
         
-        if ($user == NULL && isset($_POST['username']) && isset($_POST['password']))
+        if ($user !== NULL)
+        {
+            header('Location: mainpage.php');
+        }
+        else if (isset($_POST['username']) && isset($_POST['password']))
         {
             $user = UserController::requestUser($_POST['username'], $_POST['password']);
             
@@ -29,7 +33,7 @@ class LoginController implements IPageController
             }
             else if ($user !== NULL && !$user->hasEmailActivated())
             {
-                $vals['ERROR_MSG'] = new WarningMessageView('Please activate your email address');
+                $vals['ERROR_MSG'] = new ErrorMessageView('Please activate your email address');
             }
             else
             {
@@ -38,11 +42,11 @@ class LoginController implements IPageController
         }
         else if (isset($_GET['registered']))
         {
-            $vals['ERROR_MSG'] = new WarningMessageView('Your user has been registered. To sign in, follow the activation link which was sent to your email.');   
+            $vals['ERROR_MSG'] = new ErrorMessageView('Your user has been registered. To sign in, follow the activation link which was sent to your email.');   
         }
         else if (isset($_GET['activated']))
         {
-            $vals['ERROR_MSG'] = new WarningMessageView('Your user has been activated. You can sign in using the username and password you used while registering.');   
+            $vals['ERROR_MSG'] = new ErrorMessageView('Your user has been activated. You can sign in using the username and password you used while registering.');   
         }
         
         

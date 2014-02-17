@@ -28,7 +28,7 @@ class SessionController
          }
          else
          {
-             return UserController::getUserByID($userID);                // User in session! Fetch userdata from db
+             return UserController::requestUserByID($userID);            // User in session! Fetch userdata from db
          }
     }
     
