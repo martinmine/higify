@@ -1,8 +1,8 @@
 <?php
 require_once('SessionModel.class.php');
 require_once('SessionView.class.php');
-require_once('user/UserController.class.php');
-require_once('user/UserModel.class.php');
+require_once('UserController.class.php');
+require_once('UserModel.class.php');
 
 /**
  * Manages the users session data and wether a user is logged in or not

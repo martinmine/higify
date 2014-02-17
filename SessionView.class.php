@@ -1,5 +1,5 @@
 <?php
-require_once('user/UserModel.class.php');
+require_once('UserModel.class.php');
 
 /**
  * Describes what to return to the user

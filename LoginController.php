@@ -1,7 +1,7 @@
 <?php
 require_once('Template/IPageController.interface.php');
 require_once('SessionController.class.php');
-require_once('user/UserModel.class.php');
+require_once('UserModel.class.php');
 require_once('ErrorMessageView.class.php');
 require_once('WarningMessageView.class.php');
 
