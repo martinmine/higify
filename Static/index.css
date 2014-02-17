@@ -139,6 +139,7 @@ div.warning
 	width: auto;
 	position: relative;
 	height: auto;
+	margin-bottom: 5px;
 }
 
 div.error
@@ -150,6 +151,7 @@ div.error
 	padding: 5px;
 	width: auto;
 	height: auto;
+	margin-bottom: 5px;
 }
 
 div.registerBtn
@@ -159,7 +161,7 @@ div.registerBtn
 
 }
 
-button.greenbtn
+input.greenbtn
 {
 
 	background-color: rgb(0, 91, 23);
@@ -187,4 +189,17 @@ button.greenbtn
 
 	border-bottom-left-radius: 2px;
 	border-bottom-right-radius: 2px;
+}
+
+div.fieldDescription
+{
+	font-size: 10px;
+	top: 0;
+	padding-bottom: 5px;
+	color: rgb(195,195,195);
+}
+
+a.captchaController
+{
+	font-size: 10px;
 }

@@ -28,7 +28,7 @@ class ErrorMessageView extends WebPageElement
     public function generateHTML()
     {
         $tpl = new Template();
-        $tpl->appendTemplate('LoginError');
+        $tpl->appendTemplate('FrontPageError');
         $tpl->setValue('MSG', $this->message);
         
         $tpl->display();

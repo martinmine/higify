@@ -55,5 +55,17 @@ class UserController
             UserModel::submitPicture($userID, $picture);
         }
     }
+    
+    /**
+     * Registers a user in the database
+     * @param string $username The username
+     * @param string $password User's password
+     * @param string $email User's email address
+     */
+    public static function registerUser($username, $password, $email)
+    {
+        UserModel::registerUser($username, $password, $email, false, false);
+        // Send email
+    }
 }
 ?>
