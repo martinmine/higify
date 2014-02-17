@@ -36,6 +36,15 @@ class LoginController implements IPageController
                 $vals['ERROR_MSG'] = new ErrorMessageView('Unknown username or password');
             }
         }
+        else if (isset($_GET['registered']))
+        {
+            $vals['ERROR_MSG'] = new WarningMessageView('Your user has been registered. To sign in, follow the activation link which was sent to your email.');   
+        }
+        else if (isset($_GET['activated']))
+        {
+            $vals['ERROR_MSG'] = new WarningMessageView('Your user has been activated. You can sign in using the username and password you used while registering.');   
+        }
+        
         
         return $vals;
     }

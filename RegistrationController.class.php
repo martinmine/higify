@@ -42,7 +42,7 @@ class RegistrationController implements IPageController
                 $registrationFailure = true;
                 $vals['ERROR_USR'] = new ErrorMessageView('Please enter a username');
             }
-            else if (UserModel::userExists($username)) // User already exists
+            else if (UserModel::userExists($username)) // User already exists TODO: move userexists to UserController
             {
                 $registrationFailure = true;
                 $vals['ERROR_USR'] = new ErrorMessageView('A user with this username already exists. Try another one.');
@@ -76,6 +76,11 @@ class RegistrationController implements IPageController
                 $registrationFailure = true;
                 $vals['ERROR_EMAIL'] = new ErrorMessageView('Please specify a valid email address');
             }
+            else if (true) // A user already exists with this email [TODO]
+            {
+                $registrationFailure = true;
+                $vals['ERROR_EMAIL'] = new ErrorMessageView('An user with this email already exists');
+            }
             
             if (strlen($captcha) == 0)
             {
@@ -96,9 +101,10 @@ class RegistrationController implements IPageController
             else
             {
                 UserController::registerUser($username, $password, $email);
-                header('Location: index.php?registered');
+                header('Location: login.php?registered');
             }
         }
+        
         return $vals;
     }
 }

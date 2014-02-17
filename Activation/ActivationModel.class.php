@@ -1,6 +1,9 @@
 <?php
-require_once('../DatabaseManager.class.php');
+require_once('./DatabaseManager.class.php');
 require_once('PHPMailer/PHPMailerAutoload.php');
+require_once('ActivationType.class.php');
+require_once('./UserController.class.php');
+
 class ActivationModel
 {
     /**
@@ -43,23 +46,37 @@ class ActivationModel
     /**
      * Checks if a key exists
      * @param string  $key             The key to validate
-     * @param boolean $destroyIfExists If the key should be destroyed if it exists
-     * @return boolean True if key was found
+     * @param boolean $destroyIfExists If the key should be destroyed if it exists, 
+     *                                 also performs the activation if this is set to true
+     * @return mixed The token type if key was found otherwise false
      */
     public static function keyExists($key, $destroyIfExists)
     {
         $pdo = DatabaseManager::getDB();
-        $query = $pdo->prepare('SELECT tokenID FROM ActivationToken WHERE hash = :key');
+        $query = $pdo->prepare('SELECT type, userID, tokenID FROM ActivationToken WHERE hash = :key');
         $query->bindParam(':key', $key);
         $query->execute();
         
         if ($row = $query->fetch(PDO::FETCH_ASSOC))
         {
-            $query = $pdo->prepare('DELETE FROM FROM ActivationToken WHERE hash = :key AND tokenID = :id');
-            $query->bindParam(':key', $key);
-            $query->bindParam(':id', $row['tokenID']);
-            $query->execute();
-            return false;
+            if ($destroyIfExists)
+            {
+                $query = $pdo->prepare('DELETE FROM ActivationToken WHERE hash = :key AND tokenID = :id');
+                $query->bindParam(':key', $key);
+                $query->bindParam(':id', $row['tokenID']);
+                $query->execute();
+                
+                if ($row['type'] == ActivationType::EMAIL)
+                {
+                    UserController::activateUserEmail($row['userID']);
+                }
+                else
+                {
+                    //to-do
+                }
+            }
+            
+            return $row['type'];
         }
         else
         {

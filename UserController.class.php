@@ -1,6 +1,8 @@
 <?php
 require_once('UserModel.class.php');
 require_once('SessionController.class.php');
+require_once('Activation/ActivationController.class.php');
+require_once('Activation/ActivationType.class.php');
 
 class UserController
 {
@@ -64,8 +66,13 @@ class UserController
      */
     public static function registerUser($username, $password, $email)
     {
-        UserModel::registerUser($username, $password, $email, false, false);
-        // Send email
+        $userID = UserModel::registerUser($username, $password, $email, false, false);
+        ActivationController::generateActivationKey($userID, $email, ActivationType::EMAIL);
+    }
+    
+    public static function activateUserEmail($userID)
+    {
+        UserModel::activateEmail($userID);
     }
 }
 ?>

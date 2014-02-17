@@ -138,29 +138,21 @@ class UserModel
      */
     public static function registerUser($username, $password, $email, $emailActivated ,$publicTimeSchedule)
     {
-        if(!UserModel::userExists($username))
-        {                                                                               // SQL query
-            $query = "INSERT INTO user(username, password, email, emailActivated, publicTimeSchedule)
-                      VALUES (:username, :password, :email, :emailActivated, :publicTimeSchedule)";
+        $query = "INSERT INTO user(username, password, email, emailActivated, publicTimeSchedule)
+                    VALUES (:username, :password, :email, :emailActivated, :publicTimeSchedule)";
             
-            $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
+        $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
             
-            $db = DatabaseManager::getDB();
-            $stmt = $db->prepare($query);                                               // Preparing database
-            $stmt->bindparam(':username', $username);                                   // Binding variables
-            $stmt->bindparam(':password', $hashedPassword);
-            $stmt->bindparam(':email', $email);
-            $stmt->bindparam(':emailActivated', $emailActivated);
-            $stmt->bindparam(':publicTimeSchedule', $publicTimeSchedule);
-            $stmt->execute();                                                           // Execute query
+        $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);                                               // Preparing database
+        $stmt->bindparam(':username', $username);                                   // Binding variables
+        $stmt->bindparam(':password', $hashedPassword);
+        $stmt->bindparam(':email', $email);
+        $stmt->bindparam(':emailActivated', $emailActivated);
+        $stmt->bindparam(':publicTimeSchedule', $publicTimeSchedule);
+        $stmt->execute();                                                           // Execute query
             
-            return true;                                                                // User has been added to DB
-        }
-        
-        else
-        {
-            return false;                                                               // Username is taken
-        }
+        return $db->lastInsertId();
     }
     
     /**
@@ -241,6 +233,14 @@ class UserModel
         $stmt->bindparam(':picture',$imagevariable);
         $stmt->bindparam(':userID',$userID);
         $stmt->execute();
+    }
+    
+    public static function activateEmail($userID)
+    {
+        $pdo = DatabaseManager::getDB();
+        $query = $pdo->prepare('UPDATE user SET emailActivated = 1 WHERE userID = :userID');
+        $query->bindParam('userID', $userID);
+        $query->execute();
     }
 }
 ?>
