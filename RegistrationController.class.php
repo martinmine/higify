@@ -1,15 +1,13 @@
 <?php
-
 require_once('Template/IPageController.interface.php');
 require_once('SessionController.class.php');
 require_once('UserModel.class.php');
 require_once('ErrorMessageView.class.php');
 require_once('Recaptcha/recaptchalib.php');
+require_once('HigifyConfig.class.php');
 
 class RegistrationController implements IPageController
 {
-    const CAPTCHA_PRIVATE_KEY = '6Lfis-4SAAAAANi6ne8PD0-i9U9z8X8PvKnGhJiG';
-    
     public function onDisplay()
     {
         $user = SessionController::acquireSession(true);    // Send the user home if he is logged in
@@ -18,6 +16,9 @@ class RegistrationController implements IPageController
                                     '1234567', 'iloveyou', 'adobe123', '123123', 'admin', '1234567890', 'letmein', 
                                     'photoshop', '1234', 'monkey', 'shadow', 'sunshine', '12345', 'password1', 
                                     'princess', 'azerty', 'trustno1', 'qwerty123', 'asdfg', 'fronter', 'student');
+        
+        $vals['RECAPTCHA_PUBLIC_KEY'] = HigifyConfig::RECAPTCHA_PUBLIC_KEY;
+        
         if ($user !== NULL)
         {
             header('Location: index.php');
@@ -32,7 +33,7 @@ class RegistrationController implements IPageController
             $email = $_POST['email'];
             $captcha = $_POST['recaptcha_response_field'];
             
-            $captchaResponse = recaptcha_check_answer(self::CAPTCHA_PRIVATE_KEY, $_SERVER['REMOTE_ADDR'], 
+            $captchaResponse = recaptcha_check_answer(HigifyConfig::RECAPTCHA_PRIVATE_KEY, $_SERVER['REMOTE_ADDR'], // Verify the security code
                                        $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
             
             $registrationFailure = false;
