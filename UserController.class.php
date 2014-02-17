@@ -49,11 +49,11 @@ class UserController
      */
     public static function requestPictureSubmit($userID,$picture)
     {
-       // if (is_uploaded_file($picture))
-      //  {
-       //     $userID = SessionController::requestLoggedinID();
+        if (is_uploaded_file($picture))
+        {
+           // $userID = SessionController::requestLoggedinID();
             UserModel::submitPicture($userID, $picture);
-     //   }
+        }
     }
 }
 ?>
