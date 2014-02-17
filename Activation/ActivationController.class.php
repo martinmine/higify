@@ -8,7 +8,7 @@ class ActivationController
      * Validates an activation key
      * @param string  $key            The key
      * @param boolean $destroyIfFound Destroy the key if it was found
-     * @return boolean True if the key is valid, otherwise false
+     * @return boolean True if the key is valid, otherwise the type of the activation key
      */
     public static function validateActivationKey($key, $destroyIfFound = false)
     {

@@ -1,26 +1,18 @@
-
-
-
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Higify - Login</title>
+		<meta charset="UTF-8" content="image/jpeg"/>
 	</head>
-	<body id="page">
+<body>
 
-		<div class="pageContainer">
-			<div class="centerContainer">
-				<form action="testingUserClass.php" method="POST">
-                    <label for="image">Bilde</label><input type="file" name="image" title="Vises sammen med notatblokksider når andre viser dine offentlige notater"><br/>
-                    <input class="loginbtn" type="submit" value="Submit">
-				</div>
-				<div>
-					
-				</div>
-				</form>
-			</div>
-		</div>
-	</body>
+<form action="testingUserClass.php" method="post"
+enctype="multipart/form-data">
+<label for="file">Filename:</label>
+<input type="file" name="file" id="file"><br>
+<input type="submit" name="submit" value="Submit">
+</form>
+
+</body>
 </html>
 <?php
 session_start();
@@ -87,8 +79,29 @@ if(isset($_POST['userID']))
 print_r($_POST);
 print_r($_FILES);
 
-if(isset($_FILES['image']))
-UserController::requestPictureSubmit(5,$_FILES['image']);
+echo count($_FILES);
+if(count($_FILES) > 0)
+{
+    if ($_FILES['file']["error"] > 0)
+    {
+        echo "Error: " . $_FILES["file"]["error"] . "<br>";
+    }
+    else
+    {
+        echo "Upload: " . $_FILES["file"]["name"] . "<br>";
+        echo "Type: " . $_FILES["file"]["type"] . "<br>";
+        echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
+        echo "Stored in: " . $_FILES["file"]["tmp_name"];
+    }
+
+    if(isset($_FILES['file']))
+    {
+        UserController::requestPictureSubmit(5,$_FILES['file']['tmp_name']);
+      
+    
+        
+    }
+}
 
 
 ?>

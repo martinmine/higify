@@ -28,7 +28,7 @@ class WarningMessageView extends WebPageElement
     public function generateHTML()
     {
         $tpl = new Template();
-        $tpl->appendTemplate('LoginWarning');
+        $tpl->appendTemplate('FrontPageWarning');
         $tpl->setValue('MSG', $this->message);
         
         $tpl->display();

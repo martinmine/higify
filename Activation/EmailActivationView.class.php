@@ -15,7 +15,7 @@ class EmailActivationView implements IActivationView
         $builder->appendLine();
         $builder->appendLine('A user has been registered with your email address.');
         $builder->appendLine('In order to user your account, please enter the following link in your browser:');
-        $builder->appendLine('http://higify.obbahhost.com/activation.php?tokenID=' . $key);
+        $builder->appendLine('http://localhost/activation.php?key=' . $key);
         $builder->appendLine();
         $builder->appendLine('Sincery,');
         $builder->appendLine('The Higify Team');

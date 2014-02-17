@@ -62,15 +62,9 @@ class UserModel
                                  $result['email'], $result['emailActivated']);              // Creating new user object
                 return $user;                                                               // Returns the user object
             }
-            else
-            {
-                return NULL;                                                             // Something went wrong!
-            }
-        }   
-        else
-        {
-            return NULL;                                                                 // User does not exist
         }
+                 
+        return NULL;                                                                       // Something went wrong!
     }
     
     /**
@@ -197,33 +191,40 @@ class UserModel
                 return true;                                                     // The password was changed
             }
         }
-       
+  
         return false;
     }     
     
-    public function submitPicture($userID, $picture)
+    /**
+     * Scales a picture and submits to database 
+     * Picture format: .PNG
+     * 
+     * @param $userID
+     * @param $picture
+     */
+    public static function submitPicture($userID, $picture)
     {
         $height = 200;
         $width = 200;
-        $currentSize = array();
+        $imagevariable = 0;
         
-        $currentSize = getimagesize($picture);                                  // Returns array
-        $heightFactor = $currentSize[0] / $height;                              // Original image height / heigth
-        $widthFactor = $currentSize[1] / $width;
+        list($originalWidth, $originalHeight) = getimagesize($picture);         // Returns array with height and width
+        $heightFactor = $originalHeight / $height;                              // Original image height / heigth
+        $widthFactor = $originalWidth / $width;
         
-        $factor = ($heightFactor > $widthFactor)? $heightFactor : $widthFactor; // Wich factor to use for scaling?
+        $factor = ($heightFactor > $widthFactor)? $heightFactor : $widthFactor; // Which factor to use for scaling?
         
-        $newWidth = $width / $factor;                                           // New image width
-        $newHeight = $height / $factor;                                         // New image height
+        $newWidth = $originalWidth / $factor;                                   // Calculating new image width
+        $newHeight = $originalHeight / $factor;                                 // Calculating new image height
+        $image = imagecreatefromstring(file_get_contents($picture));
+        $newImage = imagecreatetruecolor($newWidth, $newHeight);                // Creating new image frame                                                        
+        imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
+        ob_start();                                                             // Turn on output buffering
+        imagepng($newImage);                                                    // Creating .png image
+        $imagevariable = ob_get_contents();                                     // Retrieving image from stream
+        ob_end_clean();                                                         // End stream
         
-        $image_p = imagecreatetruecolor($newWidth, $newHeight);
-        imagecopyresampled($image_p, $picture, 0, 0, 0, 0, $newWidth, $newHeight, $currentSize[1], $currentSize[0]);
-        ob_start();
-        imagepng($image_p);
-        $imagevariable = ob_get_contents();
-        ob_end_clean();
-        
-        $db = DatabaseManager::getDB();
+        $db = DatabaseManager::getDB();                                         
         
         $query = "UPDATE user
                   SET profilePicture = :picture
@@ -235,12 +236,38 @@ class UserModel
         $stmt->execute();
     }
     
+
     public static function activateEmail($userID)
     {
         $pdo = DatabaseManager::getDB();
         $query = $pdo->prepare('UPDATE user SET emailActivated = 1 WHERE userID = :userID');
         $query->bindParam('userID', $userID);
         $query->execute();
+    }
+
+    /**
+     * Selects the profilepicture from user matching userID
+     * 
+     * @param $userID
+     * @return picture
+     */
+    public static function fetchProfilePicture($userID)
+    {
+        $query = "SELECT profilePicture
+                  FROM user
+                  WHERE userID = :userID";
+        $db = DatabaseManager::getDB();
+        
+        $stmt = $db->prepare($query);
+        $stmt->bindparam(':userID',$userID);
+        $stmt->execute();
+        
+        $picture = array();
+        $picture = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (isset($picture['profilePicture']))
+            return $picture['profilePicture'];
+        
+        return NULL;
     }
 }
 ?>
