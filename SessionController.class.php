@@ -33,6 +33,15 @@ class SessionController
     }
     
     /**
+     * @return userID of logged in user
+     */
+    public static function requestLoggedinID()
+    {
+        return SessionModel::getLoggedinID();
+    }
+    
+    
+    /**
      * Sets the logged in user ID for a session and redirects the user
      * @param integer $loginID The users ID
      */

@@ -12,7 +12,7 @@ class UserModel
      * Sends a query to the database to see if the
      * value of $username has a match.
      * @param $username
-     * @return true,false 
+     * @return true,false
      */
     public static function userExists($username)        // Boolean, checks if username is listed in database
     {                                                   // SQL query
@@ -208,6 +208,39 @@ class UserModel
        
         return false;
     }     
+    
+    public function submitPicture($userID, $picture)
+    {
+        $height = 200;
+        $width = 200;
+        $currentSize = array();
+        
+        $currentSize = getimagesize($picture);                                  // Returns array
+        $heightFactor = $currentSize[0] / $height;                              // Original image height / heigth
+        $widthFactor = $currentSize[1] / $width;
+        
+        $factor = ($heightFactor > $widthFactor)? $heightFactor : $widthFactor; // Wich factor to use for scaling?
+        
+        $newWidth = $width / $factor;                                           // New image width
+        $newHeight = $height / $factor;                                         // New image height
+        
+        $image_p = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($image_p, $picture, 0, 0, 0, 0, $newWidth, $newHeight, $currentSize[1], $currentSize[0]);
+        ob_start();
+        imagepng($image_p);
+        $imagevariable = ob_get_contents();
+        ob_end_clean();
+        
+        $db = DatabaseManager::getDB();
+        
+        $query = "UPDATE user
+                  SET profilePicture = :picture
+                  WHERE userID = :userID";
+        
+        $stmt = $db->prepare($query);
+        $stmt->bindparam(':picture',$imagevariable);
+        $stmt->bindparam(':userID',$userID);
+        $stmt->execute();
+    }
 }
-
 ?>
