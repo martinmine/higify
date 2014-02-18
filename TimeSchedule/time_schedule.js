@@ -1,31 +1,51 @@
+/**
+* Runs a xpath query and returns the result
+*/
 function runXpath(xpathExpression)
 {
 	var ORDERED_NODE_SNAPSHOT_TYPE = 7;
 	return document.evaluate(xpathExpression, document, null, ORDERED_NODE_SNAPSHOT_TYPE, null);
 }
 
+/**
+* Sets the height and width for all elements found with an xpath expression
+*/
 function setHeightAndWidth(xpathExpression, width, height)
 {
 	var elements = runXpath(xpathExpression);
-	var element;
 
 	for (var i = 0; i < elements.snapshotLength; i++)
 	{
-		element = elements.snapshotItem(i);
+		var element = elements.snapshotItem(i);
 		element.style.height = height + "px";
 		element.style.width = width + "px";
 	}
 }
 
+/**
+* The width of one cell in the time schedule
+*/
 var cellWidth;
+
+/**
+* The height for one cell in the time schedule
+*/
 var cellHeight;
 
+/**
+* Sets the default width and height for one cell in the time schedule
+*/
 function setTimeObjectLayout(width, height)
 {
 	cellWidth = width;
 	cellHeight = height;
 }
 
+/**
+* Sets the properties for one time object by the object's ID
+* @offset integer Amount of minutes the object shall be moved down on the schedule
+* @duration integer The duration of the time objects in minutes
+*/
 function setTimeObject(id, offset, duration)
 {
 	var element = document.getElementById(id);
@@ -43,30 +63,38 @@ function setTimeObject(id, offset, duration)
 	element.style.marginTop = offset + "px";
 }
 
+/**
+* Sets the height for all the elements found with an xpath expression
+*/
 function setHeight(xpathExpression, height)
 {
 	var elements = runXpath(xpathExpression);
-	var element;
 
 	for (var i = 0; i < elements.snapshotLength; i++)
 	{
-		element = elements.snapshotItem(i);
+		var element = elements.snapshotItem(i);
 		element.style.height = height + "px";
 	}
 }
 
-function formatTimeTable(CELL_HEIGHT, CELL_WIDTH, CELL_DAY_HEADER_HEIGHT, CELL_DAY_PADDING_HEGIHT, CELL_TIME_WIDTH)
+/**
+* Formats the time table according to the given parameters
+*/
+function formatTimeTable(cellHeight, cellWidth, cellDayHeaderHeight, cellDayPaddingHeight, cellTimeWidth)
 {
-	setContainerWidth(CELL_WIDTH, CELL_TIME_WIDTH);
-	setHeightAndWidth('//div[@class="weekIdentifier"]', CELL_TIME_WIDTH - 4, CELL_DAY_HEADER_HEIGHT);
-	setHeightAndWidth('//div[@class="timeIdentifier"]', CELL_TIME_WIDTH - 4, CELL_HEIGHT);
-	setHeightAndWidth('//div[@class="dayHeader"]', CELL_WIDTH, CELL_DAY_HEADER_HEIGHT);
-	setHeightAndWidth('//div[@class="singleHour"]', CELL_WIDTH, CELL_HEIGHT);
+	setContainerWidth(cellWidth, cellTimeWidth);
+	setHeightAndWidth('//div[@class="weekIdentifier"]', cellTimeWidth - 4, cellDayHeaderHeight);
+	setHeightAndWidth('//div[@class="timeIdentifier"]', cellTimeWidth - 4, cellHeight);
+	setHeightAndWidth('//div[@class="dayHeader"]', cellWidth, cellDayHeaderHeight);
+	setHeightAndWidth('//div[@class="singleHour"]', cellWidth, cellHeight);
 
-	setHeightAndWidth('//div[contains(@class, "dayPadding")]', CELL_WIDTH, CELL_DAY_PADDING_HEGIHT);
-	setHeightAndWidth('//div[contains(@class, "weekPadding")]', CELL_TIME_WIDTH - 4, CELL_DAY_PADDING_HEGIHT);
+	setHeightAndWidth('//div[contains(@class, "dayPadding")]', cellWidth, cellDayPaddingHeight);
+	setHeightAndWidth('//div[contains(@class, "weekPadding")]', cellTimeWidth - 4, cellDayPaddingHeight);
 }
 
+/**
+* Sets the width of the time schedule container
+*/
 function setContainerWidth(cellWidth, celltimerWidth)
 {
 	var container = document.getElementById('scheduleContainer');
