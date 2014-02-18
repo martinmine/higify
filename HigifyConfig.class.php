@@ -32,19 +32,17 @@ class HigifyConfig
      */
     const RECAPTCHA_PUBLIC_KEY = '6Lfis-4SAAAAAKnGTAWkuCwryfiHKK0OlNM0MjIe';
     
-<<<<<<< HEAD
+
     var $t = serialize (array('123456', 'password' , '12345678', 'qwerty', 'abc123', '123456789', '111111', 
                                     '1234567', 'iloveyou', 'adobe123', '123123', 'admin', '1234567890', 'letmein', 
                                     'photoshop', '1234', 'monkey', 'shadow', 'sunshine', '12345', 'password1', 
-                                    'princess', 'azerty', 'trustno1', 'qwerty123', 'asdfg', 'fronter', 'student'));
-    
+                                    'princess', 'azerty', 'trustno1', 'qwerty123', 'asdfg', 'fronter', 'student'));   
     const BAD_PASSWORDS =  ($this->t);
-=======
+
     /**
      * The domain used in the website
      */
     const SITE_DOMAIN = 'localhost';
->>>>>>> bdf6e01290d80e4efa71f166355486b18feb53e6
 }
 
 ?>
