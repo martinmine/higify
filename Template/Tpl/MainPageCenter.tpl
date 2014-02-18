@@ -10,23 +10,6 @@
 		</div>
 		</br></br>
 		<div id="notes">
-			<div class="note">
-				<div class="info">
-					Username (owner)<span>18:01 15.02.14</span></br>
-				</div>
-				<div class="content">
-					<p>Content</p>
-				</div>
-			</div>
-			</br>
-			<div class="note">
-				<div class="info">
-					Username (owner)<span>20:01 16.02.14</span></br>
-				</div>
-				<div class="content">
-					<p>Content number 2 :)</p>
-				</div>
-			</div>
-			
+			<? echo $NOTES; ?>
 		</div>
 	</div>

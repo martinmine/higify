@@ -7,7 +7,12 @@ div.scheduleContainer
 {
 	display: inline-block; 
 	height: auto;
-	overflow: hidden;
+	width: 1237px;
+}
+
+div.scheduleWrapper
+{
+	overflow: auto;
 }
 
 div.timeStamps

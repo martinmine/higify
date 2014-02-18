@@ -72,7 +72,10 @@ class ActivationModel
                 }
                 else
                 {
-                    // Generate a new password for the user and send this on email to the user
+                    $user = UserModel::getUserByID($row['userID']);
+                    $newPassword = self::generateKey(10);
+                    $emailContent = UserController::notifyPasswordChange($user, $newPassword);
+                    self::sendEmail($user->getEmail(), $emailContent);
                 }
             }
             

@@ -14,8 +14,8 @@ if (isset($_GET['key']))
     {
         if ($type == ActivationType::EMAIL)   // This key was for an email
             header('Location: login.php?activated');
-        else    // This key was for a password
-            header('Location: login.php?passwordsent');
+        else if ($type == ActivationType::PASSWORD)   // This key was for a password
+            header('Location: login.php?passwordchanged');
     }
 }
 die('key not set');

@@ -29,7 +29,8 @@ class LoginController implements IPageController
             
             if ($user !== NULL && $user->hasEmailActivated())
             {
-                SessionController::setLoggedIn($user->getUserID());
+                $rememberMe = (isset($_POST['rememberPassword']) && $_POST['rememberPassword'] == 'true');
+                SessionController::setLoggedIn($user->getUserID(), $rememberMe);
             }
             else if ($user !== NULL && !$user->hasEmailActivated())
             {
@@ -42,13 +43,20 @@ class LoginController implements IPageController
         }
         else if (isset($_GET['registered']))
         {
-            $vals['ERROR_MSG'] = new ErrorMessageView('Your user has been registered. To sign in, follow the activation link which was sent to your email.');   
+            $vals['ERROR_MSG'] = new WarningMessageView('Your user has been registered. To sign in, follow the activation link which was sent to your email.');   
         }
         else if (isset($_GET['activated']))
         {
-            $vals['ERROR_MSG'] = new ErrorMessageView('Your user has been activated. You can sign in using the username and password you used while registering.');   
+            $vals['ERROR_MSG'] = new WarningMessageView('Your user has been activated. You can sign in using the username and password you used while registering.');   
         }
-        
+        else if (isset($_GET['passwordsent']))
+        {
+            $vals['ERROR_MSG'] = new WarningMessageView('An email with instructions on how to reset your password has been sent. Please check your email.');   
+        }
+        else if (isset($_GET['passwordchanged']))
+        {
+            $vals['ERROR_MSG'] = new WarningMessageView('An email with your username and a new password has been sent to your email address.');   
+        }
         
         return $vals;
     }

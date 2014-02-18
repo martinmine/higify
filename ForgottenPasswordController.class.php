@@ -1,7 +1,6 @@
 <?php
 require_once('Template/IPageController.interface.php');
 require_once('SessionController.class.php');
-require_once('UserModel.class.php');
 require_once('Recaptcha/recaptchalib.php');
 require_once('ErrorMessageView.class.php');
 require_once('Activation/ActivationController.class.php');
@@ -25,21 +24,24 @@ class ForgottenPasswordController implements IPageController
         if (isset($_POST['email']))
         {
             $validValues = true;
-            $user = NULL;
             $captchaResponse = recaptcha_check_answer(HigifyConfig::RECAPTCHA_PRIVATE_KEY, $_SERVER['REMOTE_ADDR'], // Verify the security code
                                        $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
             
             if (!$captchaResponse->is_valid) 
             {
-                $vals['ERROR_MSG'] = new ErrorMessageView('Invalid security code');
+                $vals['ERROR_CAPTCHA'] = new ErrorMessageView('Invalid security code');
+                return $vals; // Exit
             }
-            else if ($user = UserController::requestUserByEmail($_POST['email']) === NULL)
+            
+            $user = UserController::requestUserByEmail($_POST['email']);
+            if ($user === NULL)
             {
-                $vals['ERROR_MSG'] = new ErrorMessageView('There is no registered user with this email address.');
+                $vals['ERROR_EMAIL'] = new ErrorMessageView('There is no registered user with this email address.');
             }
             else
             {
                 ActivationController::generateActivationKey($user->getUserID(), $user->getEmail(), ActivationType::PASSWORD);
+                header('Location: login.php?passwordsent');
             }
         }
         
