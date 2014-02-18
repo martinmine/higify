@@ -209,23 +209,30 @@ class UserModel
                                                
             if(strcmp($oldPassword,$res['password']) == 0)                       // If current PW matches the one in db
             {                                                                    // Query for updating password
-                $query2 = "UPDATE user                                       
-                           SET password = :newPassword
-                           WHERE userID = :userID";
-                                                                                 // Hashing new PW with salt
-                $hashedNewPassword = hash_hmac('sha512', $newPassword . UserModel::SALT, UserModel::SITEKEY);
-                $db = DatabaseManager::getDB();
-                $stmt2 = $db->prepare($query2);                                  // Preparing database for query
-                $stmt2->bindparam(':newPassword', $hashedNewPassword);                 // Binding parameters
-                $stmt2->bindparam(':userID', $userID);
-                $stmt2->execute();                                               // Executing query
-                
+                self::setPassword($userID, $newPassword);                        // Set the new password
                 return true;                                                     // The password was changed
             }
         }
   
         return false;
     }     
+    
+    /**
+     * Sets the password for the user
+     * @param integer $userID The users ID
+     * @param string  $newPassword The new password in cleartext
+     */
+    public static function setPassword($userID, $newPassword)
+    {
+        $hashedNewPassword = hash_hmac('sha512', $newPassword . UserModel::SALT, UserModel::SITEKEY);
+        $db = DatabaseManager::getDB();
+        $stmt2 = $db->prepare("UPDATE user                                       
+                           SET password = :newPassword
+                           WHERE userID = :userID");                     // Preparing database for query
+        $stmt2->bindparam(':newPassword', $hashedNewPassword);           // Binding parameters
+        $stmt2->bindparam(':userID', $userID);
+        $stmt2->execute();                                               // Executing query
+    }
     
     /**
      * Scales a picture and submits to database 

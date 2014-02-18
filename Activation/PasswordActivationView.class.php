@@ -17,7 +17,7 @@ class PasswordActivationView implements IActivationView
         $builder->appendLine();
         $builder->appendLine('Someone issued a new password on your account from the IP address ' . $_SERVER['REMOTE_ADDR'] . '.');
         $builder->appendLine('We will let you createa a new password if you enter this link in your browser: ');
-        $builder->appendLine('http://higify.obbahhost.com/activation.php?tokenID=' . $key);
+        $builder->appendLine('http://higify.obbahhost.com/activation.php?key=' . $key);
         $builder->appendLine();
         $builder->appendLine('Sincery,');
         $builder->appendLine('The Higify Team');

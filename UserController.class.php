@@ -3,6 +3,7 @@ require_once('UserModel.class.php');
 require_once('SessionController.class.php');
 require_once('Activation/ActivationController.class.php');
 require_once('Activation/ActivationType.class.php');
+require_once('Activation/StringBuilder.class.php');
 
 class UserController
 {
@@ -50,12 +51,7 @@ class UserController
      */
     public static function requestUserByEmail($email)
     {
-        if ($user = UserModel::getUserByEmail($email))
-        {
-            return $user;
-        }
-        
-        return NULL;
+        return UserModel::getUserByEmail($email);
     }
     
     /**
@@ -119,6 +115,30 @@ class UserController
         }
         
         return false;
+    }
+    
+    /**
+     * Resets the users password and returns the content of the email that shall be sent to the user
+     * @param User $user The user
+     * @param string $newPassword The new password
+     * @return string Email content with the username and the password
+     */
+    public static function notifyPasswordChange($user, $newPassword)
+    {
+        UserModel::setPassword($user->getUserID(), $newPassword);
+        
+        $builder = new StringBuilder();
+        
+        $builder->appendLine('Greeting Higify User!');
+        $builder->appendLine();
+        $builder->appendLine('Your password has been changed. You can now sign in with the following username and password:');
+        $builder->appendLine('Username: ' . $user->getUsername());
+        $builder->appendLine('Password: ' . $newPassword);
+        $builder->appendLine();
+        $builder->appendLine('Sincery,');
+        $builder->appendLine('The Higify Team');
+        
+        return $builder->toString();
     }
 }
 ?>
