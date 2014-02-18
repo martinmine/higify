@@ -18,7 +18,7 @@ class NoteModel
    * note defined in the database. 
    * 
    * @return Note[] An array of note-objects for each note defined
-   *         int the database
+   *         in the database with the owners username.
    * @uses Note
    * @throws PDOException
    */
@@ -29,11 +29,11 @@ class NoteModel
 		
 		else
 		{
-			$db = openDB();
-			//$db = DatabaseManager::getDB();
+			$db = DatabaseManager::getDB();
 			$res = array();
-			$query = 'SELECT noteID, ownerID, content, isPublic, timePublished
+			$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username
 						FROM note
+						JOIN user ON (user.userID = ownerID)
 						WHERE ownerID = :ownerID';
 
 			if ($condition !== NoteType::ALL)
@@ -42,23 +42,22 @@ class NoteModel
 				$query .= ($condition === NoteType::PUBLIC_ONLY)? '1': '0';
 			}
 			
-			echo '</br>' . $query . '</br>';
-			
 			$stmt = $db->prepare($query);
 			$stmt->bindParam(':ownerID', $ownerID);
 			$stmt->execute();
 			while($row = $stmt->fetch(PDO::FETCH_ASSOC))
 			{
 				$res[] = new Note($row['noteID'], $row['ownerID'],
-								$row['content'], $row['isPublic'],
-								$row['timePublished']);
+								  $row['content'], $row['isPublic'],
+								  $row['timePublished'], $row['username']);
 			}
 			return $res;
 		}
 	}
 	
 	/**
-	 *
+	 * Get all notes on some condition. limited condition ofcourse
+	 * Change comment when done... obviously :
 	 */
 	public function getAllPublicNotes($condition = NULL)
 	{
@@ -69,7 +68,7 @@ class NoteModel
 	
 	
 	
-	// Work below is under construction:
+	// Work below is under construction and/or abandoned  :(
   
 	/**
 	 * Adds a new Note object with data int the library to the database

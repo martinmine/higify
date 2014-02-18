@@ -9,12 +9,13 @@
 
 class Note
 { 
-	private $noteID;          //  @var int(10) notes uniq id.
-	private $ownerID;         //  @var int(10) a reference to the owner by id.
-	private $content;         //  @var text the content of the note.
-	private $isPublic;        //  @var tinyint(1) 1 if note is public otherwise 0.
+	private $noteID;			//  @var int(10) notes uniq id.
+	private $ownerID;			//  @var int(10) a reference to the owner by id.
+	private $content;			//  @var text the content of the note.
+	private $isPublic;			//  @var tinyint(1) 1 if note is public otherwise 0.
+	private $published;			//  @timestamp time and date for when the note was published.
+	private $ownerUsername;		//	@var varchar(30) username of the note owner.
   
-	private $published;       //  @timestamp time and date for when the note was published.
   
 	/**
 	 *  Constructs a new note setting all variables.
@@ -24,13 +25,14 @@ class Note
 	 *  @param $content a string with the content.
 	 *  @param $isPublic boolean value 0 or 1.
 	 */
-	public function __construct($noteID, $ownerID, $content, $isPublic, $published)
+	public function __construct($noteID, $ownerID, $content, $isPublic, $published, $username)
 	{
 		$this->noteID = $noteID;
 		$this->ownerID = $ownerID;
 		$this->content = $content;
 		$this->isPublic = $isPublic;
 		$this->published = $published;
+		$this->ownerUsername = $username;
 	}
   
 	/**
@@ -83,6 +85,16 @@ class Note
 	public function getTime()
 	{
 		return $this->published;
+	}
+	
+	/**
+	 * Retrieves the username from the note owner.
+	 *
+	 * @return varchar(30)
+	 */
+	public function getUsername()
+	{
+		return $this->ownerUsername;
 	}
   
 	/**

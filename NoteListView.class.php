@@ -1,20 +1,59 @@
 <?php
 require_once('Template/Template.class.php');
+include_once('Template/WebPageElement.class.php');
 require_once('NoteType.class.php');
 
-
-class NoteListView
+ /**
+  * The view listing all note-elements
+  *
+  * @uses Template.class.php
+  * @uses WebPageElement.class.php
+  * @uses NoteType.class.php
+  */
+class NoteListView extends WebPageElement
 {
+	private $notes = NULL;
 	
-	public function generateDocument()
+	public __construct()
 	{
-		$tpl = new Template();
-		$tpl->appendTemplate('');
-		$tpl->registerController(new LoginController());
-		$tpl->appendTemplate('');
-		$tpl->appendTemplate('');
-		$tpl->display();
+		$userID = SessionController::requestLoggedinID();
+		$this->notes = NoteController::requestNotesFromUser($userID, NoteType::ALL);
 	}
+	
+	/**
+	 * Creating a list of all notes.
+	 * 
+	 * @uses Template.class.php
+	 */
+	public function generateHTML()
+	{
+		
+		foreach($this->notes as $note)
+		{
+			$tpl = new Template();
+			$tpl->appendTemplate('NoteElement');
+			$tpl->setValue('USERNAME', $note['username']);
+			$tpl->setValue('CONTENT', $note['content']);
+			$tpl->setValue('TIME', $note['timePublished']);
+			$tpl->display();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

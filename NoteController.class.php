@@ -1,13 +1,17 @@
 <?php
-require_once('db.php');
-//require_once('SessionController.class.php');
 require_once('NoteType.class.php');
 require_once('NoteModel.class.php');
-
-//require_once('UserController.class.php');
+require_once('UserController.class.php');
+require_once('SessionController.class.php');
 
 	/**
+	 * The controller between NoteModel and note-views (see template)
+	 * It also request information from both users and the active user( the one logged in)
+	 * for retrieving note-information and checking to allow viewing specific notes (e.g private)
 	 *
+	 * @uses NoteType.class.php
+	 * @uses NoteModel.cass.php
+	 * @uses UserController.class.php
 	 */
 	class NoteController
 	{
@@ -43,13 +47,6 @@ require_once('NoteModel.class.php');
 					//	When displaying other users notes - ONLY notes flagged public is allowed:
 					if ($this->user->getUserID() !== $noteOwner->getUserID()  &&  $condition !== NoteType::PUBLIC_ONLY)
 						return NULL;
-					
-					/**
-					 * Reflection:
-					 * Put whats below in an variabel instead of 'return' and connect it with a view 
-					 *
-					 * maybe?
-					 */
 					 
 					return NoteModel::getNotesFromOwner($noteOwnerID, $condition);
 				}
@@ -58,19 +55,22 @@ require_once('NoteModel.class.php');
 		}
 	
 		/**
+		 * EXTRA?
 		 * Retrieves all public notes by every user except the one logged in.
 		 * 
 		 * @param string $condition filter only desired notes.
+		 * @Order asc desc...
 		 * @return array of note-objects.
 		 */
-		public function requestAllPublicNotes($condition)
+		public function requestAllPublicNotes($condition, $order)
 		{
 			if ($this->user !== NULL)
 			{
 				
 				
-				
+				return NULL;
 			}
+			return NULL;
 		}
 	
 	

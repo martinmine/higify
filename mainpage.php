@@ -7,7 +7,7 @@ $tpl = new Template();
 $tpl->appendTemplate('MainPageHeader');
 $tpl->setValue('PAGE_TITLE', 'Index');
 $tpl->registerController(new MainPageController());
-¤tpl->appendTemplate('MainPageTop');
+$tpl->appendTemplate('MainPageTop');
 $tpl->appendTemplate('MainPageLeft');
 $tpl->appendTemplate('MainPageCenter');
 $tpl->appendTemplate('MainPageRight');
