@@ -87,6 +87,8 @@ class UserController
             $userID = SessionController::requestLoggedinID();
             UserModel::submitPicture($userID, $picture);
         }
+       
+        return NULL;
     }
     
     /**
@@ -120,5 +122,15 @@ class UserController
         
         return false;
     }
+    
+    public static function updateUser($oldPassword, $newPassword, $newEmail, $picture)
+    {
+        $userID = SessionController::requestLoggedinID();
+        
+        self::requestPictureSubmit($picture);
+        UserModel::newEmail($userID, $newEmail);
+        UserModel::newPassword($userID,$oldPassword,$newPassword);
+    }
 }
+  
 ?>

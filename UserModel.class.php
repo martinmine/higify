@@ -268,13 +268,34 @@ class UserModel
         $stmt->execute();
     }
     
-
+    
+    /**
+     * Sets email to activated 
+     * 
+     * @param $userID
+     */
     public static function activateEmail($userID)
     {
         $pdo = DatabaseManager::getDB();
-        $query = $pdo->prepare('UPDATE user SET emailActivated = 1 WHERE userID = :userID');
+        $query = $pdo->prepare('UPDATE user 
+                                SET emailActivated = 1 
+                                WHERE userID = :userID');
+        
         $query->bindParam('userID', $userID);
         $query->execute();
+    }
+    
+    public static function newEmail($userID, $newEmail)
+    {
+        $query = "UPDATE user 
+                  SET email = :email
+                  WHERE userID = :userID";
+        
+        $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':email', $newEmail);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->execute();
     }
 
     /**
