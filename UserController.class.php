@@ -15,13 +15,7 @@ class UserController
      */
     public static function requestUser($username, $password)  
     {
-        $user = UserModel::getUser($username, $password);
-        if ($user !== NULL)
-         {
-             return $user;
-         }
-         
-         return NULL;
+        return UserModel::getUser($username, $password);
     }
     
     /**
@@ -34,13 +28,7 @@ class UserController
      */
     public static function requestUserByID($userID)
     {
-        $user = UserModel::getUserByID($userID);
-        if ($user !== NULL)
-        {
-            return $user;
-        }
-        
-        return NULL;
+        return UserModel::getUserByID($userID);
     }
     
     
@@ -63,7 +51,7 @@ class UserController
      */
     public static function userExists($username)
     {
-        if(UserModel::userExists($username))
+        if (UserModel::userExists($username))
             return true;
         
         return false;
@@ -111,7 +99,7 @@ class UserController
      */
     public static function requestProfilePicture($userID)
     {
-        if($picture = UserModel::fetchProfilePicture($userID))
+        if ($picture = UserModel::fetchProfilePicture($userID))
         {
             return $picture;
         }
