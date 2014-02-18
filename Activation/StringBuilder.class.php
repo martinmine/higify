@@ -25,7 +25,7 @@ class StringBuilder
      */
     public function appendLine($txt = '')
     {
-        $this->content .= $txt . "\n<br/>";
+        $this->content .= $txt . "<br/>";
     }
     
     /**

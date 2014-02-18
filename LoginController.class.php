@@ -29,7 +29,8 @@ class LoginController implements IPageController
             
             if ($user !== NULL && $user->hasEmailActivated())
             {
-                SessionController::setLoggedIn($user->getUserID());
+                $rememberMe = (isset($_POST['rememberPassword']) && $_POST['rememberPassword'] == 'true');
+                SessionController::setLoggedIn($user->getUserID(), $rememberMe);
             }
             else if ($user !== NULL && !$user->hasEmailActivated())
             {

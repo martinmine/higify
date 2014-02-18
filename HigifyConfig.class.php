@@ -31,6 +31,11 @@ class HigifyConfig
      * Public recaptcha API key
      */
     const RECAPTCHA_PUBLIC_KEY = '6Lfis-4SAAAAAKnGTAWkuCwryfiHKK0OlNM0MjIe';
+    
+    /**
+     * The domain used in the website
+     */
+    const SITE_DOMAIN = 'localhost';
 }
 
 ?>

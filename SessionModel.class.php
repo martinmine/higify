@@ -1,5 +1,6 @@
 <?php
 require_once('DatabaseManager.class.php');
+require_once('HigifyConfig.class.php');
 
 class SessionModel
 {
@@ -11,13 +12,7 @@ class SessionModel
     /**
      * Random key used for initializing the hash function
      */
-    const HASH_INIT = 'hQVJ5TaKt7QTaScYrvFsaPPJKEpB56X6y9QzEYKcNvST8DpYDymrx7JWfGDUBHSpBugzw3L2Ce9MuAeGe6KNw2MCvMsjCnmEwtuHDgWyXHV2HVW7K3GQgT7g';
-    
-    /**
-     * The domain used in the website
-     */
-    const SITE_DOMAIN = 'localhost';
-    
+    const HASH_INIT = 'hQVJ5TaKt7QTaScYrvFsaPPJKEpB56X6y9QzEYKcNvST8DpYDymrx7JWfGDUBHSpBugzw3L2Ce9MuAeGe6KNw2MCvMsjCnmEwtuHDgWyXHV2HVW7K3GQgT7g'; 
     
     private static $sessionStarted = false;
     /**
@@ -27,7 +22,7 @@ class SessionModel
      */
     private static function createToken($key)
     {
-        return hash_hmac('sha512', $key . self::COOKIE_SALT, self::HASH_INIT);
+        return substr(hash_hmac('sha512', $key . self::COOKIE_SALT, self::HASH_INIT), 0, 30);
     }
     
     /**
@@ -57,20 +52,19 @@ class SessionModel
             
             if ($rowData)   // Match, update db and cookie
             {
-                $newToken = createToken($rowData['chainKey']);
+                /*$newToken = self::createToken($rowData['chainKey']);
                 $query = $pdo->prepare('UPDATE UserToken SET chainKey = :newChainKey WHERE userID = :userID AND chainkey = :oldChainKey');
                 $query->bindParam('userID', $userID);
                 $query->bindParam(':newChainKey', $newToken);
                 $query->bindParam(':oldChainKey', $rowData['chainKey']);
                 $query->execute();
                 
-                setcookie('TOKEN', $newToken, 60*60*24*30, '/', self::SITE_DOMAIN);
-                
+                setcookie('TOKEN', $newToken, time() + 60*60*24*30, '/', HigifyConfig::SITE_DOMAIN);*/
                 return $userID;
             }
             else    // Invalid key used, unset the cookie
             {
-                setcookie('TOKEN', NULL, -1, '/', self::SITE_DOMAIN);
+                setcookie('TOKEN', NULL, -1, '/', HigifyConfig::SITE_DOMAIN);
                 return false;
             }
             
@@ -97,13 +91,14 @@ class SessionModel
             $token = self::createToken($userID . rand());
             
             $pdo = DatabaseManager::getDB();
+            $pdo->exec('DELETE FROM UserToken WHERE userID = ' . $userID);
             $query = $pdo->prepare('INSERT INTO UserToken (userID, chainKey) VALUES (:userID, :chainKey)');
             $query->bindParam('userID', $userID);
             $query->bindParam(':chainKey', $token);
             $query->execute();
             
-            setcookie('USR_ID', $userID, 60*60*24*30, '/', self::SITE_DOMAIN);
-            setcookie('TOKEN', $newToken, 60*60*24*30, '/', self::SITE_DOMAIN);
+            setcookie('USR_ID', $userID, time() + 60*60*24*30); 
+            setcookie('TOKEN', $token, time() + 60*60*24*30); 
         }
     }
     

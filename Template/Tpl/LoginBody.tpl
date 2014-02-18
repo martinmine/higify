@@ -6,7 +6,7 @@
 						<input class="inputfield" type="text" id="username" name="username"/><br/>
 						<label for="password">Password</label><br/>
 						<input class="inputfield" type="password" id="password" name="password"/><br/>
-						<input type="checkbox" name="rememberPassword" id="rememberPassword" value="Remember password"/> 
+						<input type="checkbox" name="rememberPassword" id="rememberPassword" value="true"/> 
 						<label for="rememberPassword">Remember password</label><br/>
 						<a href="forgotten.php" class="reglink">Forgotten password&raquo;</a><br/>
 					</div>
