@@ -119,7 +119,7 @@ class UserController
         return false;
     }
     
-<<<<<<< HEAD
+
     public static function updateUser($oldPassword, $newPassword, $newEmail, $picture)
     {
         $userID = SessionController::requestLoggedinID();
@@ -127,7 +127,7 @@ class UserController
         self::requestPictureSubmit($picture);
         UserModel::newEmail($userID, $newEmail);
         UserModel::newPassword($userID,$oldPassword,$newPassword);
-=======
+    }
     /**
      * Resets the users password and returns the content of the email that shall be sent to the user
      * @param User $user The user
@@ -150,7 +150,6 @@ class UserController
         $builder->appendLine('The Higify Team');
         
         return $builder->toString();
->>>>>>> bdf6e01290d80e4efa71f166355486b18feb53e6
     }
 }
   
