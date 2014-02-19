@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Time schedule setup</title>
+		<link rel="stylesheet" type="text/css" href="wizzard.css">
+		<script type="text/javascript" src="jquery-latest.min.js"></script>
+        <script type="text/javascript">
+
+        $(document).ready(function() {
+			$("#search").submit(function(e) {
+				var searchElement = document.getElementById("searchField");
+				alert(searchElement.value);
+
+				e.preventDefault();
+			});
+		});		
+
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<div>
+				<form id ="search">
+					<input class="searchField" type="text" id="searchField" name="searchField"/>
+					<input class="searchBtn" type="submit" value="Search"/>
+				</form>
+			</div>
+			<div>
+				<form action="submit.php" method="POST">
+					<div id="1" class="searchResultElement">
+						<div class="objectDescription">IMT Mordi</div>
+						<div class="removeButton">Remove</div>
+					</div>
+					<div id="2" class="searchResultElement">
+						<div class="objectDescription">IMT Fardin</div>
+						<div class="removeButton">Remove</div>
+					</div>
+					<input class="saveBtn" type="submit" value="Save"/>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

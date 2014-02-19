@@ -33,7 +33,7 @@ class HigifyConfig
     const RECAPTCHA_PUBLIC_KEY = '6Lfis-4SAAAAAKnGTAWkuCwryfiHKK0OlNM0MjIe';
     
 
-    var $BAD_PASSWORDS = array ('123456', 'password' , '12345678', 'qwerty', 'abc123', '123456789', '111111', 
+    public static $BAD_PASSWORDS = array ('123456', 'password' , '12345678', 'qwerty', 'abc123', '123456789', '111111', 
                                     '1234567', 'iloveyou', 'adobe123', '123123', 'admin', '1234567890', 'letmein', 
                                     'photoshop', '1234', 'monkey', 'shadow', 'sunshine', '12345', 'password1', 
                                     'princess', 'azerty', 'trustno1', 'qwerty123', 'asdfg', 'fronter', 'student'); 

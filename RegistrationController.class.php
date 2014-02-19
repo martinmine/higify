@@ -13,7 +13,7 @@ class RegistrationController implements IPageController
         $user = SessionController::acquireSession(true);    // Send the user home if he is logged in
         $vals = array();
         
-        $mostUsedPasswords = unserialze(HigifyConfig::BAD_PASSWORDS);
+        $mostUsedPasswords = HigifyConfig::$BAD_PASSWORDS;
         
         $vals['RECAPTCHA_PUBLIC_KEY'] = HigifyConfig::RECAPTCHA_PUBLIC_KEY;
         

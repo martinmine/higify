@@ -1,0 +1,41 @@
+body
+{
+	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+div.container
+{
+	width: 600px;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+}
+
+input.searchField
+{
+	width: 400px;
+}
+
+div.searchResultElement
+{
+	width: 500px;
+	height: 40px;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+}
+
+div.removeButton
+{
+	font-style: italic;
+	text-align: right;
+	float: right;
+	margin-right: 5px;
+}
+
+div.objectDescription
+{
+	font-weight: bold;
+	float: left;
+	margin-left: 5px;
+}

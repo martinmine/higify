@@ -134,7 +134,7 @@ class UserController
         $builder->appendLine('Username: ' . $user->getUsername());
         $builder->appendLine('Password: ' . $newPassword);
         $builder->appendLine();
-        $builder->appendLine('Sincery,');
+        $builder->appendLine('Sincerly,');
         $builder->appendLine('The Higify Team');
         
         return $builder->toString();
