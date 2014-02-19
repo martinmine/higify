@@ -5,18 +5,7 @@
 		<title>Time schedule setup</title>
 		<link rel="stylesheet" type="text/css" href="wizzard.css">
 		<script type="text/javascript" src="jquery-latest.min.js"></script>
-        <script type="text/javascript">
-
-        $(document).ready(function() {
-			$("#search").submit(function(e) {
-				var searchElement = document.getElementById("searchField");
-				alert(searchElement.value);
-
-				e.preventDefault();
-			});
-		});		
-
-		</script>
+		<script type="text/javascript" src="search_core.js"></script>
 	</head>
 	<body>
 		<div class="container">
@@ -27,14 +16,9 @@
 				</form>
 			</div>
 			<div>
-				<form action="submit.php" method="POST">
-					<div id="1" class="searchResultElement">
-						<div class="objectDescription">IMT Mordi</div>
-						<div class="removeButton">Remove</div>
-					</div>
-					<div id="2" class="searchResultElement">
-						<div class="objectDescription">IMT Fardin</div>
-						<div class="removeButton">Remove</div>
+				<form id="form" action="submit.php" method="POST">
+					<div id="objectList">
+
 					</div>
 					<input class="saveBtn" type="submit" value="Save"/>
 				</form>
