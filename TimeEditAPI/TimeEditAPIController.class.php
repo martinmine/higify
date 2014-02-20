@@ -18,7 +18,7 @@ class TimeEditAPIController
     /**
      * The base URL used for searching objects (courses, lecturer, classes, etc.)
      */
-    const BASE_SEARCH_URL = 'https://web.timeedit.se/hig_no/db1/open/objects.%s?max=15&sid=3&partajax=t&l=en&types=%d&search_text=%s';
+    const BASE_SEARCH_URL = 'https://web.timeedit.se/hig_no/db1/open/objects.%s?max=%d&sid=3&partajax=t&l=en&types=%d&search_text=%s';
 	
     /**
      * Performs a search on TimeEdit and returns an array of SearchResult with the result data
@@ -29,9 +29,18 @@ class TimeEditAPIController
      */
     public static function search($objectType, $searchText, $maxResult)
     {
-        $queryURL = sprintf(TimeEditAPIController::BASE_SEARCH_URL, '%s', $objectType, $searchText);
+        $queryURL = sprintf(TimeEditAPIController::BASE_SEARCH_URL, '%s', intval($maxResult), intval($objectType), self::urlEncode($searchText));
         $model = new TimeEditAPIModel($queryURL);
         return $model->parseJSON();
+    }
+    
+    /**
+     * Encodes the input value for URL and adds escape characters for the sprintf method
+     * @param string $string Value to URL encode
+     */
+    private static function urlEncode($string)
+    {
+        return str_replace('%', '%%', urlencode($string));
     }
     
     /**
@@ -48,7 +57,7 @@ class TimeEditAPIController
 										ITimeParameter $to, $getAllData = false)
     {
         $queryURL = sprintf(TimeEditAPIController::BASE_TIME_TABLE_URL, '%s',
-							$from->serialize(), $to->serialize(), $objectID, $type);
+							$from->serialize(), $to->serialize(), intval($objectID), intval($type));
         $model = new TimeEditAPIModel($queryURL);
         $timeTable = new TimeTable();
         

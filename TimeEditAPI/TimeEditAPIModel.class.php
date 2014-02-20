@@ -129,8 +129,9 @@ class TimeEditAPIModel
             for ($j = 0; $j < $lineValueCount; $j++)
             {
                 $item = $rowItems[$j];
-                if (isset($rowDefinitions[$j][0]) && $rowDefinitions[$j][0] == 'Emne')	// Parse course code data
+                if (isset($rowDefinitions[$j][0]) && $rowDefinitions[$j][0] == 'Emne' && is_array($item)) // Parse course code data
                 {
+                    
 					$subjects = array();
 					$valueCount = count($item);
 					$k = 0;
@@ -207,7 +208,9 @@ class TimeEditAPIModel
 							
 						default:		// Unknown element
 							{
-								trigger_error('Column ' . $j . '=>' . $rowDefinitions[$j] . ' is unknown');
+                                if (!is_array($rowDefinitions[$j]))
+								    trigger_error('Column ' . $j . '=>' . $rowDefinitions[$j] . ' is unknown');
+                                
 								break;
 							}
 					}

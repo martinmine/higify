@@ -244,10 +244,13 @@ class TableObject implements JsonSerializable
 	 */
 	public function match($tableObject)
 	{
-		$keys = array_keys($this->courseCodes[0]);
+        if (isset($this->courseCodes[0]))
+		    $keys = array_keys($this->courseCodes[0]);
+        else
+            $keys = array('');
 				
 		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
-			&& $tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room);
+			&& (count($tableObject->courseCodes) == count($this->courseCodes) || ($tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room)));
 	}
 	
 	/**
