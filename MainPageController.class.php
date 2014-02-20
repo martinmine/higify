@@ -22,18 +22,27 @@ class MainPageController implements IPageController
 		$user = SessionController::acquireSession();
 		$vals = array();
 		$notes = array();
-	
 		
-		if ($this->user !== NULL)
-		{	
+		if ($user !== NULL)
+		{
+			$username = $user->getUsername();
+			$userID = $user->getUserID();
+			
+			if (isset($_POST['submit'])  &&  isset($_POST['content']))
+			{
+				$_POST['userID']   = $userID;
+				$_POST['username'] = $username;
+				NoteController::requestAddNote($_POST);		
+			}
+			
 			$vals['TOP'] = 'Top';	// Test;
 			
-			$vals['USERNAME'] = $this->user->getUsername();
-			$vals['PROFILE_ID'] = $this->getUserID;
+			$vals['USERNAME'] = $username;
+			$vals['PROFILE_ID'] = $userID;
 			
 			$vals['NOTES'] = new NoteListView();
 			
-			$vals['HOURS'] = new DayScheduleView();  //  not done...
+			//$vals['HOURS'] = new DayScheduleView();  //  not done...
 			
 		}
 		else

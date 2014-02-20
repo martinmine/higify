@@ -28,14 +28,13 @@ class NoteListView extends WebPageElement
 	 */
 	public function generateHTML()
 	{
-		
 		foreach($this->notes as $note)
 		{
 			$tpl = new Template();
 			$tpl->appendTemplate('NoteElement');
-			$tpl->setValue('USERNAME', $note['username']);
-			$tpl->setValue('CONTENT', $note['content']);
-			$tpl->setValue('TIME', $note['timePublished']);
+			$tpl->setValue('USERNAME', $note->getUsername());
+			$tpl->setValue('CONTENT', $note->getContent());
+			$tpl->setValue('TIME', $note->getTime());
 			$tpl->display();
 		}
 	}

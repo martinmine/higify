@@ -15,13 +15,6 @@ require_once('SessionController.class.php');
 	 */
 	class NoteController
 	{
-	
-		// ----private $user = NULL;
-		
-	//	public function __construct()
-	//	{
-	//		$this->user = SessionController::requestLoggedinID();
-	//	}
 		
 		/**
 		 * Retrieves all notes published by a $user, depending on $status.
@@ -38,20 +31,17 @@ require_once('SessionController.class.php');
 		{
 			
 			$userID = SessionController::requestLoggedinID();
-		//	if ($this->user !== NULL)
-			//{
-				$noteOwner = UserController::requestUserByID($noteOwnerID);
+			$noteOwner = UserController::requestUserByID($noteOwnerID);
+			
+			if ($noteOwner !== NULL)
+			{	
+				//	When displaying other users notes - ONLY notes flagged public is allowed:
+				if ($userID !== $noteOwner->getUserID()  &&  $condition !== NoteType::PUBLIC_ONLY)
+					return NULL;
 				
-				if ($noteOwner !== NULL)
-				{	
-					//	When displaying other users notes - ONLY notes flagged public is allowed:
-					if ($userID !== $noteOwner->getUserID()  &&  $condition !== NoteType::PUBLIC_ONLY)
-						return NULL;
-					 
-					return NoteModel::getNotesFromOwner($noteOwnerID, $condition);
-				}
-			//}
-		//	return NULL;
+				return NoteModel::getNotesFromOwner($noteOwnerID, $condition);
+			}
+			return NULL;
 		}
 	
 		/**
@@ -62,7 +52,7 @@ require_once('SessionController.class.php');
 		 * @Order asc desc...
 		 * @return array of note-objects.
 		 */
-		public function requestAllPublicNotes($condition, $order)
+		public static function requestAllPublicNotes($condition, $order)
 		{
 			if ($this->user !== NULL)
 			{
@@ -72,8 +62,27 @@ require_once('SessionController.class.php');
 			}
 			return NULL;
 		}
-	
-	
+		
+		/**
+		 * Adding a new note to the database.
+		 *
+		 * @param Array of values that should be added ($_POST);
+		 */
+		public static function requestAddNote($values)
+		{
+			$isPublic = isset($values['isPublic'])? '1': '0';
+		
+		
+			$note = new Note(-1, 
+							 $values['userID'], 
+							 $values['content'],
+							 $isPublic,
+							 date('l jS \of F Y h:i:s A'),
+							 $values['username']
+							);
+							
+			NoteModel::addNote($note);	
+		}
 	}
 
 ?>

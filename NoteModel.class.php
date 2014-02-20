@@ -25,8 +25,9 @@ class NoteModel
 	public static function getNotesFromOwner($ownerID, $condition)
 	{
 		if ($condition === NoteType::NONE)
+		{
 			return NULL;
-		
+		}
 		else
 		{
 			$db = DatabaseManager::getDB();
@@ -35,7 +36,7 @@ class NoteModel
 						FROM note
 						JOIN user ON (user.userID = ownerID)
 						WHERE ownerID = :ownerID';
-
+						
 			if ($condition !== NoteType::ALL)
 			{
 				$query .= ' AND isPublic = ';
@@ -66,19 +67,15 @@ class NoteModel
 		
 	}
 	
-	
-	
-	// Work below is under construction and/or abandoned  :(
-  
 	/**
 	 * Adds a new Note object with data int the library to the database
 	 *
 	 * @Param Note $note A Note object holding the data to be added
 	 *        to the database.
 	 */
-	public function addNote($note)
+	public static function addNote($note)
 	{
-
+		$db = DatabaseManager::getDB();
 		$res = 0;
 		$query = 'INSERT INTO Note '
 			   . '(ownerID, content, isPublic) '
@@ -90,13 +87,12 @@ class NoteModel
 		   
 		try
 		{
-			$stmt = $this->db->prepare($query);
+			$stmt = $db->prepare($query);
 			$stmt->bindParam(':ownerID',  $ownerID   );
 			$stmt->bindParam(':content',  $content   );
 			$stmt->bindParam(':isPublic', $isPublic  );
 			$stmt->execute();
-			return $this->db->lastInsertId();
-			
+			//return $this->db->lastInsertId();
 		}
 		catch(Exception $e)
 		{

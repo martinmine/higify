@@ -4,6 +4,6 @@
 					<span><?php echo $TIME; ?></span></br>
 				</div>
 				<div class="content">
-					<p><? echo $CONTENT; ?></p>
+					<p><?php echo $CONTENT; ?></p>
 				</div>
 			</div>

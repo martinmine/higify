@@ -1,3 +1,3 @@
 	<div class="top">
-		<p><? echo $TOP; ?></p>
+		<p><?php echo $TOP; ?></p>
 	</div>
