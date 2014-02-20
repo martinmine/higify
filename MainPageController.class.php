@@ -11,15 +11,6 @@ require_once('DayScheduleView.class.php');
  */
 class MainPageController implements IPageController
 {
-	private $user = NULL;
-	
-	/**
-	 * Retrieves the active user object.
-	 */
-	public function __construct()
-	{
-		$this->user = SessionController::acquireSession();
-	}
 	
 	/**
 	 * Putting main page together.
@@ -28,9 +19,9 @@ class MainPageController implements IPageController
 	 */
 	public function onDisplay()
 	{
+		$user = SessionController::acquireSession();
 		$vals = array();
 		$notes = array();
-		
 	
 		
 		if ($this->user !== NULL)
@@ -38,7 +29,7 @@ class MainPageController implements IPageController
 			$vals['TOP'] = 'Top';	// Test;
 			
 			$vals['USERNAME'] = $this->user->getUsername();
-			$vals['PROFILE_ID'] = $this->user->getUserID();
+			$vals['PROFILE_ID'] = $this->getUserID;
 			
 			$vals['NOTES'] = new NoteListView();
 			
