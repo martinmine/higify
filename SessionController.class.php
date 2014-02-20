@@ -50,6 +50,11 @@ class SessionController
         SessionModel::setLoginID($userID, $rememberPassword);
         header('Location: loggedin.php');
     }
+    
+    public static function logout()
+    {
+        SessionModel::destroySession();
+    }
 }
 
 

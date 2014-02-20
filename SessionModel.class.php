@@ -64,7 +64,7 @@ class SessionModel
             }
             else    // Invalid key used, unset the cookie
             {
-                setcookie('TOKEN', NULL, -1, '/', HigifyConfig::SITE_DOMAIN);
+                setcookie('TOKEN', NULL, -1);
                 return false;
             }
             
@@ -102,6 +102,9 @@ class SessionModel
         }
     }
     
+    /**
+     * Calls the session_start, reads the session cookie and loads all the data for the super global session array
+     */
     private static function prepareSession()
     {
         if (!self::$sessionStarted)
@@ -109,6 +112,21 @@ class SessionModel
             session_start();
             self::$sessionStarted = true;
         }   
+    }
+    
+    /**
+     * Unsets the logged in session ID and clears the cookies if they are set
+     */
+    public static function destroySession()
+    {
+        self::prepareSession();
+        unset($_SESSION['LOGIN_ID']);
+        
+        if (isset($_COOKIE['USR_ID']) && isset($_COOKIE['TOKEN']))
+        {
+            setcookie('USR_ID', NULL, -1); 
+            setcookie('TOKEN', NULL, -1); 
+        }
     }
 }
 ?>
