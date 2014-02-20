@@ -1,11 +1,12 @@
-$(document).ready(onPageLoaded);		
+$(document).ready(onPageLoaded);        
 
 /**
 * Called once the page is loaded, registers the event on the search form
 */
 function onPageLoaded()
 {
-	$("#search").submit(onSubmit);
+    $("#search").submit(onSubmit);
+    schedule = new Array();
 }
 
 /**
@@ -14,11 +15,17 @@ function onPageLoaded()
 */
 function onSubmit(e)
 {
-	var searchElement = document.getElementById("searchField");
-	$.getJSON("search_results.js", receivedSearchResult); // Add searchElement to the URL (filter)
-	e.preventDefault();
+    var searchElement = document.getElementById("searchField");
+    var searchTypeElement = document.getElementById("searchType");
+
+    var searchText = encodeURIComponent(searchElement.value);
+    var searchType = encodeURIComponent(searchTypeElement.value);
+
+    $.getJSON("search.php?searchType=" + searchType + "&searchText=" + searchText, receivedSearchResult);
+    e.preventDefault();
 }
 
+var schedule;
 /**
 * Function called when the search data is received
 */
@@ -26,20 +33,39 @@ function receivedSearchResult(data)
 {
     var elementCount = data["count"];
     var elements = data["results"];
-    $.each(elements, appendTimeObject);
+
+    var resultSet = createResultSet(data["type"], data["info"], data["desc"]);
+
+
+    $.each(elements, function(index, obj)   // For every new course in return result
+    {
+        var course = createCourse(obj["code"], obj["desc"]);
+        resultSet.results.push(course);
+
+        $.each(schedule, function(index, timeObject)    // set every other course with the same code to enabled
+        {
+            var sameObject = timeObject.tryGet(course.code);
+            if (sameObject != null)
+                sameObject.enabled = true;
+        });
+
+        appendTimeObject(course);
+    });
+
+    // check if is a union of existing?
+
+    schedule.push(resultSet);   // add to schedule
 }
 
 /**
 * Adds one time object to the HTML output and the underlying data-structure
 */
-function appendTimeObject(objIndex, obj)
+function appendTimeObject(obj)
 {
-    var objID = obj["id"];
-    var objDesc = obj["name"];
     var form = $("#objectList");
-    form.append('<div id="' + objID + '" class="searchResultElement">' +
-    '<div class="objectDescription">' +  objDesc +'</div>' +
-    '<button class="removeButton" onclick="removeTimeObject(\'' + objID +'\'); return false">Remove</button>' +
+    form.append('<div id="' + obj.code + '" class="searchResultElement">' +
+    '<div class="objectDescription">' +  obj.code + ' ' + obj.desc +'</div>' +
+    '<button class="removeButton" onclick="removeTimeObject(\'' + obj.code +'\'); return false">Remove</button>' +
     '</div>');
 }
 
@@ -50,4 +76,91 @@ function removeTimeObject(id)
 { 
     var element = document.getElementById(id);
     element.parentNode.removeChild(element);
+
+    // Find the amount with LEAST enabled elements
+    var enabledRatio = 1;
+    var toRemove = new Array();
+
+    $.each(schedule, function(index, resultSet)
+    {
+        var code = resultSet.tryGet(id);
+        if (code != null)
+            code.enabled = false;
+
+        if (resultSet.enabledCount() == 0)
+        {
+            toRemove.push(resultSet);
+        }
+    });
+
+    $.each(schedule, function(index, scheduleObject)
+    {
+        var scheduleIndex = schedule.indexOf(scheduleObject);
+        schedule.splice(scheduleIndex);
+    });
+}
+
+function createResultSet(type, info, desc)
+{
+    var resultSet = 
+    {
+        "type": type,
+        "info": info,
+        "desc": desc,
+        "results": new Array(),
+
+        count: function() 
+        {
+            return results.length;
+        },
+
+        enabledCount: function()
+        {
+            var count = 0;
+            this.results.forEach(function(element) 
+            {
+                if (element.enabled == true)
+                    count++;
+            });
+
+            return count;
+        },
+
+        contains: function(course) 
+        {
+            var found = false;
+            this.results.forEach(function(element) 
+            {
+                if (element.code == course)
+                    found = true;
+            });
+
+            return found;
+        },
+
+        tryGet: function(course)
+        {
+            var course = null;
+            this.results.forEach(function(element) 
+            {
+                if (element.code == course)
+                    course = element;
+            });
+            return course;
+        }
+    }
+
+    return resultSet;
+}
+
+function createCourse(code, desc)
+{
+    var course = 
+    {
+        "code": code,
+        "desc": desc,
+        "enabled": true
+    }
+
+    return course;
 }
