@@ -16,12 +16,12 @@ require_once('SessionController.class.php');
 	class NoteController
 	{
 	
-		private $user = NULL;
+		// ----private $user = NULL;
 		
-		public function __construct()
-		{
-			$this->user = SessionController::requestLoggedinID();
-		}
+	//	public function __construct()
+	//	{
+	//		$this->user = SessionController::requestLoggedinID();
+	//	}
 		
 		/**
 		 * Retrieves all notes published by a $user, depending on $status.
@@ -34,24 +34,24 @@ require_once('SessionController.class.php');
 		 * @param $condition const (enum) for showing desired notes.
 		 * @return Array of note-objects with desired and legal $condition.
 		 */
-		public function requestNotesFromUser($noteOwnerID, $condition = NoteType::NONE)
+		public static function requestNotesFromUser($noteOwnerID, $condition = NoteType::NONE)
 		{
 			
-			//$user = SessionController::requestLoggedinID();
-			if ($this->user !== NULL)
-			{
+			$userID = SessionController::requestLoggedinID();
+		//	if ($this->user !== NULL)
+			//{
 				$noteOwner = UserController::requestUserByID($noteOwnerID);
 				
 				if ($noteOwner !== NULL)
 				{	
 					//	When displaying other users notes - ONLY notes flagged public is allowed:
-					if ($this->user->getUserID() !== $noteOwner->getUserID()  &&  $condition !== NoteType::PUBLIC_ONLY)
+					if ($userID !== $noteOwner->getUserID()  &&  $condition !== NoteType::PUBLIC_ONLY)
 						return NULL;
 					 
 					return NoteModel::getNotesFromOwner($noteOwnerID, $condition);
 				}
-			}
-			return NULL;
+			//}
+		//	return NULL;
 		}
 	
 		/**

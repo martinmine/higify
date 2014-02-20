@@ -2,6 +2,7 @@
 require_once ('DatabaseManager.class.php');
 require_once ('User.class.php');
 
+
 class UserModel
 {
     const SALT = 'abcfds11jhG';
@@ -43,7 +44,7 @@ class UserModel
     {
         if (UserModel::userExists($username))
         {                                                                                           // SQL query
-            $query = "SELECT userID, username, email, emailActivated                                   
+            $query = "SELECT userID, username, email, emailActivated, publicTimeSchedule                                   
                       FROM user
                       WHERE username = :username AND password = :password";
             
@@ -60,8 +61,8 @@ class UserModel
             
             if ($result['userID'] && $result['username'])
             {
-                $user = new User($result['userID'], $result['username'], 
-                                 $result['email'],  $result['emailActivated']);             // Creating new user object
+                $user = new User($result['userID'], $result['username'], $result['email'],       // Creating new user object
+                                 $result['emailActivated'], $result['publicTimeSchedule']);             
                 return $user;                                                               // Returns the user object
             }
         }
@@ -226,12 +227,12 @@ class UserModel
     {
         $hashedNewPassword = hash_hmac('sha512', $newPassword . UserModel::SALT, UserModel::SITEKEY);
         $db = DatabaseManager::getDB();
-        $stmt2 = $db->prepare("UPDATE user                                       
-                           SET password = :newPassword
-                           WHERE userID = :userID");                     // Preparing database for query
-        $stmt2->bindparam(':newPassword', $hashedNewPassword);           // Binding parameters
-        $stmt2->bindparam(':userID', $userID);
-        $stmt2->execute();                                               // Executing query
+        $stmt = $db->prepare("UPDATE user                                       
+                               SET password = :newPassword
+                               WHERE userID = :userID");                 // Preparing database for query
+        $stmt->bindparam(':newPassword', $hashedNewPassword);           // Binding parameters
+        $stmt->bindparam(':userID', $userID);
+        $stmt->execute();                                               // Executing query
     }
     
     /**
@@ -327,7 +328,8 @@ class UserModel
         if (isset($picture['profilePicture']))
             return $picture['profilePicture'];
         
-        return NULL;
+        else
+            return NULL;
     }
 }
 ?>

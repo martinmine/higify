@@ -86,18 +86,13 @@ class RegistrationController implements IPageController
                 $registrationFailure = true;
                 $vals['ERROR_CAPTCHA'] = new ErrorMessageView('Please enter the two words in the image above');
             }
-            else if ($captcha) // Invalid captcha
+            else if (!$captchaResponse->is_valid) // Invalid captcha
             {
                 $registrationFailure = true;
                 $vals['ERROR_CAPTCHA'] = new ErrorMessageView('Invalid security code');
             }
-            
-            if (!$captchaResponse->is_valid) // Something went wrong
-            {
-                $vals['FORM_USERNAME'] = $username;
-                $vals['FORM_EMAIL'] = $email;
-            }
-            else
+           
+            if ($registrationFailure == false)
             {
                 UserController::registerUser($username, $password, $email);
                 header('Location: login.php?registered');

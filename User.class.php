@@ -9,6 +9,8 @@ class User
     
     private $emailActivated; // type: boolean, true if user's email is activated
     
+    private $publicTimeSchedule; // type: boolean, true if user has set timetable to public
+    
     public function __construct($userID, $username, $email, $emailActivated) // Constructor
     {
         $this->userID = $userID;
@@ -56,17 +58,9 @@ class User
         return $this->emailActivated;
     }
 	
-	
-    /**
-     * Summary of display
-     * TEST FUNCTION
-     * TODO: DELETE IT
-     */
-    public function display()
+	public function hasPublicTimeTable()
     {
-        $res = 'id: ' . $this->userID . '   username: ' . $this->username 
-                      . '   email: ' . $this->email;
-        echo $res;
+        return $this->publicTimeSchedule;
     }
 }
 ?>

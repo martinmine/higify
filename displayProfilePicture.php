@@ -1,6 +1,15 @@
 <?php
-require_once('UserModel.class.php');
-$picture = UserModel::fetchProfilePicture(5);
-header("Content-type: image/jpeg");
-echo $picture;
+function displayProfilePicture($userID)
+{
+	require_once('UserModel.class.php');
+	$picture = UserModel::fetchProfilePicture($userID);
+
+	header("Content-type: image/jpeg");
+	if ($picture === NULL)
+	{
+		include ('/static/defaultpicture.png');
+	}
+	else
+		echo $picture;
+}
 ?>

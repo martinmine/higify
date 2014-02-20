@@ -48,7 +48,7 @@ class SessionController
     public static function setLoggedIn($userID, $rememberPassword = false)
     {
         SessionModel::setLoginID($userID, $rememberPassword);
-        header('Location: loggedin.php');
+        header('Location: mainpage.php');
     }
     
     public static function logout()

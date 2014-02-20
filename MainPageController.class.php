@@ -1,5 +1,8 @@
 <?php
 require_once('UserController.class.php');
+require_once('SessionController.class.php');
+require_once('NoteListView.class.php');
+require_once('DayScheduleView.class.php');
 
 /**
  * Retrieves all elements for the main-page.
@@ -32,8 +35,8 @@ class MainPageController implements IPageController
 		{	
 			$vals['TOP'] = 'Top';	// Test;
 			
-			$vals['USERNAME'] = $this->getUsername();
-			$vals['PROFILE_PICTURE'] = UserController::requestProfilePicture($this->getUserID());
+			$vals['USERNAME'] = $this->user->getUsername();
+			$vals['PROFILE_PICTURE'] = UserController::requestProfilePicture($this->user->getUserID());
 			
 			$vals['NOTES'] = new NoteListView();
 			$vals['HOURS'] = new DayScheduleView();
@@ -43,6 +46,7 @@ class MainPageController implements IPageController
 		{
 			$vals['ERROR_MSG'] = new ErrorMessageView('No user is logged in...');
 		}
+        return $vals;
 	}
 
 

@@ -11,7 +11,7 @@ class DayScheduleView extends WebPageElement
 {
 	private $classHours = NULL;		//	@val class-hour object...
 	
-	public __construct()
+	public function __construct()
 	{
 		//$userID = SessionController::requestLoggedinID();
 		//$this->classHours ...
@@ -29,9 +29,9 @@ class DayScheduleView extends WebPageElement
 			$tpl->setValue('ROOM', $hour['room']);
 			$tpl->setValue('START', $hour['start']);
 			$tpl->setValue('END', $hour['end']);
-			*/
+             */
 			$tpl->display();
 		}
 	}
-
+}
 ?>

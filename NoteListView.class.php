@@ -2,6 +2,7 @@
 require_once('Template/Template.class.php');
 include_once('Template/WebPageElement.class.php');
 require_once('NoteType.class.php');
+require_once('NoteController.class.php');
 
  /**
   * The view listing all note-elements
@@ -14,7 +15,7 @@ class NoteListView extends WebPageElement
 {
 	private $notes = NULL;
 	
-	public __construct()
+	public function __construct()
 	{
 		$userID = SessionController::requestLoggedinID();
 		$this->notes = NoteController::requestNotesFromUser($userID, NoteType::ALL);

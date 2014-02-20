@@ -1,5 +1,5 @@
 <?php
-require_once('db.php');
+require_once('databaseManager.class.php');
 require_once('NoteType.class.php');
 require_once('Note.class.php');
 
