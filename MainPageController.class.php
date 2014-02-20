@@ -37,10 +37,11 @@ class MainPageController implements IPageController
 			$vals['TOP'] = 'Top';	// Test;
 			
 			$vals['USERNAME'] = $this->user->getUsername();
-			$vals['PROFILE_PICTURE'] = UserController::requestProfilePicture($this->user->getUserID());
+			$vals['PROFILE_ID'] = $this->user->getUserID();
 			
 			$vals['NOTES'] = new NoteListView();
-			$vals['HOURS'] = new DayScheduleView();
+			
+			$vals['HOURS'] = new DayScheduleView();  //  not done...
 			
 		}
 		else
