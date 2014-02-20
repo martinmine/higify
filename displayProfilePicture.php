@@ -1,8 +1,6 @@
 <?php
-function displayProfilePicture($userID)
-{
 	require_once('UserModel.class.php');
-	$picture = UserModel::fetchProfilePicture($userID);
+	$picture = UserModel::fetchProfilePicture($_GET['id']);
 
 	header("Content-type: image/jpeg");
 	if ($picture === NULL)
@@ -11,5 +9,4 @@ function displayProfilePicture($userID)
 	}
 	else
 		echo $picture;
-}
 ?>
