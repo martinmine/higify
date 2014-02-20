@@ -31,7 +31,7 @@ class MainPageController implements IPageController
 		$vals = array();
 		$notes = array();
 		
-		NoteModel
+	
 		
 		if ($this->user !== NULL)
 		{	
