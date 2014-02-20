@@ -3,8 +3,6 @@ require_once('UserController.class.php');
 require_once('SessionController.class.php');
 require_once('NoteListView.class.php');
 require_once('DayScheduleView.class.php');
-require_once('displayProfilePicture.php');
-require_once('NoteModel.class.php');
 
 /**
  * Retrieves all elements for the main-page.
