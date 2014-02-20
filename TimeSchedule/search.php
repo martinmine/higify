@@ -61,15 +61,17 @@ else
 
 $info = '';
 $desc = '';
+$id = 0;
 
 if (count($response) > 0)
 {
     $info = $response[0]->getInfo();
     $desc = $response[0]->getDescription();
+    $id = $response[0]->getID();
 }
 
-
 $json = array('count' => count($results),
+              'id'   => $id,
               'type' => $searchType,
               'info' => $info,
               'desc' => $desc,

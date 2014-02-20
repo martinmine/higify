@@ -1,11 +1,18 @@
 $(document).ready(onPageLoaded);        
 
 /**
-* Called once the page is loaded, registers the event on the search form
+* Holds all the items that shall be either added or removed from the schedule
+* Is an array of ResultSet
+*/
+var schedule;
+
+/**
+* Called once the page is loaded, registers event handlers and prepares variables
 */
 function onPageLoaded()
 {
     $("#search").submit(onSubmit);
+    $("#objectForm").submit(onSave);
     schedule = new Array();
 }
 
@@ -25,18 +32,26 @@ function onSubmit(e)
     e.preventDefault();
 }
 
-var schedule;
+/**
+* Function called when the user clicks on the save button on the end of the form
+* Serializes the schedule to JSON data and adds it to the form
+*/
+function onSave(e)
+{
+    var scheduleData = document.getElementById("scheduleData");
+    scheduleData.value = $.toJSON(schedule);
+}
+
 /**
 * Function called when the search data is received
 */
 function receivedSearchResult(data)
 {
-    var elementCount = data["count"];
+    var newItems = 0;   // The new items which gets added to the schedule
+
     var elements = data["results"];
-
-    var resultSet = createResultSet(data["type"], data["info"], data["desc"]);
-
-
+    var resultSet = createResultSet(data["type"], data["info"], data["desc"], data["id"]);
+    
     $.each(elements, function(index, obj)   // For every new course in return result
     {
         var course = createCourse(obj["code"], obj["desc"]);
@@ -49,12 +64,15 @@ function receivedSearchResult(data)
                 sameObject.enabled = true;
         });
 
-        appendTimeObject(course);
+        if (courseExists(course.code) == false) // If not already added,
+        {
+            appendTimeObject(course);           // add to output
+            newItems++;
+        }
     });
 
-    // check if is a union of existing?
-
-    schedule.push(resultSet);   // add to schedule
+    if (newItems > 0)   // If there was any new items to add at all
+        schedule.push(resultSet);   // add to schedule
 }
 
 /**
@@ -79,7 +97,7 @@ function removeTimeObject(id)
 
     // Find the amount with LEAST enabled elements
     var enabledRatio = 1;
-    var toRemove = new Array();
+    var toRemove = new Array(); // Empty sets to be removed
 
     $.each(schedule, function(index, resultSet)
     {
@@ -87,45 +105,90 @@ function removeTimeObject(id)
         if (code != null)
             code.enabled = false;
 
-        if (resultSet.enabledCount() == 0)
-        {
+        if (resultSet.enabledCount() == 0) // Add to to-remove list if is empty
             toRemove.push(resultSet);
-        }
     });
 
-    $.each(schedule, function(index, scheduleObject)
+    $.each(toRemove, function(index, scheduleObject)    // Remove all the empty sets
     {
         var scheduleIndex = schedule.indexOf(scheduleObject);
         schedule.splice(scheduleIndex);
     });
 }
 
-function createResultSet(type, info, desc)
+/**
+* Checks if a course is already added (and enabled) in the time schedule
+*/
+function courseExists(courseCode)
+{
+    var found = false;
+    $.each(schedule, function (index, resultSet)
+    {
+        var course = resultSet.tryGet(courseCode);
+        if (course != null && course.enabled)
+            found = true;
+    });
+
+    return found;
+}
+
+/**
+* Creates a new ResultSet with a type, info and desc
+* also defines the functions for the result set
+*/
+function createResultSet(type, info, desc, id)
 {
     var resultSet = 
     {
-        "type": type,
-        "info": info,
-        "desc": desc,
-        "results": new Array(),
+        "id": id,
+        "type": type, // What type this result set is for (room, lecturer, class, etc.)
+        "info": info, // Information on the result set, eg IMT2321
+        "desc": desc, // Description, eg. www-technology
+        "results": new Array(), // All the course codes under the set
 
+        // returns the amount of items under the result set
         count: function() 
         {
             return results.length;
         },
 
-        enabledCount: function()
+        // Returns the amount of enabled items in the result set, returns 0 if all the properties are enabled somewhere else
+        enabledCount: function() 
         {
             var count = 0;
+            var id = this.id;
             this.results.forEach(function(element) 
             {
-                if (element.enabled == true)
-                    count++;
+                if (element.enabled)
+                {
+                    var rendundant = false; // Enabled of this type in other places
+                    schedule.forEach(function (set)
+                    {
+                        if (set.id != id && set.hasCourseEnabled(element.code)) // Someone else has the code enabled, safe to disable here
+                            rendundant = true;
+                    });
+
+                    if (!rendundant) // If nowhere to be found other places - this cannot be removed, increase the count
+                        count++;
+                }
             });
 
             return count;
         },
 
+        hasCourseEnabled: function(course)
+        {
+            var found = false;
+            this.results.forEach(function (element)
+            {
+                if (element.code == course && element.enabled)
+                    found = true;
+            });
+
+            return found;
+        },
+
+        // Returns true or false if the set contains the course given as parameter
         contains: function(course) 
         {
             var found = false;
@@ -138,28 +201,32 @@ function createResultSet(type, info, desc)
             return found;
         },
 
-        tryGet: function(course)
+        // Tries to get a course from the set, returns null if none found
+        tryGet: function(course) 
         {
-            var course = null;
+            var hit = null;
             this.results.forEach(function(element) 
             {
                 if (element.code == course)
-                    course = element;
+                    hit = element;
             });
-            return course;
+            return hit;
         }
     }
 
     return resultSet;
 }
 
+/**
+* Creates a course with a code and a description
+*/
 function createCourse(code, desc)
 {
-    var course = 
+    var course =
     {
-        "code": code,
-        "desc": desc,
-        "enabled": true
+        "code": code, // Code, eg. IMT123
+        "desc": desc, // Description name, eg. Algorithmic Methods
+        "enabled": true // When the user clicks remove, this is set to false
     }
 
     return course;

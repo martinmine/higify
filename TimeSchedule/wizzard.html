@@ -5,6 +5,7 @@
         <title>Time schedule setup</title>
         <link rel="stylesheet" type="text/css" href="wizzard.css">
         <script type="text/javascript" src="jquery-latest.min.js"></script>
+        <script type="text/javascript" src="jquery.json-2.4.min.js"></script>
         <script type="text/javascript" src="search_core.js"></script>
     </head>
     <body>
@@ -22,10 +23,11 @@
                 </form>
             </div>
             <div>
-                <form id="form" action="submit.php" method="POST">
+                <form id="objectForm" action="showpost.php" method="POST">
                     <div id="objectList">
 
                     </div>
+                    <input type="hidden" name="scheduleData" id="scheduleData">
                     <input class="saveBtn" type="submit" value="Save"/>
                 </form>
             </div>
