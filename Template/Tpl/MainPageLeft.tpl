@@ -19,5 +19,5 @@
 			<li><a href="https://www.studweb.no/as/WebObjects/studentweb2?inst=HiG">Studentweb</a></li>
 			<li><a href="http://www.google.no">Min Timeplan</a></li>
 			</ul>
-		</div>	
+		</div>
 	</div>
