@@ -9,6 +9,18 @@ div
 }
 
 
+a:link, a:visited, a:active, a:hover
+{
+	text-decoration: none;
+	color: orange;
+}
+
+a:hover
+{
+	color: black;
+}
+
+
 li
 {
 	list-style: none;
@@ -126,6 +138,29 @@ input[type=text]
 	margin-top: -16px;
 	text-align: left;
 	background-color: #FFFFFF;
+}
+
+.option
+{
+	margin-top: -16px;
+	display: block;
+	float: left;
+	width: 100%;
+	background-color: #FFFFFF;
+}
+
+.option_right
+{
+	width: 70px;
+	float: right;
+	background-color: #565656;
+}
+
+.option_right:hover
+{
+	width: 70px;
+	float: right;
+	background-color: #CCCCCC;
 }
 
 .center

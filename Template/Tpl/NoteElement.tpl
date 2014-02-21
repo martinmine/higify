@@ -6,4 +6,15 @@
 				<div class="content">
 					<p><?php echo $CONTENT; ?></p>
 				</div>
-			</div>
+				<div class="option">
+					
+					<a href="mainpage.php?noteID=<?php echo $NOTEID . "&changeType=1"; ?>">
+						<div class="option_right"> <?php echo $OPTION2; ?> </div>
+					</a>
+					
+					<a href="mainpage.php?noteID=<?php echo $NOTEID . "&changeType=0"; ?>">
+						<div class="option_right"> <?php echo $OPTION1; ?> </div>
+					</a></br>
+
+				</div>
+			</div></br>

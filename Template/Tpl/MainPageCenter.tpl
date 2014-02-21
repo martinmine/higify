@@ -2,7 +2,7 @@
 		<div class="mid">
 			<h3>Publish a new note</h3>
 			<div class="AddNewNote">
-				<form action="mainpage.php" method="post">
+				<form action="mainpage.php" method="post" value=" <?php echo $TEXT; ?> ">
 				<textarea style="resize:none" name="content"></textarea></br>
 				<label for="isPublic">Make Public</label>
 				<input type="checkbox" name="isPublic" value="1"/>
