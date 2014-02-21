@@ -22,6 +22,9 @@ function onPageLoaded()
 */
 function onSubmit(e)
 {
+    displayLoader();
+    hideNotifications();
+
     var searchElement = document.getElementById("searchField");
     var searchTypeElement = document.getElementById("searchType");
 
@@ -47,6 +50,7 @@ function onSave(e)
 */
 function receivedSearchResult(data)
 {
+    hideLoader();
     var newItems = 0;   // The new items which gets added to the schedule
 
     var elements = data["results"];
@@ -56,14 +60,24 @@ function receivedSearchResult(data)
     {
         var course = createCourse(obj["code"], obj["desc"]);
         resultSet.results.push(course);
+        var needsReadd = false;
 
         $.each(schedule, function(index, timeObject)    // set every other course with the same code to enabled
         {
             var sameObject = timeObject.tryGet(course.code);
-            if (sameObject != null)
+            if (sameObject != null && sameObject.enabled == false)
+            {
                 sameObject.enabled = true;
+                needsReadd = true;
+                
+            }
         });
 
+        if (needsReadd)
+        {
+            appendTimeObject(course);
+        }
+        
         if (courseExists(course.code) == false) // If not already added,
         {
             appendTimeObject(course);           // add to output
@@ -73,6 +87,9 @@ function receivedSearchResult(data)
 
     if (newItems > 0)   // If there was any new items to add at all
         schedule.push(resultSet);   // add to schedule
+    
+    if (data["count"] == 0)
+        displayNoSearchResultsFoundMessage();
 }
 
 /**
@@ -80,11 +97,45 @@ function receivedSearchResult(data)
 */
 function appendTimeObject(obj)
 {
-    var form = $("#objectList");
-    form.append('<div id="' + obj.code + '" class="searchResultElement">' +
-    '<div class="objectDescription">' +  obj.code + ' ' + obj.desc +'</div>' +
-    '<button class="removeButton" onclick="removeTimeObject(\'' + obj.code +'\'); return false">Remove</button>' +
-    '</div>');
+    var list = $("#objectList");
+    list.append('<div id="' + obj.code + '" class="searchResultElement">' +
+                  '<div class="objectDescription">' + obj.code + ' - ' + obj.desc + '</div>' +
+                  '<a href="#" onclick="removeTimeObject(\'' + obj.code + '\');" class="itemAction">Remove</a>' +
+                '</div>');
+}
+
+/**
+* Displays the loader icon at the end of the form with ID = search
+*/
+function displayLoader()
+{
+    var container = $("#notificationContainer");
+    container.append('<img id="loaderIcon" class="loader" src="loader.gif" alt="Loading"/>');
+}
+
+/**
+* Displays a notification to the user that nothing was found for this search
+*/
+function displayNoSearchResultsFoundMessage()
+{
+    var container = $("#notificationContainer");
+    container.append('<div id="notification" class="notification">No items found</div>');
+}
+
+/**
+* Removes the loader icon from the HTML document
+*/
+function hideLoader()
+{
+    removeHTMLElement("loaderIcon");
+}
+
+/**
+* Hides the notification element from the HTML document
+*/
+function hideNotifications()
+{
+    removeHTMLElement("notification");
 }
 
 /**
@@ -230,4 +281,14 @@ function createCourse(code, desc)
     }
 
     return course;
+}
+
+/**
+* Removes an HTML element from the HTML document with the given ID
+*/
+function removeHTMLElement(id)
+{
+    var element = document.getElementById(id);
+    if (element != null)
+        element.parentElement.removeChild(element);
 }

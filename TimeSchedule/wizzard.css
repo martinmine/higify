@@ -41,3 +41,14 @@ div.objectDescription
 	float: left;
 	margin-left: 5px;
 }
+
+div.notification
+{
+	width: 500px;
+	height: 30px;
+	background-color: rgb(153,217,234);
+	border-color: rgb(0,125,179);
+	border-width: 1px;
+	border-style: solid;
+	color: black;
+}
