@@ -57,7 +57,7 @@ class NoteModel
 	}
 	
 	/**
-	 * Get all notes on some condition. limited condition ofcourse
+	 * Get all notes on some condition. limited condition of course
 	 * Change comment when done... obviously :
 	 */
 	public function getAllPublicNotes($condition = NULL)
