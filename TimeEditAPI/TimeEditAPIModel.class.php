@@ -138,7 +138,6 @@ class TimeEditAPIModel
 					
 					while ($k < $valueCount)
 						$subjects[] = array($item[$k++] => $item[$k++]);	// Course code => Course name
-					
 					$tableObject->setCourseCodes($subjects);
                 }
                 else

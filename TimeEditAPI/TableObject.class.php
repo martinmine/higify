@@ -149,6 +149,7 @@ class TableObject implements JsonSerializable
 	 */
 	public function setCourseCodes($courseCode)
 	{
+        
 		$this->courseCodes = $courseCode;
 	}
 
@@ -245,12 +246,18 @@ class TableObject implements JsonSerializable
 	public function match($tableObject)
 	{
         if (isset($this->courseCodes[0]))
-		    $keys = array_keys($this->courseCodes[0]);
+        {
+            if (is_string($this->courseCodes[0]))
+                $keys = array($this->courseCodes[0]);
+            else 
+		        $keys = array_keys($this->courseCodes[0]);
+        }
         else
             $keys = array('');
 				
-		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
+		$val = ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
 			&& (count($tableObject->courseCodes) == count($this->courseCodes) || ($tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room)));
+        return $val;
 	}
 	
 	/**

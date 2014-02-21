@@ -3,6 +3,7 @@ require_once('TimeEditAPIModel.class.php');
 require_once('PullFormat.class.php');
 require_once('ObjectType.class.php');
 require_once('TimeTableViewFactory.class.php');
+require_once('TimeTable.class.php');
 
 /**
  * API Towards TimeEdit, all the calls for getting data from TimeEdit 
@@ -85,6 +86,83 @@ class TimeEditAPIController
 		
 		$view = TimeTableViewFactory::getView($outputFormat);
         return $view->render($timeTable);
+    }
+    
+    /**
+     * Merges two data sets into one new TimeTable, identital events are merged while the difference is also added (Union)
+     * @param TimeTable $left The first table to merge
+     * @param TimeTable $right The second table to merge
+     * @return TimeTable The union of left and right
+     */
+    public static function merge(TimeTable $left, TimeTable $right)
+    {
+        $merged = array();
+        $leftIterator = $left->getIterator();
+        $rightIterator = $right->getIterator();
+        
+        $leftItem = NULL;
+        $rightItem = NULL;
+        
+        do
+        {
+            if ($leftItem === NULL && $leftIterator->valid())
+            {
+                $leftItem = $leftIterator->current();
+            }
+            if ($rightItem === NULL && $rightIterator->valid())
+            {
+                $rightItem = $rightIterator->current();
+            }
+            
+            if ($leftItem !== NULL && $rightItem !== NULL) // Still items to merge
+            {
+                // If they equal, just add one of them and continue TO THE LEFT TO THE LEFT
+                if ($leftItem->match($rightItem))
+                {
+                    $merged[] = $leftItem;
+                    
+                    $leftIterator->next();  // advance the items
+                    $leftItem = NULL;
+                    $rightIterator->next();
+                    $rightItem = NULL;
+                    
+                }
+                  // left items comes before right item (lowest time), then left item's time is LESS than right item's time
+                else if ($leftItem->getTimeStart() < $rightItem->getTimeStart()) // LEFT begins first
+                {
+                    $merged[] = $leftItem;
+                    $leftIterator->next();  // advance the items
+                    $leftItem = NULL;
+                }
+                else // Then the right must be the first one
+                {
+                    $merged[] = $rightItem;
+                    $rightIterator->next();
+                    $rightItem = NULL;
+                }
+            }
+            else
+            {
+                if ($leftItem !== NULL) // Push whatever is not null to the array
+                {
+                    $merged[] = $leftItem;
+                    $leftIterator->next();
+                    $leftItem = NULL;
+                }
+                else
+                {
+                    $merged[] = $rightItem;
+                    $rightIterator->next();
+                    $rightItem = NULL;
+                }
+            }
+        }
+        while ($leftIterator->valid() || $rightIterator->valid()); // While anything left in any of the data sets
+        
+        $margedTable = new TimeTable();
+        $margedTable->fill($merged);
+        
+        return $margedTable;   
     }
 }
 ?>
