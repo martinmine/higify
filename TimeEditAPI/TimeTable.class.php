@@ -92,6 +92,24 @@ class TimeTable implements JsonSerializable
 		return new TimeTableIterator($this);
 	}
 	
+    /**
+     * Inserts all the objects into the table
+     * @param Array $objects Array of TableObject
+     */
+    public function fill($objects)
+    {
+        foreach ($objects as $object)
+        {
+            if (is_integer($object->getID()))
+            {
+                $this->addObjectWithID($object, $object->getID());
+            }
+            else
+            {
+                $this->addObject($object);
+            }
+        }
+    }
 	/**
 	 * Serializes the TimeTable for JSON (required by JsonSerializable)
 	 * @return Array Represents the content for the JSON serializer
