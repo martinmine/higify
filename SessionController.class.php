@@ -9,6 +9,8 @@ require_once('UserModel.class.php');
  */
 class SessionController
 {
+    private static $sessionUser;
+    
     /**
      * Gets the User instance of a given user. If no user was found, it will be redirected.
      * @param boolean $disableRedirect If set to true, user won't be redirected when a user is signed in.
@@ -17,29 +19,33 @@ class SessionController
      */
     public static function acquireSession($disableRedirect = false)
     {
-         $userID = SessionModel::getLoggedinID();                        // Fetches logged in user
-         
-         if ($userID === false)                                          // If there is no logged in user
-         {
-             if (!$disableRedirect)                                      // Redirect to login page
-                 header('Location: index.php');             
-             else
-                 return NULL;                                            // If disable redirect is false return NULL
-         }
-         else
-         {
-             return UserController::requestUserByID($userID);            // User in session! Fetch userdata from db
-         }
+        $userID = self::requestLoggedinID($disableRedirect);
+        if ($userID !== NULL)
+            return UserController::requestUserByID($userID);  // User in session! Fetch userdata from db
+        else
+            return NULL;
     }
     
     /**
+     * Gets the ID of the logged in user
      * @return userID of logged in user
      */
-    public static function requestLoggedinID()
+    public static function requestLoggedinID($disableRedirect = false)
     {
-        return SessionModel::getLoggedinID();
+        $userID = SessionModel::getLoggedinID();                        // Fetches logged in user
+        
+        if ($userID === false)                                          // If there is no logged in user
+        {
+            if (!$disableRedirect)                                      // Redirect to login page
+                header('Location: index.php');             
+            else
+                return NULL;                                            // If disable redirect is false return NULL
+        }
+        else
+        {
+            return $userID;
+        }
     }
-    
     
     /**
      * Sets the logged in user ID for a session and redirects the user
