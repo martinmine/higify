@@ -1,5 +1,9 @@
 <?php
 require_once('ScheduleModel.class.php');
+require_once('PullFormat.class.php');
+require_once('OutputType.class.php');
+require_once('ObjectType.class.php');
+require_once('ITimeParameter.class.php');
 
 class ScheduleController
 {
@@ -33,6 +37,8 @@ class ScheduleController
     {
         $includedObjects = ScheduleModel::getIncludeObjects($userID);
         $exludedObjects = ScheduleModel::getExcludingTimeObject($userID);
+        
+
         
         print_r($includedObjects);
         echo '<br/>';
