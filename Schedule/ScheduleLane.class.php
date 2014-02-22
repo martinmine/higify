@@ -54,27 +54,33 @@ class ScheduleLane
             return;
         
         $max = $prev->getIndentMax();
-        $free = array_fill(0, $max, true); // Initialize the array with flags
+        $free = array_fill(1, $max, true); // Initialize the array with flags for if a lane is taken or not
+        $flagged = false;
         
         // Look for overlapping elements and flag these in the free array if there are any overlapping
         // elements. Then move backwards in the time-schedule (previous)
         while ($prev !== NULL) // Find overlapping elements
         {
-            
-            if ($prev->overlaps($item))                   // Item overlaps 
+            if ($prev->overlaps($item))               // Item overlaps 
             {
-                $free[$prev->getIndent() - 1] = false;    // Flag this slot
+                $free[$prev->getIndent()] = false;    // Flag this slot
+                $flagged = true;
             }
             
             $prev = $prev->getPrevious();
         }
         
-        $i = 0; // The position where $item will be put
-        while ($i < $max && !$free[$i]) $i++; // Find the free position in $free
+        // This means the previous item was a part of another group, but the item does not conflict
+        // with any of the other items
+        if (!$flagged) 
+            return;
         
-        if ($i == $max) // FULL row, all the free slots in $free are set to false, indent group
+        $i = 1; // The position where $item will be put
+        while ($i <= $max && !$free[$i]) $i++; // Find the free position in $free
+
+        if ($i > $max) // FULL row, all the free slots in $free are set to false, indent group
         {
-            $max++; $i++;
+            $max++; 
             $prev = $this->lanes[$this->count - 1];
             do
             {

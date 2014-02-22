@@ -171,14 +171,17 @@ class ScheduleObject
     }
     
     /**
-     * Summary of overlaps
-     * @param ScheduleObject $item 
-     * @return mixed
+     * Checks if two items overlaps
+     * @param ScheduleObject $item The item to compare with
+     * @return boolean
      */
     public function overlaps(ScheduleObject $item)
     {
-        return (($item->start >= $this->start && $item->start <= $this->end)  // item's start between this->start/end
-                || ($item->end >= $this->start && $item->end <= $this->end)); // item's end between this->start/end
+        if ($item->start == $this->start && $item->end == $this->end)
+            return true;
+        
+        return (($item->start > $this->start && $item->start < $this->end)  // item's start between this->start/end
+                || ($item->end > $this->start && $item->end < $this->end)); // item's end between this->start/end
     }
 }
 
