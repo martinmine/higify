@@ -255,9 +255,8 @@ class TableObject implements JsonSerializable
         else
             $keys = array('');
 				
-		$val = ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
+		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
 			&& (count($tableObject->courseCodes) == count($this->courseCodes) || ($tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room)));
-        return $val;
 	}
 	
 	/**

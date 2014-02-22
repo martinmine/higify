@@ -1,5 +1,5 @@
 <?php
-require_once('DatabaseManager.class.php');
+require_once('../DatabaseManager.class.php');
 class ScheduleModel
 {
     /**
@@ -53,6 +53,11 @@ class ScheduleModel
         $query->execute();    
     }
     
+    /**
+     * Gets an object that shall be requested from TimeEdit from the database
+     * @param integer $userID The ID of the user to be requested
+     * @return Array of object IDs
+     */
     public static function getIncludeObjects($userID)
     {
         $objects = array();
@@ -71,6 +76,11 @@ class ScheduleModel
         return $objects;
     }
     
+    /**
+     * Gets an item of key words that shall be excluded from the time schedule 
+     * @param integer $userID Users ID
+     * @return Array of key words that shall be excluded from the schedule
+     */
     public static function getExcludingTimeObject($userID)
     {
         $contents = array();
