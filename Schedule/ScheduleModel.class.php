@@ -1,5 +1,10 @@
 <?php
-require_once('../DatabaseManager.class.php');
+require_once('./DatabaseManager.class.php');
+require_once('TimeEditAPI/TimeEditAPIController.class.php');
+require_once('TimeEditAPI/PullFormat.class.php');
+require_once('TimeEditAPI/OutputType.class.php');
+require_once('TimeEditAPI/ITimeParameter.class.php');
+
 class ScheduleModel
 {
     /**
@@ -54,9 +59,9 @@ class ScheduleModel
     }
     
     /**
-     * Gets an object that shall be requested from TimeEdit from the database
+     * Gets the TimeSchedule object containing all the items to be shown (and those not to be - unfiltered)
      * @param integer $userID The ID of the user to be requested
-     * @return Array of object IDs
+     * @return TimeTable
      */
     public static function getIncludeObjects($userID)
     {
@@ -64,16 +69,16 @@ class ScheduleModel
         
         $pdo = DatabaseManager::getDB();
         
-        $query = $pdo->prepare('SELECT objectID from IncludedTimeObject WHERE userID = :usrID');
+        $query = $pdo->prepare('SELECT objectID, type FROM IncludedTimeObject WHERE userID = :usrID');
         $query->bindParam(':usrID', $userID);
         $query->execute();
         
         while ($row = $query->fetch(PDO::FETCH_ASSOC))
         {
-            $objects[] = $row['objectID'];   
+            $objects[] = TimeEditAPIController::getTimeTable($row['objectID'], $row['type'], PullFormat::CSV, OutputType::TIME_TABLE, Minutes::now(), new Weeks(1), true);
         }
         
-        return $objects;
+        return TimeEditAPIController::mergeObjects($objects);
     }
     
     /**

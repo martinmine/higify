@@ -1,9 +1,11 @@
 <?php
 require_once('ScheduleModel.class.php');
-require_once('PullFormat.class.php');
-require_once('OutputType.class.php');
-require_once('ObjectType.class.php');
-require_once('ITimeParameter.class.php');
+require_once('ScheduleLane.class.php');
+require_once('ScheduleObject.class.php');
+require_once('TimeEditAPI/PullFormat.class.php');
+require_once('TimeEditAPI/OutputType.class.php');
+require_once('TimeEditAPI/ObjectType.class.php');
+require_once('TimeEditAPI/ITimeParameter.class.php');
 
 class ScheduleController
 {
@@ -38,13 +40,52 @@ class ScheduleController
         $includedObjects = ScheduleModel::getIncludeObjects($userID);
         $exludedObjects = ScheduleModel::getExcludingTimeObject($userID);
         
-
+        $schedule = array();
         
-        print_r($includedObjects);
-        echo '<br/>';
-        print_r($exludedObjects);
+        $iterator = $includedObjects->getIterator();
+        foreach ($iterator as $timeObject)
+        {
+            $include = true;
+            $objTitle = '';
+            foreach ($timeObject->getCourseCodes() as $codeSet)
+            {
+                if (is_array($codeSet))
+                {
+                    foreach ($codeSet as $code =>$title)
+                    {
+                        if (!in_array($title, $exludedObjects))
+                        {
+                            $include = true;
+                            $objTitle = $title;
+                        }
+                    }
+                }
+                else // Demokratitid
+                {
+                    $include = true;
+                    $objTitle = $codeSet;
+                }
+            }
+            
+            if ($include)
+            {
+                $obj = new ScheduleObject($timeObject->getID(), $objTitle, $timeObject->getRoom(), $timeObject->getTimeStart(), $timeObject->getTimeEnd());
+                
+                $day = $obj->getStart()->format('w');
+                $hour = $obj->getStart()->format('G');
         
-        // Merge and exclude
+                if (!isset($schedule[$day][$hour]))
+                    $schedule[$day][$hour] = new ScheduleLane();
+                
+                $schedule[$day][$hour]->insertItem($obj);
+            }
+            else
+            {
+                echo 'EXCLUDED<br/>';   
+            }
+        }
+        
+        return $schedule;
     }
 }
 

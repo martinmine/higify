@@ -92,7 +92,7 @@ class TimeEditAPIController
      * Merges two data sets into one new TimeTable, identital events are merged while the difference is also added (Union)
      * @param TimeTable $left The first table to merge
      * @param TimeTable $right The second table to merge
-     * @return An array of all the TableObjects: The union of the TimeTableObjects in left and right TimeTable
+     * @return A new TimeTable object: The union of the TimeTableObjects in left and right TimeTable
      */
     public static function merge(TimeTable $left, TimeTable $right)
     {
@@ -159,7 +159,26 @@ class TimeEditAPIController
         }
         while ($leftIterator->valid() || $rightIterator->valid()); // While anything left in any of the data sets
         
-        return $merged;   
+        $mergedTable = new TimeTable();
+        $mergedTable->fill($merged);
+        return $mergedTable;   
+    }
+    
+    /**
+     * Merges a collection of TimeSchedules into one single TimeSchedule
+     * @param Array $objects Array of TimeSchedules
+     * @return TimeSchedule
+     */
+    public static function mergeObjects($objects)
+    {
+        $root = new TimeTable();
+        
+        foreach ($objects as $singleObj)
+        {
+            $root = self::merge($root, $singleObj);
+        }
+        
+        return $root;
     }
 }
 ?>

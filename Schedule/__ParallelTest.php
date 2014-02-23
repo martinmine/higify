@@ -30,7 +30,6 @@ $t14 = new ScheduleObject(14, "t14", "In the void", new DateTime("2014-01-01 15:
 $t15 = new ScheduleObject(15, "t15", "In the void", new DateTime("2014-01-01 15:10"), new DateTime("2014-01-01 15:25"));
 $t16 = new ScheduleObject(16, "t13", "In the void", new DateTime("2014-01-01 15:25"), new DateTime("2014-01-01 15:30"));
 
-
 $lane->insertItem($t1);
 $lane->insertItem($t2);
 
