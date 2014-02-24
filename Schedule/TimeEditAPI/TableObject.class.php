@@ -243,36 +243,25 @@ class TableObject implements JsonSerializable
 	 * @param  TableObject $tableObject Object to compare with
 	 * @return Boolean              [description]
 	 */
-	public function match($tableObject)
+	public function match(TableObject $tableObject)
 	{
-        
         if (isset($this->courseCodes[0]))
         {
-          
             if (is_string($this->courseCodes[0]))
                 $keys = array($this->courseCodes[0]);
             else 
 		        $keys = array_keys($this->courseCodes[0]);
-                
         }
         else
         {
             $keys = array('');
         }
-		
-        if ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd)
-        {
-            {
-                print_r($tableObject);
-                print_r($this);
-                
-            }
-            die();
-        }
         
 		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
-			&& (count($tableObject->courseCodes) == count($this->courseCodes) || ($this->room == $tableObject->room)));
+			&& ($this->hasCourses($tableObject->courseCodes) || ($this->room == $tableObject->room)));
 	}
+    
+    static $i = 0;
     
     /**
      * Checks if the courses is a part of this by comparing course codes
