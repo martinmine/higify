@@ -19,16 +19,20 @@ class MainPageController implements IPageController
 	 */
 	public function onDisplay()
 	{
-		$text = NULL;
-		$edit = false;
-		$user = SessionController::acquireSession();
-		$vals = array();
-		$notes = array();
+		$text = NULL;									// Default value in the texarea for adding new note.
+		$edit = false;									// Setting a default value for checking for editing.
+		$user = SessionController::acquireSession();	// Requesting the logged in user.
+		$vals = array();								// Array, values that fills the page with requested input.
+		$notes = array();								// List of notes to be displayed (if not in edit mode).
 		
+		/**
+		 * Can only view a mainpage for logged in users
+		 * else a warning message is displayed.
+		 */
 		if ($user !== NULL)
 		{
 			$username = $user->getUsername();
-			$userID = $user->getUserID();
+			//$userID = $user->getUserID();
 			
 										// Variables for editing/(adding) a note:
 			$noteID         = NULL;			// Check to edit or add new note.
@@ -81,42 +85,37 @@ class MainPageController implements IPageController
 			}
 			
 			/**
-			 * When submitted you either change or add a new note:
-			 *
-			 *
+			 * When submitted you either change or add a new note depending on get input
+			 * Both call on NoteController to handle both calls.
 			 */
 			if (isset($_POST['submit'])  &&  isset($_POST['content']))
 			{
 				
-				if (isset($_GET['noteID'])  &&  isset($_GET['edit']) &&  $_GET['edit'] === '1')				// Change a note:
+				if (isset($_GET['noteID'])  &&  isset($_GET['edit']) &&  $_GET['edit'] === '1')
 				{
 					$_POST['noteID']   = $_GET['noteID'];
-					$_POST['ownerID']  = $userID;
+					$_POST['ownerID']  = $user->getUserID();
 					$_POST['username'] = $username;
 					
 					NoteController::requestEditNote($_POST);
-					
 				} 
-				else					// Ass a new note
+				else
 				{	
-					
-					$_POST['ownerID']  = $userID;
+					$_POST['ownerID']  = $user->getUserID();
 					$_POST['username'] = $username;
 					NoteController::requestAddNote($_POST);
-				
 				}
 			}
 			
 			$vals['TOP']           = 'Top';	// Test;
 			$vals['USERNAME']      = $username;
-			$vals['PROFILE_ID']    = $userID;
+			//$vals['PROFILE_ID']    = $userID;
 			$vals['CONTENT']       = ($displayContent)? $displayContent: NULL;
 			$vals['CANCEL'] 	   = ($edit)? "cancel": NULL;
 			$vals['NOTES']         = ($edit)? NULL: new NoteListView();
 			$vals['EDIT']          = ($edit)? "?noteID=" . $noteID . "&edit=1": NULL;
 			$vals['ISPUBLIC']      = $isPublicCheck;
-			
-			//$vals['HOURS'] = new DayScheduleView();  //  not done...
+			$vals['HOURS'] 		   = "Fjerna feilmld :) ";//new DayScheduleView();  //  not done...
 			
 		}
 		else
@@ -125,8 +124,6 @@ class MainPageController implements IPageController
 		}
         return $vals;
 	}
-
-
 }
 
 

@@ -92,7 +92,6 @@ class NoteModel
 			$stmt->bindParam(':content',  $content   );
 			$stmt->bindParam(':isPublic', $isPublic  );
 			$stmt->execute();
-			//return $this->db->lastInsertId();
 		}
 		catch(Exception $e)
 		{
@@ -101,6 +100,12 @@ class NoteModel
 		return $res;
 	}
 	
+	/**
+	 * Retrieves a single note from the database based on the parameter.
+	 *
+	 * @param ID the notes unique id.
+	 * @return returning the requested note Object.
+	 */
 	public static function getNote($noteID)
 	{
 		$db = DatabaseManager::getDB();
@@ -122,6 +127,11 @@ class NoteModel
 		return $note;	
 	}
 	
+	/**
+	 * Updating an existing note in the database.
+	 *
+	 * @param Object note with the new values to update.
+	 */
 	public static function editNote($note)
 	{
 		$db = DatabaseManager::getDB();
@@ -135,15 +145,17 @@ class NoteModel
 		$time     = $note->getTime();
 		$noteID   = $note->getNoteID();
 		
-		echo "</br>HERE: " . $time . "</br>";
-		
 		$stmt->bindParam(':content', $content);
 		$stmt->bindParam(':isPublic', $isPublic);
-		//$stmt->bindParam(':time', $time);
 		$stmt->bindParam(':noteID', $noteID );
 		$stmt->execute();
 	}
 	
+	/**
+	 * Deleting a note from the database.
+	 *
+	 * @Param ID objects unique id.
+	 */
 	public static function deleteNote($noteID)
 	{
 		$db = DatabaseManager::getDB();
