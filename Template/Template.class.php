@@ -70,6 +70,8 @@ class Template
     {
         foreach ($this->values as $key => $value)
         {
+            if (is_string($value))
+                $value = htmlentities($value);
             $$key = $value;
         }
         
