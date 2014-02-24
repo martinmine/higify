@@ -1,1 +1,1 @@
-				setTimeObject(<?php echo $ID ?>, <?php echo $MINUTE ?>, <?php echo $DURATION ?>);
+				setTimeObject(<?php echo $ID ?>, <?php echo $MINUTE ?>, <?php echo $DURATION ?>, <?php echo $INDENT; ?>, <?php echo $MAXINDENT; ?>);

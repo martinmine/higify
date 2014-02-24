@@ -6,6 +6,7 @@ require_once('TimeEditAPI/PullFormat.class.php');
 require_once('TimeEditAPI/OutputType.class.php');
 require_once('TimeEditAPI/ObjectType.class.php');
 require_once('TimeEditAPI/ITimeParameter.class.php');
+require_once('ColorFactory.class.php');
 
 class ScheduleController
 {
@@ -41,11 +42,12 @@ class ScheduleController
         $exludedObjects = ScheduleModel::getExcludingTimeObject($userID);
         
         $schedule = array();
+        $colorFact = new ColorFactory();
         
         $iterator = $includedObjects->getIterator();
         foreach ($iterator as $timeObject)
         {
-            $include = true;
+            $include = false;
             $objTitle = '';
             foreach ($timeObject->getCourseCodes() as $codeSet)
             {
@@ -69,19 +71,31 @@ class ScheduleController
             
             if ($include)
             {
-                $obj = new ScheduleObject($timeObject->getID(), $objTitle, $timeObject->getRoom(), $timeObject->getTimeStart(), $timeObject->getTimeEnd());
+                $objColor = $colorFact->produceCode($objTitle);
+                $obj = new ScheduleObject($timeObject->getID(), $objTitle, $timeObject->getRoom(), $timeObject->getTimeStart(), $timeObject->getTimeEnd(), $objColor);
                 
                 $day = $obj->getStart()->format('w');
-                $hour = $obj->getStart()->format('G');
-        
-                if (!isset($schedule[$day][$hour]))
-                    $schedule[$day][$hour] = new ScheduleLane();
                 
-                $schedule[$day][$hour]->insertItem($obj);
+        
+                if (!isset($schedule[$day]))
+                    $schedule[$day] = new ScheduleLane();
+                
+                $schedule[$day]->insertItem($obj);
             }
         }
         
-        return $schedule;
+        $orderedItems = array();
+        foreach ($schedule as $day => $lane)
+        {
+            $laneItems = $lane->getLane();
+            foreach ($laneItems as $obj)
+            {
+                $hour = $obj->getStart()->format('G');
+                $orderedItems[$day][$hour][] = $obj;
+            }
+        }
+        
+        return $orderedItems;
     }
 }
 

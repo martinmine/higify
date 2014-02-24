@@ -7,19 +7,19 @@ class ScheduleObjectElement extends WebPageElement
 {
     private $scheduleObjects;
     
-    public function __construct(ScheduleLane $objects)
+    public function __construct($objects)
     {
         $this->scheduleObjects = $objects;
     }
     
     public function generateHTML()
     {
-        foreach ($this->scheduleObjects->getLane() as $obj)
+        foreach ($this->scheduleObjects as $obj)
         {
             $tpl = new Template();
             $tpl->appendTemplate('TimeObject');
             $tpl->setValue('ID', $obj->getID());
-            $tpl->setValue('STYLE', 'blueTimeObject');
+            $tpl->setValue('STYLE', $obj->getStyle());
             $tpl->setValue('TITLE', $obj->getTitle());
             $tpl->setValue('ROOM', $obj->getLocation());
             $tpl->setValue('START', $obj->getStart()->format('H:i')); // hi o/

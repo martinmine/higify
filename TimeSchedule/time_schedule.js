@@ -46,12 +46,15 @@ function setTimeObjectLayout(width, height)
 * @offset integer Amount of minutes the object shall be moved down on the schedule
 * @duration integer The duration of the time objects in minutes
 */
-function setTimeObject(id, offset, duration)
+function setTimeObject(id, offset, duration, indent, indentMax)
 {
 	var element = document.getElementById(id);
 
 	var offset = Math.floor(offset * (cellHeight / 60));
 	var length = Math.floor(duration * (cellHeight / 60));
+
+	var width = (CELL_WIDTH / indentMax) - 8;
+	var widthOffset = (indent - 1) * (CELL_WIDTH / indentMax);
 
 	if (length > cellHeight)	// If cross a border
 	{
@@ -59,7 +62,8 @@ function setTimeObject(id, offset, duration)
 	}
 
 	element.style.height = length + "px";
-	element.style.width = cellWidth + "px";
+	element.style.width = width + "px";
+	element.style.marginLeft = widthOffset + "px";
 	element.style.marginTop = offset + "px";
 }
 

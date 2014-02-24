@@ -20,9 +20,9 @@ class TableJavascriptElement extends WebPageElement
     {
         for ($i = $this->dayBegin; $i <= $this->dayEnd; $i++)
         {
-            foreach ($this->elements[$i] as $lane)
+            foreach ($this->elements[$i] as $hour)
             {
-                foreach ($lane->getLane() as $obj)
+                foreach ($hour as $obj)
                 {
                     $diff = $obj->getEnd()->diff($obj->getStart());
                     
@@ -31,6 +31,8 @@ class TableJavascriptElement extends WebPageElement
                     $tpl->setValue('ID', $obj->getID());
                     $tpl->setValue('MINUTE', $obj->getStart()->format('i'));
                     $tpl->setValue('DURATION', $diff->i + ($diff->h * 60));
+                    $tpl->setValue('INDENT', $obj->getIndent());
+                    $tpl->setValue('MAXINDENT', $obj->getIndentMax());
                     $tpl->display();
                 }
             }

@@ -1,12 +1,12 @@
 <?php
-require_once('../TimeEditAPI/TimeEditAPIController.class.php');
-require_once('../TimeEditAPI/ObjectType.class.php');
-require_once('../TimeEditAPI/SearchResult.class.php');
-require_once('../TimeEditAPI/PullFormat.class.php');
-require_once('../TimeEditAPI/OutputType.class.php');
-require_once('../TimeEditAPI/ITimeParameter.class.php');
-require_once('../TimeEditAPI/TimeTable.class.php');
-require_once('../TimeEditAPI/TimeTableIterator.class.php');
+require_once('../Schedule/TimeEditAPI/TimeEditAPIController.class.php');
+require_once('../Schedule/TimeEditAPI/ObjectType.class.php');
+require_once('../Schedule/TimeEditAPI/SearchResult.class.php');
+require_once('../Schedule/TimeEditAPI/PullFormat.class.php');
+require_once('../Schedule/TimeEditAPI/OutputType.class.php');
+require_once('../Schedule/TimeEditAPI/ITimeParameter.class.php');
+require_once('../Schedule/TimeEditAPI/TimeTable.class.php');
+require_once('../Schedule/TimeEditAPI/TimeTableIterator.class.php');
 
 const MAX_RESPONSE = 1;
 

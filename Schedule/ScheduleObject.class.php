@@ -52,6 +52,12 @@ class ScheduleObject
     private $previous;
     
     /**
+     * Color style of the object, wow many color, such style
+     * @var string 
+     */
+    private $style;
+    
+    /**
      * Creates a new ScheduleObject
      * @param integer  $id       Unique ID for the object
      * @param string   $title    Title of the object
@@ -59,7 +65,7 @@ class ScheduleObject
      * @param DateTime $start    Start time
      * @param DateTime $end      End time
      */
-    public function __construct($id, $title, $location, $start, $end)
+    public function __construct($id, $title, $location, $start, $end, $color)
     {
         $start->add(new DateInterval('PT1H')); // How much I hate this language
         $end->add(new DateInterval('PT1H'));
@@ -68,6 +74,7 @@ class ScheduleObject
         $this->location = $location;
         $this->start = $start;
         $this->end = $end;
+        $this->style = $color;
         $this->indent = 1;
         $this->indentMax = 1;
         $this->previous = NULL;
@@ -170,6 +177,15 @@ class ScheduleObject
     public function setPrevious(ScheduleObject $obj)
     {
         $this->previous = $obj;
+    }
+    
+    /**
+     * Gets the style of the schedule object: CSS rule to write in HTML
+     * @return string
+     */
+    public function getStyle()
+    {
+        return $this->style;
     }
     
     /**
