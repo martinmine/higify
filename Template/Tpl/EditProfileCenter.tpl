@@ -3,16 +3,43 @@
 		<!-- <p>Center</p> -->
 		<h3>Edit profile information</h3>
 		<div class="">
-			<form action="editprofile.php" method="post" enctype="multipart/form-data">
-			  <label for="public">I want my timeschedule to be public</label>
+      <form action="editprofile.php" method="post" enctype="multipart/form-data">
+        <div>
+          <h4>Select a new profile picture</h4>
+          <input type="file" name="file" id="file"></input>
+        </div>
         <br />
-          <input type="checkbox" name="public" value="1"></input><br />
-        <label for="email">New email adress</label>
-          <input type="email" name="email"></input> <br />
-        <label for="file">Choose a new profile picture</label>
-        <input type="file" name="file" id="file"></input><br />
-            <input type="submit" value="Submit"></input>
-			</form>
+        <br />
+        <div>
+          <h4>Change email adress</h4>
+          <label for="email">New email adress</label>
+          <input type="email" name="email"></input>
+         <br />
+   
+          <label for="emailverification">Justify new email</label>
+          <input type="email" name="emailverification"></input>
+        </div>
+        <br />
+    
+        <div>
+          <label for="public">I want my timeschedule to be public</label>
+          <input type="checkbox" name="public" value="1"></input>
+        </div>
+        <br />
+  
+        <div>
+          <h4>Change password</h4>
+          <label for ="CurrentPassword">Current password</label>
+          <input type="password" name="oldpassword"></input>
+          <br />
+       
+          <label for ="CurrentPassword">New password</label>
+          <input type="password" name="newpassword"></input>
+        </div>
+        <div>
+          <input type="submit" value="Submit"></input>
+        </div>
+      </form>
 		</div>
 		<br /><br />
 	</div>

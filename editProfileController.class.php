@@ -33,9 +33,9 @@ class EditProfileController implements IPageController
             {
                 if (isset($_POST['emailverification']))
                 {
-                    if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === true)  // If correct email string format
+                    if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) == true)  // If correct email string format
                     {
-                        if ($_POST['email'] === $_POST['emailverification'])
+                        if ($_POST['email'] == $_POST['emailverification'])
                         {
                             UserController::updateEmail($userID,$_POST['email']);     // Updates users email
                         }
@@ -72,6 +72,27 @@ class EditProfileController implements IPageController
                     $picture = $_FILES['file']['tmp_name'];
                     UserController::requestPictureSubmit($picture);
                 }
+            }
+            
+            
+            if (isset($_POST['newpassword']))
+            {
+               if (isset($_POST['oldpassword']))
+               {
+                   if(UserController::requestPasswordChange($userID,$_POST['oldpassword'],$_POST['newpassword']))
+                   {
+                        //  o/
+                   }
+                   else
+                   {
+                       $vals['ERROR_PASSWORD'] = new ErrorMessageView('Your current password was incorrect');
+                   }
+               }
+               
+               else
+               {
+                   $vals['ERROR_PASSWORD'] = new ErrorMessageView('You need to fill in your current password');
+               }
             }
         }
         
