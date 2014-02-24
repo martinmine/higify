@@ -56,7 +56,7 @@ class ScheduleController
         $from = new DateTime();
         $from->setISODate(date('Y'), $weekNo)->modify('midnight');
         $to = new DateTime();
-        $to->setISODate(date('Y'), $weekNo)->modify('midnight +6 days');
+        $to->setISODate(date('Y'), $weekNo)->modify('midnight +7 days');
         
         return self::fetchTimeTable($userID, $from, $to);
     }
@@ -68,6 +68,7 @@ class ScheduleController
         
         $schedule = array();
         $colorFact = new ColorFactory();
+        
         $iterator = $includedObjects->getIterator();
         foreach ($iterator as $timeObject)
         {
