@@ -30,51 +30,85 @@ class MainPageController implements IPageController
 			$username = $user->getUsername();
 			$userID = $user->getUserID();
 			
+										// Variables for editing/(adding) a note:
+			$noteID         = NULL;			// Check to edit or add new note.
+			$displayContent = NULL;			// In edit: Check to display the 'old' content of a note.
+			$isPublicCheck  = NULL;			// In edit: Display the 'old' notes isPublic status.
+
 			/**
 			 * Changes made by the user both edit and delete is 
 			 * handled below:
 			 */
 			if (isset($_GET['noteID'])  &&  isset($_GET['changeType']))
 			{
+				
 				$noteID = $_GET['noteID'];
 				$changeType = $_GET['changeType'];
 				
-				switch($changeType)
+				$note = NoteController::requestNote($noteID);
+				/** 
+				 * A check if the user has permission to both delete or edit a note:
+				 */
+				if ($note->getOwnerID() === $user->getUserID())
 				{
-					case '0':			// Edit a note:
-					{
-						$edit = true;
-						//$text = NoteController::getNote($noteID);
-						
-					} break;
-					case '1':			//	Delete a note:
-					{
-						//NoteController::deleteNote($_GET['noteID']);
 					
-					} break;
-					default: 
+					switch($changeType)
 					{
-						echo "WARNING";
-					} break;
+						case '0':			// Edit a note:
+						{
+							$edit = true;
+							$note = NoteController::requestNote($noteID);
+							$displayContent = $note->getContent();
+							if ($note->isPublic() === '1')
+								$isPublicCheck = "checked";
+							
+							
+						} break;
+						case '1':			//	Delete a note:
+						{
+							//NoteController::deleteNote($_GET['noteID']);
+						
+						} break;
+						default: 			//	Error:
+						{
+							echo "WARNING";
+						} break;
+					}
 				}
-				
+				else
+				{
+					echo "</br></br>YOU do not have permission to do this!</br></br>";
+				}
 			}
 			
 			/**
-			 * Adding a new note in the database, ready to display.
+			 * When submitted you either change or add a new note:
+			 *
+			 *
 			 */
 			if (isset($_POST['submit'])  &&  isset($_POST['content']))
 			{
-				$_POST['userID']   = $userID;
-				$_POST['username'] = $username;
-				NoteController::requestAddNote($_POST);		
+				if (isset($noteID))		// Change a note:
+				{
+					$_POST['ownerID'] = $userID;
+					NoteController::requestEditNote($_POST);
+					
+				} 
+				else					// Ass a new note
+				{
+					$_POST['ownerID']  = $userID;
+					$_POST['username'] = $username;
+					NoteController::requestAddNote($_POST);
+				}
 			}
 			
 			$vals['TOP'] = 'Top';	// Test;
-			$vals['USERNAME'] = $username;
-			$vals['PROFILE_ID'] = $userID;
-			$vals['TEXT'] = ($text)? $text: NULL;
-			$vals['NOTES'] = ($edit)? NULL: new NoteListView();
+			$vals['USERNAME']      = $username;
+			$vals['PROFILE_ID']    = $userID;
+			$vals['CONTENT']       = ($displayContent)? $displayContent: NULL;
+			$vals['CANCEL'] 	   = ($edit)? "cancel": NULL;
+			$vals['NOTES']         = ($edit)? NULL: new NoteListView();
+			$vals['ISPUBLIC']      = $isPublicCheck;
 			
 			//$vals['HOURS'] = new DayScheduleView();  //  not done...
 			

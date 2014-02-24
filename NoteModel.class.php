@@ -100,6 +100,41 @@ class NoteModel
 		}
 		return $res;
 	}
+	
+	public static function getNote($noteID)
+	{
+		$db = DatabaseManager::getDB();
+		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username
+				  FROM note
+				  JOIN user ON (user.userID = ownerID)
+				  WHERE noteID = :noteID';
+		$stmt = $db->prepare($query);
+		$stmt->bindParam(':noteID', $noteID);
+		$stmt->execute();
+		$obj = $stmt->fetch(PDO::FETCH_ASSOC);
+		$note = new Note($obj['noteID'],
+						 $obj['ownerID'],
+						 $obj['content'],
+						 $obj['isPublic'],
+						 $obj['timePublished'],
+						 $obj['username']
+						);
+		return $note;	
+	}
+	
+	public static function editNote($note)
+	{
+		$db = DatabaseManager::getDB();
+		$query = 'UPDATE note
+				  SET content = :content, isPublic = :isPublic, timePublished = :time
+				  WHERE noteID = :noteID';
+		$stmt = $db->prepare($query);
+		$stmt->bindParam(':content', $note->getContent() );
+		$stmt->bindParam(':isPublic', $note->getContent() );
+		$stmt->bindPrarm(':noteID', $note->getNoteID() );
+		$stmt->execute();
+		echo "</br>YEE?</br>";
+	}
 }
 
 ?>

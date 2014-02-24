@@ -74,7 +74,7 @@ require_once('SessionController.class.php');
 		
 		
 			$note = new Note(-1, 
-							 $values['userID'], 
+							 $values['ownerID'], 
 							 $values['content'],
 							 $isPublic,
 							 date('UTC'),
@@ -82,6 +82,36 @@ require_once('SessionController.class.php');
 							);
 							
 			NoteModel::addNote($note);	
+		}
+		
+		/**
+		 * Retrieves a note Object from NoteModel based on noteID.
+		 *
+		 * @return Object Note.
+		 */
+		public static function requestNote($noteID)
+		{
+			return NoteModel::getNote($noteID);
+		}
+		
+		/**
+		 * Updates a note based on new $values.
+		 *
+		 */
+		public static function requestEditNote($values)
+		{
+			echo "</br></br> HERE </br>" . $values['isPublic'];
+		
+			$note = new Note($values['noteID'],
+							 $values['ownerID'],
+							 $valuse['content'],
+							 $values['isPublic'],
+							 date('UTC'),
+							 $values['username']
+							);
+							 
+			NoteModel::EditNote($note);
+			
 		}
 	}
 
