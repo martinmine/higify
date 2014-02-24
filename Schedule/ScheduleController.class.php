@@ -79,10 +79,6 @@ class ScheduleController
                 
                 $schedule[$day][$hour]->insertItem($obj);
             }
-            else
-            {
-                echo 'EXCLUDED<br/>';   
-            }
         }
         
         return $schedule;

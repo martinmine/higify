@@ -1,10 +1,10 @@
-					<div class="timeObjectContainer blueTimeObject" id="<?php echo $ID; ?>">
-						<?php ehco $TITLE; ?><br/>
-						<?php ehco $ROOM; ?>
+					<div class="timeObjectContainer <?php echo $STYLE; ?>" id="<?php echo $ID; ?>">
+						<?php echo $TITLE; ?><br/>
+						<?php echo $ROOM; ?> 
 						<div class="timeBegin">
-							<?php ehco $START; ?>
+							<?php echo $START; ?> 
 						</div>
 						<div class="timeEnd">
-							<?php ehco $END; ?>
+							<?php echo $END; ?> 
 						</div>
 					</div>

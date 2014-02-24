@@ -19,6 +19,7 @@ class ScheduleObjectElement extends WebPageElement
             $tpl = new Template();
             $tpl->appendTemplate('TimeObject');
             $tpl->setValue('ID', $obj->getID());
+            $tpl->setValue('STYLE', 'blueTimeObject');
             $tpl->setValue('TITLE', $obj->getTitle());
             $tpl->setValue('ROOM', $obj->getLocation());
             $tpl->setValue('START', $obj->getStart()->format('H:i')); // hi o/

@@ -61,6 +61,8 @@ class ScheduleObject
      */
     public function __construct($id, $title, $location, $start, $end)
     {
+        $start->add(new DateInterval('PT1H')); // How much I hate this language
+        $end->add(new DateInterval('PT1H'));
         $this->id = $id;
         $this->title = $title;
         $this->location = $location;

@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>Time schedule</title>
-		<link rel="stylesheet" type="text/css" href="time_schedule.css">
-		<script type="text/javascript" src="wgxpath.install.js"></script>
-		<script type="text/javascript" src="time_schedule.js"></script>
+		<link rel="stylesheet" type="text/css" href="TimeSchedule/time_schedule.css">
+		<script type="text/javascript" src="TimeSchedule/wgxpath.install.js"></script>
+		<script type="text/javascript" src="TimeSchedule/time_schedule.js"></script>
 		<script type="text/javascript">
 
 			window.onload = function()
@@ -21,7 +21,7 @@
 
 				setTimeObjectLayout(CELL_WIDTH - 8, CELL_HEIGHT - 2); // Set the style for all the time objects
 
-				<?php echo $TABLEJS; ?>
+<?php echo $TABLEJS; ?>
 			};
 
 
@@ -35,9 +35,9 @@
 				<div class="timeIdentifier weekPadding">
 					<div class="timeContainer"><?php echo $HOURBEGIN; ?></div>
 				</div>
-				<?php echo $TIMELABELS; ?>
+<?php echo $TIMELABELS; ?>
 			</div>
-			<?php echo $DAYS; ?>
+<?php echo $DAYS; ?>
 		</div>
 		</div>
 	</body>

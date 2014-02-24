@@ -12,7 +12,6 @@ class ScheduleDayContainerElement extends WebPageElement
     
     public function __construct($elements, $dayBegin, $dayEnd, $hourBegin, $hourEnd)
     {
-        //$this->elements = new ScheduleObjectContainerElement($elements, $hourBegin, $hourEnd);
         $this->elements = $elements;
         $this->dayBegin = $dayBegin;
         $this->dayEnd = $dayEnd;
@@ -22,10 +21,20 @@ class ScheduleDayContainerElement extends WebPageElement
     
     public function generateHTML()
     {
+        $days = array(1 => 'Monday',
+                      2 => 'Tuesday',
+                      3 => 'Wednesday',
+                      4 => 'Thursday',
+                      5 => 'Friday',
+                      6 => 'Saturday',
+                      7 => 'Sunday');
+
+        
         for ($i = $this->dayBegin; $i <= $this->dayEnd; $i++)
         {
-            $tpl = new Template('ScheduleDayContainer');
-            $tpl->setValue('DAY', $this->day);
+            $tpl = new Template();
+            $tpl->appendTemplate('ScheduleDayContainer');
+            $tpl->setValue('DAY', $days[$i]);
             $tpl->setValue('ELEMENTS', new ScheduleObjectContainerElement($this->elements[$i], $this->hourBegin, $this->hourEnd));
             $tpl->display();
         }
