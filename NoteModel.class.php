@@ -126,14 +126,32 @@ class NoteModel
 	{
 		$db = DatabaseManager::getDB();
 		$query = 'UPDATE note
-				  SET content = :content, isPublic = :isPublic, timePublished = :time
+				  SET content = :content, isPublic = :isPublic
 				  WHERE noteID = :noteID';
 		$stmt = $db->prepare($query);
-		$stmt->bindParam(':content', $note->getContent() );
-		$stmt->bindParam(':isPublic', $note->getContent() );
-		$stmt->bindPrarm(':noteID', $note->getNoteID() );
+		
+		$content  = $note->getContent();
+		$isPublic = $note->isPublic();
+		$time     = $note->getTime();
+		$noteID   = $note->getNoteID();
+		
+		echo "</br>HERE: " . $time . "</br>";
+		
+		$stmt->bindParam(':content', $content);
+		$stmt->bindParam(':isPublic', $isPublic);
+		//$stmt->bindParam(':time', $time);
+		$stmt->bindParam(':noteID', $noteID );
 		$stmt->execute();
-		echo "</br>YEE?</br>";
+	}
+	
+	public static function deleteNote($noteID)
+	{
+		$db = DatabaseManager::getDB();
+		$query = 'DELETE FROM note
+				   WHERE noteID = :noteID';
+		$stmt = $db->prepare($query);
+		$stmt->bindParam(':noteID', $noteID);
+		$stmt->execute();
 	}
 }
 

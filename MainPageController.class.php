@@ -37,15 +37,14 @@ class MainPageController implements IPageController
 
 			/**
 			 * Changes made by the user both edit and delete is 
-			 * handled below:
+			 * registered below:
 			 */
 			if (isset($_GET['noteID'])  &&  isset($_GET['changeType']))
 			{
-				
 				$noteID = $_GET['noteID'];
 				$changeType = $_GET['changeType'];
-				
 				$note = NoteController::requestNote($noteID);
+				
 				/** 
 				 * A check if the user has permission to both delete or edit a note:
 				 */
@@ -66,12 +65,12 @@ class MainPageController implements IPageController
 						} break;
 						case '1':			//	Delete a note:
 						{
-							//NoteController::deleteNote($_GET['noteID']);
+							NoteController::requestDeleteNote($_GET['noteID']);
 						
 						} break;
 						default: 			//	Error:
 						{
-							echo "WARNING";
+							throw new InvalidArgumentException('ChangeType');
 						} break;
 					}
 				}
@@ -88,26 +87,33 @@ class MainPageController implements IPageController
 			 */
 			if (isset($_POST['submit'])  &&  isset($_POST['content']))
 			{
-				if (isset($noteID))		// Change a note:
+				
+				if (isset($_GET['noteID'])  &&  isset($_GET['edit']) &&  $_GET['edit'] === '1')				// Change a note:
 				{
-					$_POST['ownerID'] = $userID;
+					$_POST['noteID']   = $_GET['noteID'];
+					$_POST['ownerID']  = $userID;
+					$_POST['username'] = $username;
+					
 					NoteController::requestEditNote($_POST);
 					
 				} 
 				else					// Ass a new note
-				{
+				{	
+					
 					$_POST['ownerID']  = $userID;
 					$_POST['username'] = $username;
 					NoteController::requestAddNote($_POST);
+				
 				}
 			}
 			
-			$vals['TOP'] = 'Top';	// Test;
+			$vals['TOP']           = 'Top';	// Test;
 			$vals['USERNAME']      = $username;
 			$vals['PROFILE_ID']    = $userID;
 			$vals['CONTENT']       = ($displayContent)? $displayContent: NULL;
 			$vals['CANCEL'] 	   = ($edit)? "cancel": NULL;
 			$vals['NOTES']         = ($edit)? NULL: new NoteListView();
+			$vals['EDIT']          = ($edit)? "?noteID=" . $noteID . "&edit=1": NULL;
 			$vals['ISPUBLIC']      = $isPublicCheck;
 			
 			//$vals['HOURS'] = new DayScheduleView();  //  not done...

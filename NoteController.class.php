@@ -100,18 +100,24 @@ require_once('SessionController.class.php');
 		 */
 		public static function requestEditNote($values)
 		{
-			echo "</br></br> HERE </br>" . $values['isPublic'];
-		
+			$isPublic = isset($values['isPublic'])? '1': '0';
+			
+			echo date('UTC');
+			
 			$note = new Note($values['noteID'],
 							 $values['ownerID'],
-							 $valuse['content'],
-							 $values['isPublic'],
+							 $values['content'],
+							 $isPublic,
 							 date('UTC'),
 							 $values['username']
 							);
 							 
-			NoteModel::EditNote($note);
-			
+			NoteModel::editNote($note);
+		}
+		
+		public static function requestDeleteNote($noteID)
+		{
+			NoteModel::deleteNote($noteID);
 		}
 	}
 
