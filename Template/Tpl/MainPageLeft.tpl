@@ -4,6 +4,13 @@
 			<div class="profileImage">
 				<img src="displayProfilePicture.php?id=<?php $PROFILE_ID ?>" height="200" width="200">
 			</div>
+			<div class="editProfile">
+				<a href="editprofile.php">
+					<div class="changeButton">
+						Edit profile
+					</div>
+				</a>
+			</div>
 		</div>
 		
 		<div class="searchProfile">
