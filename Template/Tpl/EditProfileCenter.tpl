@@ -3,7 +3,7 @@
 		<!-- <p>Center</p> -->
 		<h3>Edit profile information</h3>
 		<div class="">
-			<form action="EditProfile.php" method="post">
+			<form action="editprofile.php" method="post" enctype="multipart/form-data">
 			  <label for="public">I want my timeschedule to be public</label>
         <br />
           <input type="checkbox" name="public" value="1"></input><br />

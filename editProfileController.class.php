@@ -10,7 +10,7 @@ class EditProfileController implements IPageController
 {
     public function onDisplay()
     {
-        $userID = SessionController::requestLoggedinID;
+        $userID = SessionController::requestLoggedinID();
         $vals = array();
         
         /*
@@ -24,7 +24,7 @@ class EditProfileController implements IPageController
             {
                 if ($_POST['public'] == true)                                       // If checkbox is set for public
                 {                                                                   // timeschedule
-                    updatePublicTime($userID, $_POST['public']);
+                    UserController::updatePublicTime($userID, $_POST['public']);
                 }
             }
             
@@ -61,14 +61,16 @@ class EditProfileController implements IPageController
             
             if (isset($_FILES['file']))                                             
             {
-                if ($_FILES['file']["error"] == 0)
+                if ($_FILES['file']["error"] > 0)
                 {
-                    UserController::requestPictureSubmit($userID,$_FILES['file']['tmp_name']);                   
+                    $vals['ERROR_PROFILEPIC'] = new ErrorMessageView($_FILES["file"]["error"]);
+                    echo $vals['ERROR_PROFILEPIC']; // test                    
                 }
                 
                 else
                 {
-                    $vals['ERROR_PROFILEPIC'] = new ErrorMessageView($_FILES["file"]["error"]);
+                    $picture = $_FILES['file']['tmp_name'];
+                    UserController::requestPictureSubmit($picture);
                 }
             }
         }

@@ -13,6 +13,8 @@ $tpl->appendTemplate('EditProfileRight');
 $tpl->appendTemplate('EditProfileFooter');
 $tpl->display();
 print_r($_POST);
+
+echo "FILES:";
 print_r($_FILES);
 
 ?>

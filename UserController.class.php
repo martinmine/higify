@@ -70,9 +70,10 @@ class UserController
         {
             $userID = SessionController::requestLoggedinID();
             UserModel::submitPicture($userID, $picture);
+            return true;
         }
        
-        return NULL;
+        return false;
     }
     
     /**

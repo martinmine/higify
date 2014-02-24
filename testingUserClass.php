@@ -96,7 +96,7 @@ if(count($_FILES) > 0)
 
     if(isset($_FILES['file']))
     {
-        UserController::requestPictureSubmit(5,$_FILES['file']['tmp_name']);
+        UserController::requestPictureSubmit(5,$_FILES['file']);
       
     
         
