@@ -12,5 +12,7 @@ $tpl->appendTemplate('EditProfileCenter');
 $tpl->appendTemplate('EditProfileRight');
 $tpl->appendTemplate('EditProfileFooter');
 $tpl->display();
+print_r($_POST);
+print_r($_FILES);
 
 ?>
