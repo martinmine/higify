@@ -63,7 +63,7 @@ class ScheduleModel
      * @param integer $userID The ID of the user to be requested
      * @return TimeTable
      */
-    public static function getIncludeObjects($userID, DateTime $periodStart, DateTime $periodEnd)
+    public static function getIncludeObjects($userID)
     {
         $objects = array();
         
@@ -75,10 +75,7 @@ class ScheduleModel
         
         while ($row = $query->fetch(PDO::FETCH_ASSOC))
         {
-            $obje = TimeEditAPIController::getTimeTable($row['objectID'], $row['type'], 
-                                                             PullFormat::CSV, OutputType::TIME_TABLE, 
-                                                             new Date($periodStart), new Date($periodEnd));
-            $objects[] = $obje;
+            $objects[] = TimeEditAPIController::getTimeTable($row['objectID'], $row['type'], PullFormat::CSV, OutputType::TIME_TABLE, Minutes::now(), new Weeks(1), true);
         }
         
         return TimeEditAPIController::mergeObjects($objects);

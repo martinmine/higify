@@ -245,83 +245,19 @@ class TableObject implements JsonSerializable
 	 */
 	public function match($tableObject)
 	{
-        
         if (isset($this->courseCodes[0]))
         {
-          
             if (is_string($this->courseCodes[0]))
                 $keys = array($this->courseCodes[0]);
             else 
 		        $keys = array_keys($this->courseCodes[0]);
-                
         }
         else
-        {
             $keys = array('');
-        }
-		
-        if ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd)
-        {
-            {
-                print_r($tableObject);
-                print_r($this);
-                
-            }
-            die();
-        }
-        
+				
 		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
-			&& (count($tableObject->courseCodes) == count($this->courseCodes) || ($this->room == $tableObject->room)));
+			&& (count($tableObject->courseCodes) == count($this->courseCodes) || ($tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room)));
 	}
-    
-    /**
-     * Checks if the courses is a part of this by comparing course codes
-     * @param mixed $courses Course codes and (optional) descriptions
-     */
-    public function hasCourses($courses)
-    {
-        if (is_string($courses) && is_string($this->courseCodes))
-            return ($courses == $this->courseCodes);
-        foreach ($courses as $courseObject)
-        {
-            if (is_string($courseObject))
-            {
-                if ($this->hasCourse($courseObject))
-                    return true;
-            }
-            else
-            {
-                foreach ($courseObject as $code => $desc)
-                {
-                    if ($this->hasCourse($code))
-                        return true;
-                }
-            }
-        }
-    }
-    
-    private function hasCourse($course)
-    {
-        foreach ($this->courseCodes as $codeSet)
-        {
-            if (is_string($codeSet))
-            {
-                if ($codeSet != $course)
-                    return false;
-            }
-        }
-        
-        return true;
-    }
-    
-    /**
-     * Summary of hasRooms
-     * @param mixed $rooms 
-     */
-    public function hasRooms($rooms)
-    {
-        
-    }
 	
 	/**
 	 * Serializes self for a JSON object

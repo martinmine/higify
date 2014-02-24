@@ -36,34 +36,9 @@ class ScheduleController
         }
     }
     
-    public static function fetchScheduleForTheDay($userID)
+    public static function fetchTimeTable($userID)
     {
-        $from = new DateTime();
-        $from->modify('midnight');
-        
-        $to = new DateTime();
-        $to->modify('midnight +1 days');
-        
-     
-        return self::fetchTimeTable($userID, $from, $to);
-    }
-    
-    public static function fetchScheduleForWeek($userID, $weekNo = NULL)
-    {
-        if ($weekNo === NULL)
-            $weekNo = date('W');
-        
-        $from = new DateTime();
-        $from->setISODate(date('Y'), $weekNo)->modify('midnight');
-        $to = new DateTime();
-        $to->setISODate(date('Y'), $weekNo)->modify('midnight +7 days');
-        
-        return self::fetchTimeTable($userID, $from, $to);
-    }
-    
-    public static function fetchTimeTable($userID, DateTime $begin, DateTime $end)
-    {
-        $includedObjects = ScheduleModel::getIncludeObjects($userID, $begin, $end);
+        $includedObjects = ScheduleModel::getIncludeObjects($userID);
         $exludedObjects = ScheduleModel::getExcludingTimeObject($userID);
         
         $schedule = array();
@@ -74,31 +49,23 @@ class ScheduleController
         {
             $include = false;
             $objTitle = '';
-            if (is_string($timeObject->getCourseCodes()))
+            foreach ($timeObject->getCourseCodes() as $codeSet)
             {
-                $include = true;
-                $objTitle = $timeObject->getCourseCodes();
-            }
-            else
-            {
-                foreach ($timeObject->getCourseCodes() as $codeSet)
+                if (is_array($codeSet))
                 {
-                    if (is_array($codeSet))
+                    foreach ($codeSet as $code =>$title)
                     {
-                        foreach ($codeSet as $code =>$title)
+                        if (!in_array($title, $exludedObjects))
                         {
-                            if (!in_array($title, $exludedObjects))
-                            {
-                                $include = true;
-                                $objTitle = $title;
-                            }
+                            $include = true;
+                            $objTitle = $title;
                         }
                     }
-                    else // Demokratitid
-                    {
-                        $include = true;
-                        $objTitle = $codeSet;
-                    }
+                }
+                else // Demokratitid
+                {
+                    $include = true;
+                    $objTitle = $codeSet;
                 }
             }
             
@@ -128,8 +95,6 @@ class ScheduleController
             }
         }
         
-        //print_r($orderedItems[1]);
-        //die();
         return $orderedItems;
     }
 }

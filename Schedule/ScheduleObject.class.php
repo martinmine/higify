@@ -67,6 +67,8 @@ class ScheduleObject
      */
     public function __construct($id, $title, $location, $start, $end, $color)
     {
+        $start->add(new DateInterval('PT1H')); // How much I hate this language
+        $end->add(new DateInterval('PT1H'));
         $this->id = $id;
         $this->title = $title;
         $this->location = $location;
@@ -102,10 +104,7 @@ class ScheduleObject
      */
     public function getLocation()
     {
-        if (is_string($this->location))
-            return $this->location;
-        else
-            return implode(', ', $this->location);
+        return $this->location;
     }
     
     /**
