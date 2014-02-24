@@ -97,7 +97,12 @@ textarea
 	width: 550px;
 }
 
-label[for="isPublic"], input[type="checkbox"]
+input[name="public"]
+{
+
+}
+
+label[for="isPublic"], input[name="isPublic"]
 {
 	float: left;
 }
@@ -123,7 +128,7 @@ input[type=text]
 .links
 {
 	text-align: left;
-	padding-left: -10px;*/
+	padding-left: -10px;
 }
 
 .info
@@ -184,4 +189,15 @@ input[type=text]
 	background-color: #A87BC2;
 	text-align: left;
 	list-style: none;
+}
+
+.cancelEdit
+{
+	float: right;
+	
+}
+
+.button
+{
+	padding-right: 15px;
 }

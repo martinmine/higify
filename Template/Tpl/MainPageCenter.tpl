@@ -2,12 +2,15 @@
 		<div class="mid">
 			<h3>Publish a new note</h3>
 			<div class="AddNewNote">
-				<form action="mainpage.php" method="post" value=" <?php echo $TEXT; ?> ">
-				<textarea style="resize:none" name="content"></textarea></br>
+				<form action="mainpage.php" method="post">
+				<textarea style="resize:none" name="content"><?php echo $CONTENT; ?></textarea></br>
 				<label for="isPublic">Make Public</label>
-				<input type="checkbox" name="isPublic" value="1"/>
+				<input type="checkbox" name="isPublic" <?php echo $ISPUBLIC; ?>/>
 				<input type="submit" name="submit" value="publish">
-				</form>
+				</form></br>
+				<div class="cancelEdit">
+					<a href="mainpage.php"><div class="button"><?php echo $CANCEL; ?></div></a>
+				</div>
 			</div>
 			</br></br>
 			<div id="notes">

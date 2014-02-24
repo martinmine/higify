@@ -24,7 +24,7 @@
 			<li><a href="https://fronter.com/hig/index.phtml">Fonter</a></li>
 			<li><a href="http://www.hig.no">Hig</a></li>
 			<li><a href="https://www.studweb.no/as/WebObjects/studentweb2?inst=HiG">Studentweb</a></li>
-			<li><a href="http://www.google.no">Min Timeplan</a></li>
+			<li><a href="show_schedule.php">My timeschedule</a></li>
 			</ul>
 		</div>
 	</div>
