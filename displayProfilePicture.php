@@ -6,9 +6,9 @@ require_once('UserController.class.php');
 	$picture = UserController::requestProfilePicture($userID);
     
 	header("Content-type: image/jpeg");
-	if ($picture === NULL)
+	if ($picture == NULL)
 	{
-		include ('/static/defaultpicture.png');
+		include ('static/defaultpicture.png');
 	}
 	else
 		echo $picture;
