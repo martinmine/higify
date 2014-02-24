@@ -136,7 +136,10 @@ class Weeks implements ITimeParameter
 	 */
 	public function serialize()
 	{
-		return sprintf('%d.weeks', $this->weeks);
+        if ($this->weeks > 1)
+		    return sprintf('%d.weeks', $this->weeks);
+        else
+            return sprintf('%d.week', $this->weeks);
 	}
 }
 

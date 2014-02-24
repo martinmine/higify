@@ -1,5 +1,10 @@
 <?php
-require_once('DatabaseManager.class.php');
+require_once('./DatabaseManager.class.php');
+require_once('TimeEditAPI/TimeEditAPIController.class.php');
+require_once('TimeEditAPI/PullFormat.class.php');
+require_once('TimeEditAPI/OutputType.class.php');
+require_once('TimeEditAPI/ITimeParameter.class.php');
+
 class ScheduleModel
 {
     /**
@@ -53,24 +58,34 @@ class ScheduleModel
         $query->execute();    
     }
     
+    /**
+     * Gets the TimeSchedule object containing all the items to be shown (and those not to be - unfiltered)
+     * @param integer $userID The ID of the user to be requested
+     * @return TimeTable
+     */
     public static function getIncludeObjects($userID)
     {
         $objects = array();
         
         $pdo = DatabaseManager::getDB();
         
-        $query = $pdo->prepare('SELECT objectID from IncludedTimeObject WHERE userID = :usrID');
+        $query = $pdo->prepare('SELECT objectID, type FROM IncludedTimeObject WHERE userID = :usrID');
         $query->bindParam(':usrID', $userID);
         $query->execute();
         
         while ($row = $query->fetch(PDO::FETCH_ASSOC))
         {
-            $objects[] = $row['objectID'];   
+            $objects[] = TimeEditAPIController::getTimeTable($row['objectID'], $row['type'], PullFormat::CSV, OutputType::TIME_TABLE, Minutes::now(), new Weeks(1), true);
         }
         
-        return $objects;
+        return TimeEditAPIController::mergeObjects($objects);
     }
     
+    /**
+     * Gets an item of key words that shall be excluded from the time schedule 
+     * @param integer $userID Users ID
+     * @return Array of key words that shall be excluded from the schedule
+     */
     public static function getExcludingTimeObject($userID)
     {
         $contents = array();
