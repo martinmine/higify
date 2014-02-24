@@ -36,9 +36,8 @@ class ScheduleController
         }
     }
     
-    public static function fetchTimeTable($userID)
+    public static function fetchScheduleForTheDay($userID)
     {
-<<<<<<< HEAD
         $from = new DateTime();
         $from->modify('midnight');
         
@@ -65,9 +64,6 @@ class ScheduleController
     public static function fetchTimeTable($userID, DateTime $begin, DateTime $end)
     {
         $includedObjects = ScheduleModel::getIncludeObjects($userID, $begin, $end);
-=======
-        $includedObjects = ScheduleModel::getIncludeObjects($userID);
->>>>>>> parent of 13c3a09... Optimizations
         $exludedObjects = ScheduleModel::getExcludingTimeObject($userID);
         
         $schedule = array();
@@ -77,23 +73,31 @@ class ScheduleController
         {
             $include = false;
             $objTitle = '';
-            foreach ($timeObject->getCourseCodes() as $codeSet)
+            if (is_string($timeObject->getCourseCodes()))
             {
-                if (is_array($codeSet))
+                $include = true;
+                $objTitle = $timeObject->getCourseCodes();
+            }
+            else
+            {
+                foreach ($timeObject->getCourseCodes() as $codeSet)
                 {
-                    foreach ($codeSet as $code =>$title)
+                    if (is_array($codeSet))
                     {
-                        if (!in_array($title, $exludedObjects))
+                        foreach ($codeSet as $code =>$title)
                         {
-                            $include = true;
-                            $objTitle = $title;
+                            if (!in_array($title, $exludedObjects))
+                            {
+                                $include = true;
+                                $objTitle = $title;
+                            }
                         }
                     }
-                }
-                else // Demokratitid
-                {
-                    $include = true;
-                    $objTitle = $codeSet;
+                    else // Demokratitid
+                    {
+                        $include = true;
+                        $objTitle = $codeSet;
+                    }
                 }
             }
             
@@ -123,6 +127,8 @@ class ScheduleController
             }
         }
         
+        //print_r($orderedItems[1]);
+        //die();
         return $orderedItems;
     }
 }

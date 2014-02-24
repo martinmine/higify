@@ -116,6 +116,7 @@ class TimeEditAPIModel
 		$lines = explode("\n", $response);
 		$lineCount = count($lines);
 		$rowDefinitions = TimeEditAPIModel::parseCSVRow($lines[TimeEditAPIModel::CSV_LINE_NUM - 1]);	
+        $counter = 0;
 
 		for ($i = TimeEditAPIModel::CSV_LINE_NUM; $i < $lineCount; $i++)
 		{
@@ -125,19 +126,27 @@ class TimeEditAPIModel
             $rowItems = TimeEditAPIModel::parseCSVRow($lines[$i]);
             $lineValueCount = count($rowItems);
             $tableObject = new TableObject();
+            $tableObject->setID(++$counter);
             
             for ($j = 0; $j < $lineValueCount; $j++)
             {
                 $item = $rowItems[$j];
-                if (isset($rowDefinitions[$j][0]) && $rowDefinitions[$j][0] == 'Emne' && is_array($item)) // Parse course code data
+                if (isset($rowDefinitions[$j][0]) && $rowDefinitions[$j][0] == 'Emne') // Parse course code data
                 {
-                    
-					$subjects = array();
-					$valueCount = count($item);
-					$k = 0;
+                    if (is_array($item))
+                    {
+					    $subjects = array();
+					    $valueCount = count($item);
+					    $k = 0;
 					
-					while ($k < $valueCount)
-						$subjects[] = array($item[$k++] => $item[$k++]);	// Course code => Course name
+					    while ($k < $valueCount)
+						    $subjects[] = array($item[$k++] => $item[$k++]);	// Course code => Course name
+                    }
+                    else
+                    {
+                        $subjects = $item;
+                    }
+                    
 					$tableObject->setCourseCodes($subjects);
                 }
                 else
@@ -216,7 +225,8 @@ class TimeEditAPIModel
                 }
             }
 			
-			$table->addObject($tableObject);	// We are done adding data to this object, add it to the table
+            // We are done adding data to this object, add it to the table
+			$table->addObjectWithID($tableObject, $tableObject->getID());  
 		}
 	}	
 
