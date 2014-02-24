@@ -305,6 +305,19 @@ class UserModel
         $stmt->bindParam(':userID', $userID);
         $stmt->execute();
     }
+    
+    public static function setPublicTimeSchedule($userID, $bool)
+    {
+        $query = "UPDATE user 
+                  SET publicTimeSchedule = :bool
+                  WHERE userID = :userID";
+        
+        $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':bool', $bool);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->execute();
+    }
 
     /**
      * Selects the profilepicture from user matching userID

@@ -139,6 +139,27 @@ class UserController
         
         return $builder->toString();
     }
+    
+    /**
+     * Updates useremail to $email 
+     * 
+     * @param $userID id of user
+     * @param $email new email adress
+     */
+    public static function updateEmail($userID, $email)
+    {
+        UserModel::newEmail($userID,$email);
+    }
+    
+    /**
+     * Updates state of the boolean publicTimeSchedule 
+     * @param $userID
+     * @param $bool true: set to public, false: set to private
+     */
+    public static function updatePublicTime($userID, $bool)
+    {
+        UserModel::setPublicTimeSchedule($userID, $bool);
+    }
 }
   
 ?>
