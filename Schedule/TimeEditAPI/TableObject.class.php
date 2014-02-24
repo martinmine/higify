@@ -253,8 +253,8 @@ class TableObject implements JsonSerializable
 		        $keys = array_keys($this->courseCodes[0]);
         }
         else
-        {
             $keys = array('');
+<<<<<<< HEAD
         }
         
 		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
@@ -311,6 +311,12 @@ class TableObject implements JsonSerializable
     {
         
     }
+=======
+				
+		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
+			&& (count($tableObject->courseCodes) == count($this->courseCodes) || ($tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room)));
+	}
+>>>>>>> parent of 13c3a09... Optimizations
 	
 	/**
 	 * Serializes self for a JSON object
