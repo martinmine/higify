@@ -29,7 +29,7 @@ class TableJavascriptElement extends WebPageElement
                     $tpl = new Template();
                     $tpl->appendTemplate('TimeObjectJavaScript');
                     $tpl->setValue('ID', $obj->getID());
-                    $tpl->setValue('MINUTE', $obj->getStart()->format('H'));
+                    $tpl->setValue('MINUTE', $obj->getStart()->format('i'));
                     $tpl->setValue('DURATION', $diff->i + ($diff->h * 60));
                     $tpl->display();
                 }
