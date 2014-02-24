@@ -87,6 +87,7 @@ require_once('SessionController.class.php');
 		/**
 		 * Retrieves a note Object from NoteModel based on noteID.
 		 *
+		 * @Param ID for the Note object to retrieve.
 		 * @return Object Note.
 		 */
 		public static function requestNote($noteID)
@@ -97,12 +98,11 @@ require_once('SessionController.class.php');
 		/**
 		 * Updates a note based on new $values.
 		 *
+		 * @Param Associated array that's replacing the notes values.
 		 */
 		public static function requestEditNote($values)
 		{
 			$isPublic = isset($values['isPublic'])? '1': '0';
-			
-			echo date('UTC');
 			
 			$note = new Note($values['noteID'],
 							 $values['ownerID'],
@@ -115,6 +115,11 @@ require_once('SessionController.class.php');
 			NoteModel::editNote($note);
 		}
 		
+		/**
+		 * Deleting a note by its noteID.
+		 *
+		 * @Param ID the Notes object id.
+		 */
 		public static function requestDeleteNote($noteID)
 		{
 			NoteModel::deleteNote($noteID);
