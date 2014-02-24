@@ -20,20 +20,23 @@ class TableJavascriptElement extends WebPageElement
     {
         for ($i = $this->dayBegin; $i <= $this->dayEnd; $i++)
         {
-            foreach ($this->elements[$i] as $hour)
+            if (isset($this->elements[$i]))
             {
-                foreach ($hour as $obj)
+                foreach ($this->elements[$i] as $hour)
                 {
-                    $diff = $obj->getEnd()->diff($obj->getStart());
+                    foreach ($hour as $obj)
+                    {
+                        $diff = $obj->getEnd()->diff($obj->getStart());
                     
-                    $tpl = new Template();
-                    $tpl->appendTemplate('TimeObjectJavaScript');
-                    $tpl->setValue('ID', $obj->getID());
-                    $tpl->setValue('MINUTE', $obj->getStart()->format('i'));
-                    $tpl->setValue('DURATION', $diff->i + ($diff->h * 60));
-                    $tpl->setValue('INDENT', $obj->getIndent());
-                    $tpl->setValue('MAXINDENT', $obj->getIndentMax());
-                    $tpl->display();
+                        $tpl = new Template();
+                        $tpl->appendTemplate('TimeObjectJavaScript');
+                        $tpl->setValue('ID', $obj->getID());
+                        $tpl->setValue('MINUTE', $obj->getStart()->format('i'));
+                        $tpl->setValue('DURATION', $diff->i + ($diff->h * 60));
+                        $tpl->setValue('INDENT', $obj->getIndent());
+                        $tpl->setValue('MAXINDENT', $obj->getIndentMax());
+                        $tpl->display();
+                    }
                 }
             }
         }

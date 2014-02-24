@@ -35,7 +35,7 @@ class ScheduleDayContainerElement extends WebPageElement
             $tpl = new Template();
             $tpl->appendTemplate('ScheduleDayContainer');
             $tpl->setValue('DAY', $days[$i]);
-            $tpl->setValue('ELEMENTS', new ScheduleObjectContainerElement($this->elements[$i], $this->hourBegin, $this->hourEnd));
+            $tpl->setValue('ELEMENTS', new ScheduleObjectContainerElement(isset($this->elements[$i]) ? $this->elements[$i] : NULL, $this->hourBegin, $this->hourEnd));
             $tpl->display();
         }
     }
