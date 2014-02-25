@@ -106,6 +106,15 @@ class MainPageController implements IPageController
 				}
 			}
 			
+			if (isset($_GET['search'])  &&  isset($_GET['searchterm']))
+			{
+				if ($_GET['searchterm'] == 'Chuck Norris')
+					echo "Watch out! Too late... Chuck destroyed your profile..</br>... Just kidding he higified you to the moon!";
+				else	
+					echo "Takk for din bestilling, faktura har blitt sendt til din mail adresse";
+				
+			}
+			
 			$vals['TOP']           = 'Top';	// Test;
 			$vals['USERNAME']      = $username;
 			$vals['CONTENT']       = ($displayContent)? $displayContent: NULL;
@@ -113,7 +122,7 @@ class MainPageController implements IPageController
 			$vals['NOTES']         = ($edit)? NULL: new NoteListView();
 			$vals['EDIT']          = ($edit)? "?noteID=" . $noteID . "&edit=1": NULL;
 			$vals['ISPUBLIC']      = $isPublicCheck;
-			$vals['HOURS'] 		   = "Fjerna feilmld :) ";//new DayScheduleView();  //  not done...
+			$vals['HOURS'] 		   = "Kommer senere/snart :) ";//new DayScheduleView();  //  not done...
 			
 		}
 		else

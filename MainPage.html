@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="maincsstest.css">
+<link rel="stylesheet" type="text/css" href="mainSearchCss.css">
 <title>index</title>
 </head>
 
@@ -24,12 +25,11 @@
 			</div>
 		</div>
 		
-		<div class="searchProfile">
-		<form>
-			<span><input type="text" value="Search..."/></span>
-		</form>
+		<div id="searchProfile">
+			<form id="newSearch" method="get" action="MainPage.html">
+				<input type="text" class="searchInput" onfocus="if(this.value == 'Search users..') { this.value = ''; }" value="Search users.."><input type="submit" value=">" class="searchButton">
+			</form>
 		</div>
-		
 		<div class="links">
 			<ul>
 			<li><a href="https://fronter.com/hig/index.phtml">Fonter</a></li>
