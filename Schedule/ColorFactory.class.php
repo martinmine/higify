@@ -9,10 +9,13 @@ class ColorFactory
                             'greenTimeObject',
                             'redTimeObject',
                             'orangeTimeObject',
-                            'yellowTimeObject');
+                            'yellowTimeObject',
+                            'lightRed',
+                            'darkBlue',
+                            'purple');
                             
     const DEFAULT_COLOR = 'grayTimeObject';
-    const COLOR_COUNT = 5;
+    const COLOR_COUNT = 8;
     
     private $lastRecentlyUsed;
     private $keys;

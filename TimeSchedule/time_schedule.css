@@ -94,6 +94,10 @@ div.singleHour
 	margin-top: -1px;
 }
 
+
+div.timeObjectContainer:before { content:" "; float:right; width:22px; height:12px; }
+
+
 div.timeObjectContainer
 {
 	width: 92px;
@@ -107,6 +111,7 @@ div.timeObjectContainer
 	border-width: 1px;
 	border-style: solid;
 	border-color: purple;
+    word-wrap: break-word;
 }
 
 div.yellowTimeObject
@@ -143,6 +148,24 @@ div.orangeTimeObject
 {
 	background-color: rgb(255,162,100);
 	border-color: rgb(230,91,0);
+}
+
+div.lightRed
+{
+	background-color: rgb(255,174,201);
+	border-color: rgb(159,0,52);
+}
+
+div.darkBlue
+{
+	background-color: rgb(88,128,180);
+	border-color: rgb(21,26,81);
+}
+
+div.purple
+{
+	background-color: rgb(170,156,218);
+	border-color: rgb(85,62,164);
 }
 
 div.singleHourObject
