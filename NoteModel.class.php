@@ -48,9 +48,11 @@ class NoteModel
 			$stmt->execute();
 			while($row = $stmt->fetch(PDO::FETCH_ASSOC))
 			{
+				$timestamp = date('d M H:i', strtotime($row['timePublished']));
+				
 				$res[] = new Note($row['noteID'], $row['ownerID'],
 								  $row['content'], $row['isPublic'],
-								  $row['timePublished'], $row['username']);
+								  $timestamp, $row['username']);
 			}
 			return $res;
 		}
@@ -136,13 +138,12 @@ class NoteModel
 	{
 		$db = DatabaseManager::getDB();
 		$query = 'UPDATE note
-				  SET content = :content, isPublic = :isPublic
+				  SET content = :content, isPublic = :isPublic, timePublished = NOW()
 				  WHERE noteID = :noteID';
 		$stmt = $db->prepare($query);
 		
 		$content  = $note->getContent();
 		$isPublic = $note->isPublic();
-		$time     = $note->getTime();
 		$noteID   = $note->getNoteID();
 		
 		$stmt->bindParam(':content', $content);

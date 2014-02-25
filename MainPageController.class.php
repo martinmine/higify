@@ -45,12 +45,12 @@ class MainPageController implements IPageController
 			 */
 			if (isset($_GET['noteID'])  &&  isset($_GET['changeType']))
 			{
-				$noteID = $_GET['noteID'];
+				$noteID     = $_GET['noteID'];
 				$changeType = $_GET['changeType'];
 				$note = NoteController::requestNote($noteID);
 				
 				/** 
-				 * A check if the user has permission to both delete or edit a note:
+				 * A check if the user has permission to both delete or edit the note:
 				 */
 				if ($note->getOwnerID() === $user->getUserID())
 				{
@@ -85,18 +85,17 @@ class MainPageController implements IPageController
 			}
 			
 			/**
-			 * When submitted you either change or add a new note depending on get input
-			 * Both call on NoteController to handle both calls.
+			 * When submitting (and content is set) you either change or add a new 
+			 * note depending on $_GET input. Both call on NoteController to handle 
+			 * both calls.
 			 */
 			if (isset($_POST['submit'])  &&  isset($_POST['content']))
 			{
-				
 				if (isset($_GET['noteID'])  &&  isset($_GET['edit']) &&  $_GET['edit'] === '1')
 				{
 					$_POST['noteID']   = $_GET['noteID'];
 					$_POST['ownerID']  = $user->getUserID();
 					$_POST['username'] = $username;
-					
 					NoteController::requestEditNote($_POST);
 				} 
 				else
@@ -109,7 +108,6 @@ class MainPageController implements IPageController
 			
 			$vals['TOP']           = 'Top';	// Test;
 			$vals['USERNAME']      = $username;
-			//$vals['PROFILE_ID']    = $userID;
 			$vals['CONTENT']       = ($displayContent)? $displayContent: NULL;
 			$vals['CANCEL'] 	   = ($edit)? "cancel": NULL;
 			$vals['NOTES']         = ($edit)? NULL: new NoteListView();

@@ -17,7 +17,7 @@ require_once('SessionController.class.php');
 	{
 		
 		/**
-		 * Retrieves all notes published by a $user, depending on $status.
+		 * Retrieves all notes published by a $user, depending on $status
 		 * (show public or private notes) see NoteModel.class.php for more.
 		 * 
 		 * @uses NoteModel.class.php
@@ -77,7 +77,7 @@ require_once('SessionController.class.php');
 							 $values['ownerID'], 
 							 $values['content'],
 							 $isPublic,
-							 date('UTC'),
+							 -1,
 							 $values['username']
 							);
 							
@@ -108,7 +108,7 @@ require_once('SessionController.class.php');
 							 $values['ownerID'],
 							 $values['content'],
 							 $isPublic,
-							 date('UTC'),
+							 -1,
 							 $values['username']
 							);
 							 
