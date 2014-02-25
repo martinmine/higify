@@ -313,7 +313,7 @@ class TimeEditAPIModel
 		{
 			$srcElement = NULL;
 			$dstElement = $destination->getItem($keyContainer[$i]); // Get item number i from destination table
-			$padding = $i;		// At which item in the source array to compare dstElement with
+			$padding = $i + 1;		// At which item in the source array to compare dstElement with
 			
 			do
 			{

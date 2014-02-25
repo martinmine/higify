@@ -36,16 +36,14 @@ else
 		
 		foreach ($timeTableIterator as $timeObject)
 		{
+            if (is_array($timeObject->getCourseCodes()))
             foreach ($timeObject->getCourseCodes() as $keyValuePair)
             {
-                if (is_array($keyValuePair))
+                foreach ($keyValuePair as $courseCode => $courseDesc)
                 {
-                    foreach ($keyValuePair as $courseCode => $courseDesc)
+                    if (!isset($uniqueCourses[$courseCode]))
                     {
-                        if (!isset($uniqueCourses[$courseCode]))
-                        {
-                            $uniqueCourses[$courseCode] = $courseDesc;
-                        }
+                        $uniqueCourses[$courseCode] = $courseDesc;
                     }
                 }
             }
