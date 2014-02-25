@@ -98,10 +98,16 @@ class TimeTable implements JsonSerializable
      */
     public function fill($objects)
     {
+        $counter = 0;
         foreach ($objects as $object)
         {
             if (is_integer($object->getID()))
             {
+                if ($object->isIncrementalID())
+                {
+                    $object->setID(++$counter);
+                }
+                
                 $this->addObjectWithID($object, $object->getID());
             }
             else

@@ -55,11 +55,22 @@ class TableObject implements JsonSerializable
 	 */
 	private $lastChanged;
 
+    /**
+     * Indicates if this ID came from an incremental counter (CSV parser)
+     * @var boolean
+     */
+    private $incrementalID;
+    
 	/**
 	 * The format which the DateTime shall be displayed as on XML/getTimeFormated
 	 */
 	const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 	
+    
+    public function __construct()
+    {
+        $this->incrementalID = false;
+    }
 	/**
 	 * Gets the ID of the object
 	 * @return integer ID of object
@@ -235,6 +246,16 @@ class TableObject implements JsonSerializable
 		$this->lastChanged = $lastChanged;
 	}
 	
+    public function isIncrementalID()
+    {
+        return $this->incrementalID;
+    }  
+    
+    public function setIncrementalFlag()
+    {
+        $this->incrementalID = true;
+    }
+    
 	/**
 	 * Compares self with the given object and checks if both of the TableObject
 	 * are identical. As some formats doesn't yield all data, this function compares
@@ -256,7 +277,7 @@ class TableObject implements JsonSerializable
             $keys = array('');
 				
 		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
-			&& (count($tableObject->courseCodes) == count($this->courseCodes) || ($tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room)));
+			&& (($tableObject->courseCodes[0] == $keys[0] && $this->room == $tableObject->room)));
 	}
 	
 	/**

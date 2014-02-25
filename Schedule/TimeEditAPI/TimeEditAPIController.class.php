@@ -158,7 +158,6 @@ class TimeEditAPIController
             }
         }
         while ($leftIterator->valid() || $rightIterator->valid()); // While anything left in any of the data sets
-        
         $mergedTable = new TimeTable();
         $mergedTable->fill($merged);
         return $mergedTable;   

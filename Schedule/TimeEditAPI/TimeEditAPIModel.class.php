@@ -127,6 +127,7 @@ class TimeEditAPIModel
             $lineValueCount = count($rowItems);
             $tableObject = new TableObject();
             $tableObject->setID(++$counter);
+            $tableObject->setIncrementalFlag();
             
             for ($j = 0; $j < $lineValueCount; $j++)
             {
@@ -250,7 +251,6 @@ class TimeEditAPIModel
 					break;
 
 				case 'DTSTART':
-				
 					$currentObject->setTimeStart(TimeEditAPIModel::parseICSDateTime($args[1]));
 					break;
 
