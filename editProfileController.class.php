@@ -13,20 +13,24 @@ class EditProfileController implements IPageController
         $userID = SessionController::requestLoggedinID();
         $vals = array();
         
-        /*
-         * TODO:::: Check for current state of publictimeschedule 
-         * 
-         * */
         if ($userID !== NULL)
         {
-            
+            print_r($_POST);
+           
             if (isset($_POST['public']))                                              
             {
-                if ($_POST['public'] == true)                                       // If checkbox is set for public
+                if ($_POST['public'] == 1)                                       // If checkbox is set for public
                 {                                                                   // timeschedule
-                    UserController::updatePublicTime($userID, $_POST['public']);
+                    UserController::updatePublicTime($userID, 1);
                 }
             }
+            
+            else
+            {
+                UserController::updatePublicTime($userID, 0);
+            }
+            
+            $vals['PUBLIC'] = UserController::requestPublicTime($userID); 
             
             
             if (isset($_POST['email']))         
@@ -64,7 +68,7 @@ class EditProfileController implements IPageController
                 if ($_FILES['file']["error"] > 0)
                 {
                     $vals['ERROR_PROFILEPIC'] = new ErrorMessageView($_FILES["file"]["error"]);
-                    echo $vals['ERROR_PROFILEPIC']; // test                    
+                                     
                 }
                 
                 else

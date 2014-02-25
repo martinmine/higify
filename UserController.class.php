@@ -164,7 +164,7 @@ class UserController
     
     public static function requestPublicTime($userID)
     {
-        fetchPublicTimeSchedule($userID);
+        return UserModel::fetchPublicTimeSchedule($userID);
     }
     
     public static function requestPasswordChange($userID,$oldpassword,$newpassword)

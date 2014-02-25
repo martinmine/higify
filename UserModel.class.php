@@ -318,6 +318,24 @@ class UserModel
         $stmt->bindParam(':userID', $userID);
         $stmt->execute();
     }
+    
+    public static function fetchPublicTimeSchedule($userID)
+    {
+        $query = "SELECT publicTimeSchedule 
+                  FROM user
+                  WHERE userID = :userID";
+        
+        $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->execute();
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if (isset($res['publicTimeSchedule']))
+            return  $res['publicTimeSchedule'];
+        
+        return NULL;
+    }
 
     /**
      * Selects the profilepicture from user matching userID
@@ -341,8 +359,7 @@ class UserModel
         if (isset($picture['profilePicture']))
             return $picture['profilePicture'];
         
-        else
-            return NULL;
+        return NULL;
     }
 }
 ?>
