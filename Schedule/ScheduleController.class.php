@@ -8,6 +8,9 @@ require_once('TimeEditAPI/ObjectType.class.php');
 require_once('TimeEditAPI/ITimeParameter.class.php');
 require_once('ColorFactory.class.php');
 
+/**
+ * Manages integration and formatting of schedules
+ */
 class ScheduleController
 {
     /**
@@ -36,6 +39,11 @@ class ScheduleController
         }
     }
     
+    /**
+     * Gets the time schedule for one day
+     * @param integer $userID The user ID
+     * @return Array of ScheduleLane objects where the index is the day number of the week
+     */
     public static function fetchScheduleForTheDay($userID)
     {
         $from = new DateTime();
@@ -48,6 +56,12 @@ class ScheduleController
         return self::fetchTimeTable($userID, $from, $to);
     }
     
+    /**
+     * Gets the schedule for a given week, if no week is defined it uses the current week number
+     * @param integer $userID 
+     * @param integer $weekNo 
+     * @return Array of ScheduleLane objects where the index is the day number of the week
+     */
     public static function fetchScheduleForWeek($userID, $weekNo = NULL)
     {
         if ($weekNo === NULL)
@@ -61,6 +75,13 @@ class ScheduleController
         return self::fetchTimeTable($userID, $from, $to);
     }
     
+    /**
+     * Gets the time table between a time range
+     * @param integer $userID User's ID
+     * @param DateTime $begin Time span begin
+     * @param DateTime $end Time span end
+     * @return Array of ScheduleLane objects where the index is the day number of the week
+     */
     public static function fetchTimeTable($userID, DateTime $begin, DateTime $end)
     {
         $includedObjects = ScheduleModel::getIncludeObjects($userID, $begin, $end);
@@ -109,7 +130,6 @@ class ScheduleController
                 $obj = new ScheduleObject($timeObject->getID(), $objTitle, $timeObject->getRoom(), $timeObject->getTimeStart(), $timeObject->getTimeEnd(), $objColor);
                 
                 $day = $obj->getStart()->format('w');
-                
         
                 if (!isset($schedule[$day]))
                     $schedule[$day] = new ScheduleLane();
@@ -119,7 +139,7 @@ class ScheduleController
         }
         
         $orderedItems = array();
-        foreach ($schedule as $day => $lane)
+        foreach ($schedule as $day => $lane) // Format them and put them into each lane - formats parallel objects
         {
             $laneItems = $lane->getLane();
             foreach ($laneItems as $obj)

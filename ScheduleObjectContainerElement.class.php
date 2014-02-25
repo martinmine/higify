@@ -2,6 +2,9 @@
 require_once('Template/WebPageElement.class.php');
 require_once('ScheduleObjectElement.class.php');
 
+/**
+ * Container for the one-hour in the schedule
+ */
 class ScheduleObjectContainerElement extends WebPageElement
 {
     /**
@@ -29,6 +32,9 @@ class ScheduleObjectContainerElement extends WebPageElement
         $this->hourEnd = $hourEnd;
     }
     
+    /**
+     * Creates the time cell and fills it with its contents
+     */
     public function generateHTML()
     {
         for ($i = $this->hourBegin; $i < $this->hourEnd; $i++)

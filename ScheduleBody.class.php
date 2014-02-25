@@ -6,8 +6,23 @@ require_once('TimeLabelElement.class.php');
 
 class ScheduleBody extends WebPageElement
 {
+    /**
+     * Array of all the lanes where
+     * week day = lane for this day
+     * @var Array
+     */
     private $schedule;
+    
+    /**
+     * The first hour in our schedule
+     * @var integer
+     */
     private $hourBegin;
+    
+    /**
+     * Last hour in the schedule for the day
+     * @var integer
+     */
     private $hourEnd;
     
     const DAY_BEGIN = 1;
@@ -20,6 +35,9 @@ class ScheduleBody extends WebPageElement
         $this->hourEnd = $hourEnd;
     }
     
+    /**
+     * The all mighty functions that prints our great schedule
+     */
     public function generateHTML()
     {
         $tpl = new Template();

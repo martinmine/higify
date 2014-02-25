@@ -53,7 +53,7 @@ class ScheduleLane
         if ($prev->getPrevious() === NULL && !$prev->overlaps($item)) 
             return;
         
-        $max = $prev->getIndentMax();
+        $max = $prev->getIndentMax(); // The index of the last sub-lane
         $free = array_fill(1, $max, true); // Initialize the array with flags for if a lane is taken or not
         $flagged = false;
         
@@ -63,7 +63,7 @@ class ScheduleLane
         {
             if ($prev->overlaps($item))               // Item overlaps 
             {
-                $free[$prev->getIndent()] = false;    // Flag this slot
+                $free[$prev->getIndent()] = false;    // Flag this sub-lane
                 $flagged = true;
             }
             
@@ -78,7 +78,7 @@ class ScheduleLane
         $i = 1; // The position where $item will be put
         while ($i <= $max && !$free[$i]) $i++; // Find the free position in $free
 
-        if ($i > $max) // FULL row, all the free slots in $free are set to false, indent group
+        if ($i > $max) // FULL row, all the free slots in $free are set to false, add new sublane
         {
             $max++; 
             $prev = $this->lanes[$this->count - 1];

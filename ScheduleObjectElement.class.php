@@ -3,8 +3,15 @@ require_once('Template/WebPageElement.class.php');
 require_once('Schedule/ScheduleObject.class.php');
 require_once('Schedule/ScheduleLane.class.php');
 
+/**
+ * Informs how a ScheduleObject shall be outputted within one hour
+ */
 class ScheduleObjectElement extends WebPageElement
 {
+    /**
+     * All the ScheduleObjects within this hour
+     * @var Array
+     */
     private $scheduleObjects;
     
     public function __construct($objects)
@@ -12,6 +19,9 @@ class ScheduleObjectElement extends WebPageElement
         $this->scheduleObjects = $objects;
     }
     
+    /**
+     * Displays the time objects to the HTML output
+     */
     public function generateHTML()
     {
         foreach ($this->scheduleObjects as $obj)

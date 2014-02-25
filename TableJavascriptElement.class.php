@@ -3,10 +3,27 @@ require_once('Template/WebPageElement.class.php');
 require_once('Schedule/ScheduleLane.class.php');
 require_once('Schedule/ScheduleObject.class.php');
 
+/**
+ * Describes how the function calls in the Javascript code for each time-object shall be made
+ */
 class TableJavascriptElement extends WebPageElement
 {
+    /**
+     * All the ScheduleObjects
+     * @var Array
+     */
     private $elements;
+    
+    /**
+     * Start pediod - number of the week day
+     * @var integer
+     */
     private $dayBegin;
+    
+    /**
+     * End period - number of the week day
+     * @var integer
+     */
     private $dayEnd;
     
     public function __construct($elements, $dayBegin, $dayEnd)
