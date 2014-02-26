@@ -36,7 +36,6 @@ class ScheduleLane
             $this->prepareItem($item);
         
         $this->lanes[$this->count++] = $item;
-        
     }
     
     /**

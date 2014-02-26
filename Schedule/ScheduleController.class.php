@@ -42,7 +42,7 @@ class ScheduleController
     /**
      * Gets the time schedule for one day
      * @param integer $userID The user ID
-     * @return Array of ScheduleLane objects where the index is the day number of the week
+     * @return Array of all the time objects where the index is the ID of the schedule objects
      */
     public static function fetchScheduleForTheDay($userID)
     {
@@ -52,8 +52,30 @@ class ScheduleController
         $to = new DateTime();
         $to->modify('midnight +1 days');
         
+        $now = new DateTime();
+        
+        $scheduleLanes = self::fetchTimeTable($userID, $from, $to);
+        $schedule = array();
+        $currCount = 0;
+        $maxCount = 7;
+        
+        foreach ($scheduleLanes as $dayNumber => $hours)
+        {
+            foreach ($hours as $index => $cell)
+            {
+                foreach ($cell as $item)
+                {
+                    if ($item->getEnd() > $now)
+                    {
+                        $schedule[] = $item;
+                        if (++$currCount >= $maxCount)
+                            return $schedule;
+                    }
+                }
+            }
+        }
      
-        return self::fetchTimeTable($userID, $from, $to);
+        return $schedule;
     }
     
     /**
