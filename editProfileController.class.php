@@ -11,27 +11,15 @@ class EditProfileController implements IPageController
     public function onDisplay()
     {
         $userID = SessionController::requestLoggedinID();
+        $user = UserController::requestUserByID($userID);
         $vals = array();
         
         if ($userID !== NULL)
         {
-            print_r($_POST);
-           
             if (isset($_POST['public']))                                              
-            {
-                if ($_POST['public'] == 1)                                       // If checkbox is set for public
-                {                                                                   // timeschedule
-                    UserController::updatePublicTime($userID, 1);
-                }
-            }
+                UserController::updatePublicTime($userID, ($_POST['public'] == '1' ? true : false));
             
-            else
-            {
-                UserController::updatePublicTime($userID, 0);
-            }
-            
-            $vals['PUBLIC'] = UserController::requestPublicTime($userID); 
-            
+            $vals['PUBLIC'] = $user->hasPublicTimeTable() ? '1' : '0'; // With PHP, you'll never know...
             
             if (isset($_POST['email']))         
             {
@@ -43,19 +31,16 @@ class EditProfileController implements IPageController
                         {
                             UserController::updateEmail($userID,$_POST['email']);     // Updates users email
                         }
-                        
                         else
                         {
                             $vals['ERROR_EMAIL'] = new ErrorMessageView('Emails did not match');
                         }
                     }
-                    
                     else
                     {
                         $vals['ERROR_EMAIL'] = new ErrorMessageView('Invalid email format');
                     }
                 }
-                
                 else
                 {
                     $vals['ERROR_EMAIL'] = new ErrorMessageView('You need to JUSTIFY your email address');
@@ -68,9 +53,7 @@ class EditProfileController implements IPageController
                 if ($_FILES['file']["error"] > 0)
                 {
                     $vals['ERROR_PROFILEPIC'] = new ErrorMessageView($_FILES["file"]["error"]);
-                                     
                 }
-                
                 else
                 {
                     $picture = $_FILES['file']['tmp_name'];
@@ -92,7 +75,6 @@ class EditProfileController implements IPageController
                        $vals['ERROR_PASSWORD'] = new ErrorMessageView('Your current password was incorrect');
                    }
                }
-               
                else
                {
                    $vals['ERROR_PASSWORD'] = new ErrorMessageView('You need to fill in your current password');

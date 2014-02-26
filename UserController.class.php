@@ -162,11 +162,6 @@ class UserController
         UserModel::setPublicTimeSchedule($userID, $bool);
     }
     
-    public static function requestPublicTime($userID)
-    {
-        return UserModel::fetchPublicTimeSchedule($userID);
-    }
-    
     public static function requestPasswordChange($userID,$oldpassword,$newpassword)
     {
         if (UserModel::newPassword($userID,$oldpassword,$newpassword))

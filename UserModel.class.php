@@ -78,7 +78,7 @@ class UserModel
      */
     public static function getUserByEmail($email)
     {
-        $query = "SELECT userID, username, email, emailActivated                                   
+        $query = "SELECT userID, username, email, emailActivated, publicTimeSchedule                                   
                       FROM user
                       WHERE email = :email";
         
@@ -93,7 +93,7 @@ class UserModel
         if ($result['userID'] && $result['username'])
         {
             $user = new User($result['userID'], $result['username'], 
-                             $result['email'],  $result['emailActivated']);
+                             $result['email'],  $result['emailActivated'], $result['publicTimeSchedule']);
             return $user;
         }
         
@@ -110,7 +110,7 @@ class UserModel
      */
     public static function getUserByID($userID)
     {                                                                                        // SQL query
-        $query = "SELECT username, email, emailActivated                                                   
+        $query = "SELECT username, email, emailActivated, publicTimeSchedule
                   FROM user
                   WHERE userID = :userID";
         
@@ -122,7 +122,7 @@ class UserModel
         
         if(isset($res['username']) && isset($res['email']))                                  // if needed results
         {
-            $user = new User($userID, $res['username'], $res['email'], $res['emailActivated']); // create new user
+            $user = new User($userID, $res['username'], $res['email'], $res['emailActivated'], $res['publicTimeSchedule']); // create new user
             return $user;                                                                    
         }
         else                                                                                // Needed data not achieved
@@ -166,7 +166,7 @@ class UserModel
     public static function registerUser($username, $password, $email, $emailActivated ,$publicTimeSchedule)
     {
         $query = "INSERT INTO user(username, password, email, emailActivated, publicTimeSchedule)
-                    VALUES (:username, :password, :email, :emailActivated, :publicTimeSchedule)";
+                    VALUES (:username, :password, :email, :emailActivated)";
             
         $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
             
@@ -176,7 +176,6 @@ class UserModel
         $stmt->bindparam(':password', $hashedPassword);
         $stmt->bindparam(':email', $email);
         $stmt->bindparam(':emailActivated', $emailActivated);
-        $stmt->bindparam(':publicTimeSchedule', $publicTimeSchedule);
         $stmt->execute();                                                           // Execute query
             
         return $db->lastInsertId();
@@ -317,24 +316,6 @@ class UserModel
         $stmt->bindParam(':bool', $bool);
         $stmt->bindParam(':userID', $userID);
         $stmt->execute();
-    }
-    
-    public static function fetchPublicTimeSchedule($userID)
-    {
-        $query = "SELECT publicTimeSchedule 
-                  FROM user
-                  WHERE userID = :userID";
-        
-        $db = DatabaseManager::getDB();
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':userID', $userID);
-        $stmt->execute();
-        $res = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if (isset($res['publicTimeSchedule']))
-            return  $res['publicTimeSchedule'];
-        
-        return NULL;
     }
 
     /**

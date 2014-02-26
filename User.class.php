@@ -11,12 +11,13 @@ class User
     
     private $publicTimeSchedule; // type: boolean, true if user has set timetable to public
     
-    public function __construct($userID, $username, $email, $emailActivated) // Constructor
+    public function __construct($userID, $username, $email, $emailActivated, $scheduleState) // Constructor
     {
         $this->userID = $userID;
         $this->username = $username;
         $this->email = $email;
         $this->emailActivated = $emailActivated;
+        $this->publicTimeSchedule = $scheduleState;
     }
     
 	/**
@@ -58,6 +59,13 @@ class User
         return $this->emailActivated;
     }
 	
+	/**
+	 * Gets the state of the time schedule for the user
+     * True: Schedule can be viewed by anyone
+     * False: Schedule private
+     * DNBULL: User has not yet signed in and depends setting up the time schedule
+	 * @return mixed
+	 */
 	public function hasPublicTimeTable()
     {
         return $this->publicTimeSchedule;
