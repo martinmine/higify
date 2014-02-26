@@ -6,6 +6,11 @@ require_once('TimeEditAPI/PullFormat.class.php');
 require_once('TimeEditAPI/OutputType.class.php');
 require_once('TimeEditAPI/ObjectType.class.php');
 require_once('TimeEditAPI/ITimeParameter.class.php');
+require_once('TimeEditAPI/TimeEditAPIController.class.php');
+require_once('TimeEditAPI/SearchResult.class.php');
+require_once('TimeEditAPI/PullFormat.class.php');
+require_once('TimeEditAPI/OutputType.class.php');
+require_once('TimeEditAPI/TimeTableIterator.class.php');
 require_once('ColorFactory.class.php');
 
 /**
@@ -131,7 +136,7 @@ class ScheduleController
                     {
                         foreach ($codeSet as $code =>$title)
                         {
-                            if (!in_array($title, $exludedObjects))
+                            if (!in_array($code, $exludedObjects))
                             {
                                 $include = true;
                                 $objTitle = $title;
@@ -172,6 +177,77 @@ class ScheduleController
         }
         
         return $orderedItems;
+    }
+    
+    /**
+     * Searches in the time schedule and returns the unique objects in the schedule
+     * @param string $searchText Search terms
+     * @param integer $searchType The search type
+     * @return Data serialized as JSON data
+     */
+    public static function searchSchedule($searchText, $searchType)
+    {
+        $response = TimeEditAPIController::search($searchType, $searchText, 1);
+
+        $results = array();
+
+        if ($searchType == ObjectType::COURSECODE) // No need to request further data
+        {
+            foreach ($response as $searchResult)
+            {
+                $results[] = array('code' => $searchResult->getInfo(), 
+                                   'desc' => $searchResult->getDescription());
+            }    
+        }
+        else
+        {
+            $uniqueCourses = array();
+            foreach ($response as $searchResult)
+            {
+                $timeTable = TimeEditAPIController::getTimeTable($searchResult->getID(), $searchResult->getType(), PullFormat::ICS, OutputType::TIME_TABLE, Minutes::now(), new Months(2), true);
+                
+                $timeTableIterator = $timeTable->getIterator();
+                
+                foreach ($timeTableIterator as $timeObject)
+                {
+                    if (is_array($timeObject->getCourseCodes()))
+                        foreach ($timeObject->getCourseCodes() as $keyValuePair)
+                        {
+                            foreach ($keyValuePair as $courseCode => $courseDesc)
+                            {
+                                if (!isset($uniqueCourses[$courseCode]))
+                                {
+                                    $uniqueCourses[$courseCode] = $courseDesc;
+                                }
+                            }
+                        }
+                }
+            }
+            
+            foreach ($uniqueCourses as $code => $desc)
+            {
+                $results[] = array('code' => $code, 
+                                   'desc' => $desc);
+            }
+        }
+
+        $info = '';
+        $desc = '';
+        $id = 0;
+
+        if (count($response) > 0)
+        {
+            $info = $response[0]->getInfo();
+            $desc = $response[0]->getDescription();
+            $id = $response[0]->getID();
+        }
+
+        return array('count' => count($results),
+                      'id'   => $id,
+                      'type' => $searchType,
+                      'info' => $info,
+                      'desc' => $desc,
+                      'results' => $results);   
     }
 }
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
     <head>
         <meta charset="UTF-8"/>
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div>
-                <form id="objectForm" action="schedule_wizzard.php" method="POST">
+                <form id="objectForm" action="welcome.php" method="POST">
                     <h1>Items that will be added to your schedule:</h1>
                     <div id="objectList">
 

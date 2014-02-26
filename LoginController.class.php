@@ -20,7 +20,10 @@ class LoginController implements IPageController
         
         if ($user !== NULL)
         {
-            header('Location: mainpage.php');
+            if ($user->hasPublicTimeTable() === NULL)
+                header('Location: welcome.php');
+            else
+                header('Location: mainpage.php');
         }
         else if (isset($_POST['username']) && isset($_POST['password']))
         {
