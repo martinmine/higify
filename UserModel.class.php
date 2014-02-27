@@ -357,15 +357,15 @@ class UserModel
 		$stmt->bindParam(':username', $term);
 		$stmt->execute();
 		
-		return ($res = $stmt->fetch(PDO::FETCH_ASSOC))? $res: NULL;
-		
-		/*
+		$hits = array();
+      
 		while ($res = $stmt->fetch(PDO::FETCH_ASSOC))
 		{
-			
+            $hits[] = $res;  
 		}
-		*/
-		//return $res;
+	
+ 
+		return $hits;
 	}
 }
 ?>

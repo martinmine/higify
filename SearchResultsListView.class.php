@@ -19,6 +19,7 @@ class SearchResultsListView extends WebPageElement
 	{
 		$searchTerm = $_GET['searchterm'];
 		$this->results = UserController::requestSearchResults($searchTerm);
+        print_r($this->results);
 	}
 	
 	/**
