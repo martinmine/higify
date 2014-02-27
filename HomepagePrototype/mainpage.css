@@ -1,0 +1,87 @@
+﻿body 
+{
+    margin: 0px;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    background-image: url('../static/shattered.png');
+}
+
+div.banner
+{
+    height: 100px;
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
+    background-color: #0083a9;
+    border-bottom-color: white;
+    border-bottom-width: 1px;
+}
+
+div.bannerCenterContainer
+{
+    height: 100px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.pageControllerContainer
+{
+    display: table-cell;
+    vertical-align: middle;
+    height: 100px;
+    float: right;
+}
+
+div.controllerWrapper
+{
+    float: right;
+}
+
+div.bannerWrapper
+{
+    float: left;
+}
+
+div.bannerTitle
+{
+
+    font-size: 45px;
+    color: white;
+    height: auto;
+}
+
+div.bannerControllers
+{
+    float: right;
+    width: 300px;
+    height: 75px;
+    
+}
+
+div.searchWrapper
+{
+    height: inherit;
+    
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.searchContainer
+{
+    width: auto;
+    margin-right: 40px;
+}
+
+div.profileWrapper
+{
+    height: inherit;
+    
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.profileContainer
+{
+    margin: 5px;
+
+}
+
