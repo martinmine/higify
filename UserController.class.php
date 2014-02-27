@@ -168,6 +168,17 @@ class UserController
             return true;
         return false;
     }
+	
+	/**
+	 * Retrieves an associative array of search results from the data base. 
+	 *
+	 * @param string searchterm.
+	 * @return Associative Array with user ID and Username. 
+	 */
+	public static function requestSearchResults($searchTerm)
+	{
+		return UserModel::getSearchResults($searchTerm);
+	}
 }
   
 ?>

@@ -342,5 +342,30 @@ class UserModel
         
         return NULL;
     }
+	
+	public static function getSearchResults($username)
+	{
+		$term = "%" . $username . "%";
+		
+		$res = array();
+		$db = DatabaseManager::getDB();
+		$query = "SELECT userID, username
+			        FROM user
+					WHERE username LIKE (:username)";
+		
+		$stmt = $db->prepare($query);
+		$stmt->bindParam(':username', $term);
+		$stmt->execute();
+		
+		return ($res = $stmt->fetch(PDO::FETCH_ASSOC))? $res: NULL;
+		
+		/*
+		while ($res = $stmt->fetch(PDO::FETCH_ASSOC))
+		{
+			
+		}
+		*/
+		//return $res;
+	}
 }
 ?>

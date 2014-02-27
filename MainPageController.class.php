@@ -23,7 +23,6 @@ class MainPageController implements IPageController
 		$edit = false;									// Setting a default value for checking for editing.
 		$user = SessionController::acquireSession();	// Requesting the logged in user.
 		$vals = array();								// Array, values that fills the page with requested input.
-		$notes = array();								// List of notes to be displayed (if not in edit mode).
 		
 		/**
 		 * Can only view a mainpage for logged in users
@@ -32,7 +31,6 @@ class MainPageController implements IPageController
 		if ($user !== NULL)
 		{
 			$username = $user->getUsername();
-			//$userID = $user->getUserID();
 			
 										// Variables for editing/(adding) a note:
 			$noteID         = NULL;			// Check to edit or add new note.
@@ -106,14 +104,15 @@ class MainPageController implements IPageController
 				}
 			}
 			
+			/*
 			if (isset($_GET['search'])  &&  isset($_GET['searchterm']))
-			{
+			{	
 				if ($_GET['searchterm'] == 'Chuck Norris')
 					echo "Watch out! Too late... Chuck destroyed your profile..</br>... Just kidding he higified you to the moon!";
 				else	
 					echo "Takk for din bestilling, faktura har blitt sendt til din mail adresse";
 				
-			}
+			}*/
 			
 			$vals['TOP']           = 'Top';	// Test;
 			$vals['USERNAME']      = $username;
@@ -122,6 +121,7 @@ class MainPageController implements IPageController
 			$vals['NOTES']         = ($edit)? NULL: new NoteListView();
 			$vals['EDIT']          = ($edit)? "?noteID=" . $noteID . "&edit=1": NULL;
 			$vals['ISPUBLIC']      = $isPublicCheck;
+			
 		}
 		else
 		{

@@ -14,7 +14,7 @@
 		</div>
 		
 		<div id="searchProfile">
-			<form id="newSearch" method="get" action="mainpage.php">
+			<form id="newSearch" method="get" action="searchresultspage.php">
 				<input type="text" class="searchInput" name="searchterm" onfocus="if(this.value == 'Search users..') { this.value = ''; }" value="Search users.."><input type="submit" value=">" name="search" class="searchButton">
 			</form></br></br>
 		</div>
