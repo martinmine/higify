@@ -166,6 +166,21 @@ class NoteModel
 		$stmt->bindParam(':noteID', $noteID);
 		$stmt->execute();
 	}
+    
+    public static function submitAttachment($noteID, $file, $fileName)
+    {
+        
+        $db = DatabaseManager::getDB();                                         
+        
+        $query = "INSERT INTO noteattachment(noteID, attachment, attachmentName)
+                  Values(:noteID, :attachment, :attachmentname)";
+        
+        $stmt = $db->prepare($query);
+        $stmt->bindparam(':noteID',$noteID);
+        $stmt->bindparam(':attachment',$file['tmp_name']);
+        $stmt->bindparam(':attachmentname',$fileName);
+        $stmt->execute();
+    }
 }
 
 ?>

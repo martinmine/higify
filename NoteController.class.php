@@ -124,6 +124,19 @@ require_once('SessionController.class.php');
 		{
 			NoteModel::deleteNote($noteID);
 		}
+        
+        public static function submitAttatchment($noteID, $file)
+        {
+            $fileSize = $file['size'];
+            $fileName = $file['name'];
+            if (is_uploaded_file($file['tmp_name']) && $fileSize < 15)  // If file is uploaded and is less then 15,5MB
+            {
+                NoteModel::submitAttachment($noteID, $file, $fileName);
+            }
+            
+            else
+                return NULL;
+        }
 	}
 
 ?>
