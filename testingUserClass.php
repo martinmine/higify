@@ -2,13 +2,30 @@
 <html>
 	<head>
 		<meta charset="UTF-8" content="image/jpeg"/>
+		<style>
+		div.upload {
+    width: 157px;
+    height: 57px;
+    background: url('Static/attachment.png');
+    overflow: hidden;
+}
+
+div.upload input {
+    display: block !important;
+    width: 157px !important;
+    height: 57px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+}
+	</style>
 	</head>
 <body>
 
 <form action="testingUserClass.php" method="post"
 enctype="multipart/form-data">
-<label for="file">Filename:</label>
-<input type="file" name="file" id="file"><br>
+<div class="upload">
+	<input type="file" name="file" id="file"><br>
+</div>
 <input type="submit" name="submit" value="Submit">
 </form>
 
