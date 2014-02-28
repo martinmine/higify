@@ -5,7 +5,7 @@ require_once('Template/IPageController.interface.php');
 require_once('SearchResultsListView.class.php');
 
 /**
- * Retrieves all elements for the main-page.
+ * Handel the page for viewing the search results.
  * 
  * @uses UserController.class.php
  */

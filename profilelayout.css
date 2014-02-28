@@ -1,0 +1,198 @@
+html
+{
+	background-color: #00FCBB;
+}
+
+div
+{
+	text-align: center;
+}
+
+
+a:link, a:visited, a:active, a:hover
+{
+	text-decoration: none;
+	color: orange;
+}
+
+a:hover
+{
+	color: black;
+}
+
+
+li
+{
+	list-style: none;
+}
+
+h3
+{
+	text-align: left;
+	padding-left: 30px;
+}
+
+#container
+{
+	width: 1000px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.top
+{
+	float: left;
+	width: 100%;
+	height: 100px;
+	background-color: #FFA500;
+}
+
+.left
+{
+	float: left;
+	width: 20%;
+	height: 85%;
+	background-color: #00FA56;
+}
+
+.profile
+{
+
+}
+
+.searchProfile
+{
+	padding: 1px 1px 1px 1px;
+	margin: 0px;
+	background: #FFFFFF;
+}
+
+.info_left, .info_right
+{
+	font-weight: bold;
+}
+
+.info_right
+{
+	float: right;
+}
+
+.info_left
+{
+	float: left;
+}
+
+.note
+{
+	background-color: #00FCBB;
+}
+
+textarea
+{
+	height: 200px;
+	width: 550px;
+}
+
+input[name="public"]
+{
+
+}
+
+label[for="isPublic"], input[name="isPublic"]
+{
+	float: left;
+}
+
+input[type=submit]
+{
+	float: right;
+}
+
+input[type=text]
+{
+	color: #BCBCBC;
+}
+
+.mid
+{
+	margin-left:auto;
+	margin-right:auto;
+	padding: 20px;
+	margin-top: -30px;
+}
+
+.links
+{
+	text-align: left;
+	padding-left: -10px;
+}
+
+.info
+{
+	background-color: #BBAFFF;
+	text-align: left;
+}
+
+.content
+{
+	word-wrap: break-word;			/* viktig */
+	margin-top: -16px;
+	text-align: left;
+	background-color: #FFFFFF;
+}
+
+.option
+{
+	margin-top: -16px;
+	display: block;
+	float: left;
+	width: 100%;
+	background-color: #FFFFFF;
+}
+
+.option_right
+{
+	width: 70px;
+	float: right;
+	background-color: #565656;
+}
+
+.option_right:hover
+{
+	width: 70px;
+	float: right;
+	background-color: #CCCCCC;
+}
+
+.center
+{
+	float: left;
+	width: 60%;
+	
+	background-color: #677DCC;
+}
+
+.right
+{	
+	float: left;
+	width: 20%;
+	height: 85%;
+	background-color: #A78AC3;
+}
+
+.hour
+{
+	background-color: #A87BC2;
+	text-align: left;
+	list-style: none;
+}
+
+.cancelEdit
+{
+	float: right;
+}
+
+.button
+{
+	padding-right: 15px;
+}

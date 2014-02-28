@@ -2,6 +2,7 @@
 require_once('UserController.class.php');
 require_once('SessionController.class.php');
 require_once('NoteListView.class.php');
+//require_once('NoteType.class.php');
 require_once('Template/IPageController.interface.php');
 
 /**
@@ -104,21 +105,11 @@ class MainPageController implements IPageController
 				}
 			}
 			
-			/*
-			if (isset($_GET['search'])  &&  isset($_GET['searchterm']))
-			{	
-				if ($_GET['searchterm'] == 'Chuck Norris')
-					echo "Watch out! Too late... Chuck destroyed your profile..</br>... Just kidding he higified you to the moon!";
-				else	
-					echo "Takk for din bestilling, faktura har blitt sendt til din mail adresse";
-				
-			}*/
-			
 			$vals['TOP']           = 'Top';	// Test;
 			$vals['USERNAME']      = $username;
 			$vals['CONTENT']       = ($displayContent)? $displayContent: NULL;
 			$vals['CANCEL'] 	   = ($edit)? "cancel": NULL;
-			$vals['NOTES']         = ($edit)? NULL: new NoteListView();
+			$vals['NOTES']         = ($edit)? NULL: new NoteListView(NoteType::ALL);
 			$vals['EDIT']          = ($edit)? "?noteID=" . $noteID . "&edit=1": NULL;
 			$vals['ISPUBLIC']      = $isPublicCheck;
 			

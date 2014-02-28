@@ -16,10 +16,11 @@ class NoteListView extends WebPageElement
 {
 	private $notes = NULL;
 	
-	public function __construct()
+	public function __construct($noteType)
 	{
+		echo $noteType;
 		$userID = SessionController::requestLoggedinID();
-		$this->notes = NoteController::requestNotesFromUser($userID, NoteType::ALL);
+		$this->notes = NoteController::requestNotesFromUser($userID, $noteType);
 	}
 	
 	/**

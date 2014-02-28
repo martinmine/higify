@@ -19,7 +19,6 @@ class SearchResultsListView extends WebPageElement
 	{
 		$searchTerm = $_GET['searchterm'];
 		$this->results = UserController::requestSearchResults($searchTerm);
-        print_r($this->results);
 	}
 	
 	/**
@@ -29,13 +28,6 @@ class SearchResultsListView extends WebPageElement
 	 */
 	public function generateHTML()
 	{	
-		/*
-		$tpl = new Template();
-		$tpl->appendTemplate('HitElement');
-		$tpl->setValue('USER_ID', $this->results['userID']);
-		$tpl->setValue('USERNAME', $this->results['username']);
-		$tpl->display();
-		*/
 		
 		foreach($this->results as $hit)
 		{			
