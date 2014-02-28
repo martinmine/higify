@@ -48,7 +48,8 @@ class TimeEditAPIModel
 	 */
 	private function pullResponse($format)
 	{
-		$cURL = curl_init();
+        return file_get_contents(sprintf($this->queryURL, $format));
+/*		$cURL = curl_init();
 		
 		curl_setopt($cURL, CURLOPT_HEADER, 0);
 		curl_setopt($cURL, CURLOPT_VERBOSE, 1);
@@ -60,7 +61,7 @@ class TimeEditAPIModel
 		
 		$response = curl_exec($cURL);
 		curl_close($cURL);
-		return $response;
+		return $response;*/
 	}
 
 	/**
