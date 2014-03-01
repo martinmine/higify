@@ -16,6 +16,31 @@ div.banner
     border-bottom-width: 1px;
 }
 
+div.pageContainer
+{
+    height: 100%;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.pageSideContainer
+{
+    float: left;
+    width: 60%;
+    height: 40px;
+    margin: 10px;
+}
+
+div.pageWidgetContainer
+{
+
+    float: right;
+    width: 35%;
+    height: 40px;
+    margin: 10px;
+}
+
 div.bannerCenterContainer
 {
     height: 100px;
@@ -83,5 +108,62 @@ div.profileContainer
 {
     margin: 5px;
 
+}
+
+div.pageElement
+{
+    background-color: white;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+div.pageTitle
+{
+    font-size: 35px;
+    font-weight: 200;
+    padding-left: 8px;
+}
+
+div.resourceContainer
+{
+    height: 50px;
+    background-color: rgb(232, 232, 232);
+    border-top-color: darkgray;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+a {
+    width: 100%;
+	color: gray;
+	font: bold 17px "Helvetica";
+	text-decoration: none;
+
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+a:after {
+	background: gray;
+	color: #FFF;
+	content: ">";
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	margin-left: 10px;
+	text-align: center;
+	width: 25px;
+	
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
 }
 
