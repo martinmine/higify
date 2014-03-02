@@ -124,10 +124,16 @@ div.pageTitle
     padding-left: 8px;
 }
 
+div.resourceCenterContainer
+{
+    display: table-cell;
+    vertical-align: middle;
+    height: 50px;
+}
+
 div.resourceContainer
 {
-    height: 50px;
-    background-color: rgb(232, 232, 232);
+    margin-top: -1px;
     border-top-color: darkgray;
     border-top-width: 1px;
     border-top-style: solid;
@@ -136,11 +142,13 @@ div.resourceContainer
     border-bottom-style: solid;
     padding-left: 10px;
     padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 25px;
 }
 
 
-a {
-    width: 100%;
+a.resourceLink {
 	color: gray;
 	font: bold 17px "Helvetica";
 	text-decoration: none;
@@ -149,9 +157,11 @@ a {
 	-moz-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
+    line-height: 25px;
+    float: left;
 }
 
-a:after {
+div.linkbutton {
 	background: gray;
 	color: #FFF;
 	content: ">";
@@ -165,5 +175,10 @@ a:after {
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
 	border-radius: 20px;
+    font: bold 17px "Helvetica";
+	text-decoration: none;
+    float: right;
+    line-height: 25px;
+
 }
 
