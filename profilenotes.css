@@ -1,0 +1,36 @@
+.notes
+{
+	width: 400px;
+}
+
+.note
+{
+    height: 60px;
+    display:inline-block;
+    float: left;
+}
+
+.info
+{
+   /* width: 100%;*/
+    height: 60px;
+    line-height: 60px;
+    float: right;
+    padding-right: 5px;
+}
+
+.content
+{
+    border-top-style: solid;
+    border-top-color: darkgray;
+    border-top-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    padding: 3px;
+}
+
+.option
+{
+
+}

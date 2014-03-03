@@ -1,5 +1,5 @@
 <?php
-require_once('./DatabaseManager.class.php');
+require_once('../DatabaseManager.class.php');
 require_once('TimeEditAPI/TimeEditAPIController.class.php');
 require_once('TimeEditAPI/PullFormat.class.php');
 require_once('TimeEditAPI/OutputType.class.php');
@@ -63,10 +63,29 @@ class ScheduleModel
      * @param integer $userID The ID of the user to be requested
      * @return TimeTable
      */
-    public static function getIncludeObjects($userID, DateTime $periodStart, DateTime $periodEnd)
+    public static function getIncludedScheduleObjects($userID, DateTime $periodStart, DateTime $periodEnd)
+    {
+        $includeObjects = self::getIncludeObjects($userID);
+        
+        foreach ($includeObjects as $objectID => $type)
+        {
+            $obje = TimeEditAPIController::getTimeTable($objectID, $type, 
+                                                             PullFormat::CSV, OutputType::TIME_TABLE, 
+                                                             new Date($periodStart), new Date($periodEnd));
+            $objects[] = $obje;
+        }
+        
+        return TimeEditAPIController::mergeObjects($objects);
+    }
+    
+    /**
+     * Gets all the objects and their types that shall appear on the time schedule
+     * @param integer $userID 
+     * @return Associative array object ID => object type
+     */
+    public static function getIncludeObjects($userID)
     {
         $objects = array();
-        
         $pdo = DatabaseManager::getDB();
         
         $query = $pdo->prepare('SELECT objectID, type FROM IncludedTimeObject WHERE userID = :usrID');
@@ -74,14 +93,9 @@ class ScheduleModel
         $query->execute();
         
         while ($row = $query->fetch(PDO::FETCH_ASSOC))
-        {
-            $obje = TimeEditAPIController::getTimeTable($row['objectID'], $row['type'], 
-                                                             PullFormat::CSV, OutputType::TIME_TABLE, 
-                                                             new Date($periodStart), new Date($periodEnd));
-            $objects[] = $obje;
-        }
+            $objects[$row['objectID']] = $row['type'];
         
-        return TimeEditAPIController::mergeObjects($objects);
+        return $objects;
     }
     
     /**
@@ -107,4 +121,5 @@ class ScheduleModel
         return $contents;
     }   
 }
+
 ?>

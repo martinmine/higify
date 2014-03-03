@@ -1,198 +1,207 @@
-html
+body 
 {
-	background-color: #00FCBB;
-}
-
-div
-{
-	text-align: center;
+    margin: 0px;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    background-image: url('../static/shattered.png');
 }
 
 
-a:link, a:visited, a:active, a:hover
+
+/*
+div.resourceCenterContainer
 {
+    display: table-cell;
+    vertical-align: middle;
+    height: 50px;
+}
+
+div.resourceContainer
+{
+    margin-top: -1px;
+    border-top-color: darkgray;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 25px;
+}
+
+
+a.resourceLink {
+	color: gray;
+	font: bold 17px "Helvetica";
 	text-decoration: none;
-	color: orange;
+
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+    line-height: 25px;
+    float: left;
 }
 
-a:hover
-{
-	color: black;
-}
-
-
-li
-{
-	list-style: none;
-}
-
-h3
-{
-	text-align: left;
-	padding-left: 30px;
-}
-
-#container
-{
-	width: 1000px;
-	margin-left:auto;
-	margin-right:auto;
-}
-
-.top
-{
-	float: left;
-	width: 100%;
-	height: 100px;
-	background-color: #FFA500;
-}
-
-.left
-{
-	float: left;
-	width: 20%;
-	height: 85%;
-	background-color: #00FA56;
-}
-
-.profile
-{
-
-}
-
-.searchProfile
-{
-	padding: 1px 1px 1px 1px;
-	margin: 0px;
-	background: #FFFFFF;
-}
-
-.info_left, .info_right
-{
-	font-weight: bold;
-}
-
-.info_right
-{
-	float: right;
-}
-
-.info_left
-{
-	float: left;
-}
-
-.note
-{
-	background-color: #00FCBB;
-}
-
-textarea
-{
-	height: 200px;
-	width: 550px;
-}
-
-input[name="public"]
-{
-
-}
-
-label[for="isPublic"], input[name="isPublic"]
-{
-	float: left;
-}
-
-input[type=submit]
-{
-	float: right;
-}
-
-input[type=text]
-{
-	color: #BCBCBC;
-}
-
-.mid
-{
-	margin-left:auto;
-	margin-right:auto;
-	padding: 20px;
-	margin-top: -30px;
-}
-
-.links
-{
-	text-align: left;
-	padding-left: -10px;
-}
-
-.info
-{
-	background-color: #BBAFFF;
-	text-align: left;
-}
-
-.content
-{
-	word-wrap: break-word;			/* viktig */
-	margin-top: -16px;
-	text-align: left;
-	background-color: #FFFFFF;
-}
-
-.option
-{
-	margin-top: -16px;
-	display: block;
-	float: left;
-	width: 100%;
-	background-color: #FFFFFF;
-}
-
-.option_right
-{
-	width: 70px;
-	float: right;
-	background-color: #565656;
-}
-
-.option_right:hover
-{
-	width: 70px;
-	float: right;
-	background-color: #CCCCCC;
-}
-
-.center
-{
-	float: left;
-	width: 60%;
+div.linkbutton {
+	background: gray;
+	color: #FFF;
+	content: ">";
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	margin-left: 10px;
+	text-align: center;
+	width: 25px;
 	
-	background-color: #677DCC;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+    font: bold 17px "Helvetica";
+	text-decoration: none;
+    float: right;
+    line-height: 25px;
+
 }
 
-.right
-{	
-	float: left;
-	width: 20%;
-	height: 85%;
-	background-color: #A78AC3;
-}
 
-.hour
+div.noteContainer
 {
-	background-color: #A87BC2;
-	text-align: left;
-	list-style: none;
+    margin: 5px;
+    border-style: solid;
+    border-color: darkgray;
+    border-width: 1px;
 }
 
-.cancelEdit
+div.noteHeader
 {
-	float: right;
+    width: 100%;
+
 }
 
-.button
+div.noteElementWrapper
 {
-	padding-right: 15px;
+    height: 60px;
+    display:inline-block;
+    float: left;
 }
+
+div.voteBox
+{
+    width: 20px;
+    float: left;
+    margin-left: 2px;
+    margin-right: 3px;
+    text-align: center;
+    color: gray;
+}
+
+div.noteTitle
+{
+    height: 60px;
+    line-height: 60px;
+    float: left;
+    padding-left: 5px;
+}
+
+div.noteTimeStamp
+{
+    height: 60px;
+    line-height: 60px;
+    float: right;
+    padding-right: 5px;
+}
+
+.noteHeader:before,
+.noteHeader:after {
+    content:"";
+    display:table;
+}
+.noteHeader:after {
+    clear:both;
+}
+
+div.noteContent
+{
+    border-top-style: solid;
+    border-top-color: darkgray;
+    border-top-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    padding: 3px;
+}
+
+a.noteLink
+{
+    color: gray;
+}
+
+@font-face 
+{
+    font-family: rosetta-icons;
+    src: url("rosetta-icons-Regular.woff") format('woff');
+}
+
+a.replyIcon:before 
+{
+    font-family: rosetta-icons;
+    content: "\f151";
+    color: rgb(128, 128, 128);
+    padding: 5px;
+}
+
+a.pinnedIcon:before 
+{
+    font-family: rosetta-icons;
+    content: "\f147";
+    color: rgb(128, 128, 128);
+    padding: 5px;
+}
+
+a.deleteIcon:before 
+{
+    font-family: rosetta-icons;
+    content: "\f154";
+    color: rgb(128, 128, 128);
+}
+
+a.reportIcon:before
+{
+    font-family: rosetta-icons;
+    content: "\f182";
+    color: rgb(128, 128, 128);
+}
+
+a.noteIcon 
+{
+    color: gray;
+    text-decoration: none;
+}
+
+
+a.reportIcon 
+{
+    margin: 5px;
+}
+
+div.noteControls 
+{
+    float: left;
+    margin-top: 2px;
+}
+
+div.noteTools 
+{
+    float: right;
+    margin-top: 2px;
+}
+
+div.noteFooter 
+{
+    height: 25px;
+}
+
+*/

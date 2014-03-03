@@ -1,7 +1,6 @@
 	<div class="center">
 		<div class="mid">
-			<h3>Notes</h3>
-			<div class="Notes">
+			<div class="notes">
 				<?php echo $RESULTS; ?>
 			</div>
 		</div>

@@ -248,6 +248,7 @@ div.noteContent
     border-bottom-color: darkgray;
     border-bottom-width: 1px;
     padding: 3px;
+    margin-top: -1px;
 }
 
 a.noteLink
@@ -291,14 +292,20 @@ a.reportIcon:before
     color: rgb(128, 128, 128);
 }
 
+a.editIcon:before
+{
+    font-family: rosetta-icons;
+    content: "\f112";
+    color: rgb(128, 128, 128);
+}
+
 a.noteIcon 
 {
     color: gray;
     text-decoration: none;
 }
 
-
-a.reportIcon 
+a.noteIcon 
 {
     margin: 5px;
 }
@@ -318,4 +325,26 @@ div.noteTools
 div.noteFooter 
 {
     height: 25px;
+}
+
+div.newNoteCategory
+{
+    margin-top: -1px;
+    border-top-color: darkgray;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 25px;
+}
+
+
+a.noteAttachment
+{
+    color: gray;
 }
