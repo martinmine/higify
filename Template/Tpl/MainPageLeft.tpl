@@ -2,7 +2,7 @@
 		<div class="profile">
 			<h3><?php echo $USERNAME; ?></h3>
 			<div class="profileImage">
-				<img src="displayProfilePicture.php" height="200" width="200"/>
+				<img src="displayProfilePicture.php?id=<?php echo $IMG_ID; ?>" height="200" width="200"/>
 			</div>
 			<div class="editProfile">
 				<a href="editprofile.php">

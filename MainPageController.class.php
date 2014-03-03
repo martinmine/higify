@@ -104,18 +104,21 @@ class MainPageController implements IPageController
 				}
 			}
 			
-			$vals['TOP']           = 'Top';	// Test;
-			$vals['USERNAME']      = $username;
-			$vals['CONTENT']       = ($displayContent)? $displayContent: NULL;
-			$vals['CANCEL'] 	   = ($edit)? "cancel": NULL;
-			$vals['NOTES']         = ($edit)? NULL: new NoteListView($user->getUserID(), NoteType::ALL);
-			$vals['EDIT']          = ($edit)? "?noteID=" . $noteID . "&edit=1": NULL;
-			$vals['ISPUBLIC']      = $isPublicCheck;
+			$userID = $user->getUserID();
+			
+			$vals['IMG_ID']		= $userID;
+			$vals['TOP']		= 'Top';	// Test;
+			$vals['USERNAME']	= $username;
+			$vals['CONTENT']	= ($displayContent)? $displayContent: NULL;
+			$vals['CANCEL']		= ($edit)? "cancel": NULL;
+			$vals['NOTES']		= ($edit)? NULL: new NoteListView($userID, NoteType::ALL);
+			$vals['EDIT']		= ($edit)? "?noteID=" . $noteID . "&edit=1": NULL;
+			$vals['ISPUBLIC']	= $isPublicCheck;
 			
 		}
 		else
 		{
-			$vals['ERROR_MSG'] = new ErrorMessageView('No user is logged in...');
+			echo "No user is logged in";
 		}
         return $vals;
 	}

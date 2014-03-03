@@ -1,26 +1,53 @@
 .notes
 {
-	width: 400px;
+	background-color: #00FCBB;
+	/*width: 400px;*/
 }
 
 .note
 {
-    height: 60px;
-    display:inline-block;
-    float: left;
+	background-color: #00FCBB;/*
+	margin-top: -16px;
+	display: block;
+	float: left;
+	width: 100%;
+	background-color: #FFFFFF;*/
 }
 
 .info
 {
-   /* width: 100%;*/
+	background-color: #BBAFFF;
+	text-align: left;
+	
+   /* width: 100%;
     height: 60px;
     line-height: 60px;
     float: right;
-    padding-right: 5px;
+    padding-right: 5px;*/
+}
+
+.info_left, .info_right
+{
+	font-weight: bold;
+}
+
+.info_right
+{
+	float: right;
+}
+
+.info_left
+{
+	float: left;
 }
 
 .content
 {
+	word-wrap: break-word;			/* viktig */
+	margin-top: -16px;
+	text-align: left;
+	background-color: #FFFFFF;
+	/*
     border-top-style: solid;
     border-top-color: darkgray;
     border-top-width: 1px;
@@ -28,9 +55,14 @@
     border-bottom-color: darkgray;
     border-bottom-width: 1px;
     padding: 3px;
+	*/
 }
 
 .option
 {
-
+	margin-top: -16px;
+	display: block;
+	float: left;
+	width: 100%;
+	background-color: #FFFFFF;
 }

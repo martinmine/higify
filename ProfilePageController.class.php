@@ -24,20 +24,28 @@ class ProfilePageController implements IPageController
 		$vals = array();
 		
 		/**
-		 * Can only view a mainpage for logged in users
+		 * Can only view mainpage for logged in users
 		 * else a warning message is displayed.
 		 */
 		if ($loggedinID !== NULL)
 		{
-			if (isset($_GET['id'])) $profileID = $_GET['id'];
-			else header('Location: mainpage.php');
 			
-			$profileUser = UserController::requestUserByID($profileID);
-			if ($profileID === NULL) header('Location: mainpage.php');
+			$profileID = (isset($_GET['id']))? $_GET['id']: NULL;
 			
-			$vals['PROFILE_IMG'] = 
-			$vals['RESULTS'] = new NoteListView($profileID, NoteType::PUBLIC_ONLY);
-			
+			if ($profileID !== NULL)
+			{				
+				$profileUser = UserController::requestUserByID($profileID);
+				if ($profileID === NULL) header('Location: mainpage.php');
+				
+				$vals['USERNAME'] = $profileUser->getUsername();
+				$vals['USER_ID'] = $loggedinID;
+				$vals['PROFILE_ID']  = $profileID;
+				$vals['RESULTS'] = new NoteListView($profileID, NoteType::PUBLIC_ONLY);
+			}
+			else
+			{
+				header('Location: mainpage.php');
+			}
 		}
 		else
 		{

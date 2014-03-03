@@ -2,7 +2,7 @@
         <div class="bannerWrapper">
             <div class="bannerCenterContainer">
                 <div class="bannerTitle">
-                    Your Higify
+					<?php echo $USERNAME; ?>
                 </div>
             </div>
         </div>
@@ -18,7 +18,9 @@
                 </div>
                 <div class="profileWrapper">
                     <div class="profileContainer">
-                        <img src="displayProfilePicture.php" width="120" />
+						<a href="mainpage.php">
+							<img src="displayProfilePicture.php?id=<?php echo $USER_ID; ?>" width="120" />
+						</a>
                     </div>
                 </div>
             </div>

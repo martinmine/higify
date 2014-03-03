@@ -5,7 +5,53 @@ body
     background-image: url('../static/shattered.png');
 }
 
+.container
+{
+	width: 1000px;
+	margin-left:auto;
+	margin-right:auto;
+}
 
+.left
+{
+    float: left;
+	/*
+    width: 60%;
+    height: 40px;
+    margin: 10px;
+	*/
+}
+
+.picture
+{
+	
+}
+
+.right
+{
+	float: left;
+	/*
+	width: 20%;
+	height: 85%;*/
+	background-color: #A78AC3;
+}
+
+.center
+{
+	background-color: #66FC22;
+	float: left;
+	/*
+	width: 60%;*/
+}
+
+
+.mid
+{
+	margin-left:auto;
+	margin-right:auto;
+	padding: 20px;
+	margin-top: -30px;
+}
 
 /*
 div.resourceCenterContainer
