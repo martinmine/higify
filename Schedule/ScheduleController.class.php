@@ -111,7 +111,7 @@ class ScheduleController
      */
     public static function fetchTimeTable($userID, DateTime $begin, DateTime $end)
     {
-        $includedObjects = ScheduleModel::getIncludeObjects($userID, $begin, $end);
+        $includedObjects = ScheduleModel::getIncludedScheduleObjects($userID, $begin, $end);
         $exludedObjects = ScheduleModel::getExcludingTimeObject($userID);
         
         $schedule = array();
@@ -204,23 +204,10 @@ class ScheduleController
             $uniqueCourses = array();
             foreach ($response as $searchResult)
             {
-                $timeTable = TimeEditAPIController::getTimeTable($searchResult->getID(), $searchResult->getType(), PullFormat::ICS, OutputType::TIME_TABLE, Minutes::now(), new Months(2), true);
-                
-                $timeTableIterator = $timeTable->getIterator();
-                
-                foreach ($timeTableIterator as $timeObject)
+                $courses = self::fetchUniqueCourses($searchResult->getID(), $searchResult->getType());
+                foreach ($courses as $code => $desc)
                 {
-                    if (is_array($timeObject->getCourseCodes()))
-                        foreach ($timeObject->getCourseCodes() as $keyValuePair)
-                        {
-                            foreach ($keyValuePair as $courseCode => $courseDesc)
-                            {
-                                if (!isset($uniqueCourses[$courseCode]))
-                                {
-                                    $uniqueCourses[$courseCode] = $courseDesc;
-                                }
-                            }
-                        }
+                    $uniqueCourses[$code] = $desc;
                 }
             }
             
@@ -249,6 +236,62 @@ class ScheduleController
                       'desc' => $desc,
                       'results' => $results);   
     }
+    
+    /**
+     * Gets all the classes which appears on a user's schedule
+     * @param integer $id The objects ID
+     * @param integer $type Type of the object to look for (course, class, etc.)
+     * @return Associative array of course ID => course name
+     */
+    private static function fetchUniqueCourses($id, $type)
+    {
+        $uniqueCourses = array();
+        $timeTable = TimeEditAPIController::getTimeTable($id, $type, PullFormat::ICS, OutputType::TIME_TABLE, Minutes::now(), new Months(2), true);
+        
+        $timeTableIterator = $timeTable->getIterator();
+        
+        foreach ($timeTableIterator as $timeObject)
+        {
+            if (is_array($timeObject->getCourseCodes()))
+            {
+                foreach ($timeObject->getCourseCodes() as $keyValuePair)
+                {
+                    foreach ($keyValuePair as $courseCode => $courseDesc)
+                    {
+                        if (!isset($uniqueCourses[$courseCode]))
+                        {
+                            $uniqueCourses[$courseCode] = $courseDesc;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $uniqueCourses;
+    }
+    
+    /**
+     * Gets all the unique course elements a user attends
+     * @param integer $userID 
+     * @return Assoviative array ID => description
+     */
+    public static function getCourseElements($userID)
+    {
+        $courses = array();
+        $includeObjects = ScheduleModel::getIncludeObjects($userID);
+        $excludeObjects = ScheduleModel::getExcludingTimeObject($userID);
+        
+        foreach ($includeObjects as $id => $type)
+        {
+            $searchResult = self::fetchUniqueCourses($id, $type);
+            foreach ($searchResult as $code => $desc)
+            {
+                if (!in_array($code, $excludeObjects))
+                    $courses[$code] = $desc;
+            }
+        }
+        
+        return $courses;
+    }
 }
-
 ?>
