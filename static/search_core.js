@@ -45,13 +45,21 @@ function onSave(e)
     scheduleData.value = $.toJSON(schedule);
 }
 
+/**
+* Loads all the elements that the user has previously added to their schedule.
+* Note: This requires that the user is signed in.
+*/
 function loadElements()
 {
     displayLoader();
-    $.getJSON("get_schedule_structure.php", gotScheduleData);
+    $.getJSON("get_schedule_structure.php", setDataSet);
 }
 
-function gotScheduleData(data)
+/**
+* Sets the current working data-set (schedule data structure) and displays
+* the classes which the user can remove from the HTML UI
+*/
+function setDataSet(data)
 {
     hideLoader();
     schedule = data;
