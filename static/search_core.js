@@ -45,6 +45,31 @@ function onSave(e)
     scheduleData.value = $.toJSON(schedule);
 }
 
+function loadElements()
+{
+    displayLoader();
+    $.getJSON("get_schedule_structure.php", gotScheduleData);
+}
+
+function gotScheduleData(data)
+{
+    hideLoader();
+    schedule = data;
+    var displayedElements = new Array();
+
+    $.each(schedule, function (index, obj)
+    {
+        $.each(obj.results, function (jndex, scheduleObject)
+        {
+            if (displayedElements.indexOf(scheduleObject.code) == -1) // Not yet displayed
+            {
+                appendTimeObject(scheduleObject);
+                displayedElements.push(scheduleObject.code);
+            }
+        });
+    });
+}
+
 /**
 * Function called when the search data is received
 */

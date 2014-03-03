@@ -28,20 +28,28 @@ class ScheduleController
         $schedule = json_decode($scheduleData);
         
         ScheduleModel::clearSchedule($userID);
+        $excludes = array();
+        $includes = array();
         
         foreach ($schedule as $timeObject)
         {
-            ScheduleModel::addIncludedTimeObject($userID, $timeObject->id, $timeObject->type);
+            $includes[$timeObject->id] = $timeObject->type;
             
             $scheduleElements = $timeObject->results;
             foreach ($scheduleElements as $lecture)
             {
                 if (!$lecture->enabled)
                 {
-                    ScheduleModel::addExcludingTimeObject($userID, $lecture->code, 183);
+                    $excludes[$lecture->code] = 183;
                 }
             }
         }
+        
+        foreach ($excludes as $excludeID => $type)  // This way we avoid DUPLICATE KEY error
+            ScheduleModel::addExcludingTimeObject($userID, $excludeID, $type);
+            
+        foreach ($includes as $includeID => $type)
+            ScheduleModel::addIncludedTimeObject($userID, $includeID, $type);
     }
     
     /**
@@ -269,7 +277,7 @@ class ScheduleController
         
         return $uniqueCourses;
     }
-    
+        
     /**
      * Gets all the unique course elements a user attends
      * @param integer $userID 
@@ -292,6 +300,41 @@ class ScheduleController
         }
         
         return $courses;
+    }
+    
+    /**
+     * Gets a presentation of all the courses and objects thats included and that is not included
+     * on the user's schedule that can be serialized to JSON data
+     * @param integer $userID The user ID to get the schedule data for
+     * @return an associative array with the schedule data
+     */
+    public static function getScheduleWizzardData($userID)
+    {
+        $resultSet = array();
+        $includeObjects = ScheduleModel::getIncludeObjects($userID);
+        $excludeObjects = ScheduleModel::getExcludingTimeObject($userID);
+        
+        foreach ($includeObjects as $id => $type)
+        {
+            $includeObject = array();
+            $includeObject['id'] = $id;
+            $includeObject['type'] = $type;
+            $includeObject['info'] = '';    // Unable to get this data
+            $includeObject['desc'] = '';
+            $includeObject['results'] = array();
+            
+            $searchResult = self::fetchUniqueCourses($id, $type);
+            foreach ($searchResult as $code => $desc)
+            {
+                $includeObject['results'][] = array('code' => $code,
+                                                    'desc' => $desc,
+                                                    'enabled' => in_array($code, $excludeObjects) ? 'false' : 'true');
+            }
+            
+            $resultSet[] = $includeObject;
+        }
+        
+        return $resultSet;
     }
 }
 ?>
