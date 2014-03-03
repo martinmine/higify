@@ -66,6 +66,7 @@ class ScheduleModel
     public static function getIncludedScheduleObjects($userID, DateTime $periodStart, DateTime $periodEnd)
     {
         $includeObjects = self::getIncludeObjects($userID);
+        $objects = array();
         
         foreach ($includeObjects as $objectID => $type)
         {
