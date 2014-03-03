@@ -14,8 +14,7 @@ require_once('SessionController.class.php');
 	 * @uses UserController.class.php
 	 */
 	class NoteController
-	{
-		
+	{		
 		/**
 		 * Retrieves all notes published by a $user, depending on $status
 		 * (show public or private notes) see NoteModel.class.php for more.
@@ -57,7 +56,7 @@ require_once('SessionController.class.php');
 			if ($this->user !== NULL)
 			{
 				
-				
+			
 				return NULL;
 			}
 			return NULL;
@@ -83,6 +82,19 @@ require_once('SessionController.class.php');
 							
 			NoteModel::addNote($note);	
 		}
+        
+        public static function addNoteReply($parentNote, $values)
+        {
+            $note = new Note(-1, 
+                            $values['ownerID'], 
+                            $values['content'],
+                            $isPublic,
+                             -1,
+                             $values['username']
+                            );
+            
+			NoteModel::addNotereply($parentNote,$note);	
+        }
 		
 		/**
 		 * Retrieves a note Object from NoteModel based on noteID.
@@ -95,6 +107,7 @@ require_once('SessionController.class.php');
 			return NoteModel::getNote($noteID);
 		}
 		
+        
 		/**
 		 * Updates a note based on new $values.
 		 *
@@ -138,5 +151,4 @@ require_once('SessionController.class.php');
                 return NULL;
         }
 	}
-
 ?>

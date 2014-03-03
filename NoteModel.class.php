@@ -103,6 +103,46 @@ class NoteModel
 		}
 		return $res;
 	}
+    
+    /**
+     * Adds a reply to a note
+     * @param $parentNote ID of orignial note that is being replied to
+     * @param $note The reply
+     * @return
+     */
+    public static function addNotereply($parentNote, $note)
+	{
+		$db = DatabaseManager::getDB();
+		$res = 0;
+		$query1 = 'INSERT INTO note(ownerID, content, isPublic)
+			       VALUES(:ownerID, :content, :isPublic)';
+        
+		$ownerID = $note->getOwnerID();
+		$content = $note->getContent();
+		$isPublic = 1;
+        
+		try
+		{
+			$stmt1 = $db->prepare($query1);
+			$stmt1->bindParam(':ownerID',  $ownerID   );
+			$stmt1->bindParam(':content',  $content   );
+			$stmt1->bindParam(':isPublic', $isPublic  );
+			$stmt1->execute();
+            
+            $query2 = 'INSERT INTO notereply(parentNoteID, childNoteID)
+                      VALUES(:parentNote, :childNote)';
+            
+            $stmt2 = $db->prepare($query2);
+            $stmt2->bindparam(':parentNode', $parentNode);
+            $stmt2->bindparam(':childNode', $ownerID);
+            $stmt2->execute();
+		}
+		catch(Exception $e)
+		{
+			trigger_error($e);
+		}
+		return $res;
+	}
 	
 	/**
 	 * Retrieves a single note from the database based on the parameter.
