@@ -1,5 +1,5 @@
 <?php
-require_once('../DatabaseManager.class.php');
+require_once('./DatabaseManager.class.php');
 require_once('TimeEditAPI/TimeEditAPIController.class.php');
 require_once('TimeEditAPI/PullFormat.class.php');
 require_once('TimeEditAPI/OutputType.class.php');
@@ -70,8 +70,8 @@ class ScheduleModel
         foreach ($includeObjects as $objectID => $type)
         {
             $obje = TimeEditAPIController::getTimeTable($objectID, $type, 
-                                                             PullFormat::CSV, OutputType::TIME_TABLE, 
-                                                             new Date($periodStart), new Date($periodEnd));
+                                                        PullFormat::CSV, OutputType::TIME_TABLE, 
+                                                        new Date($periodStart), new Date($periodEnd));
             $objects[] = $obje;
         }
         
