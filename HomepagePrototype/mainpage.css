@@ -182,3 +182,140 @@ div.linkbutton {
 
 }
 
+
+div.noteContainer
+{
+    margin: 5px;
+    border-style: solid;
+    border-color: darkgray;
+    border-width: 1px;
+}
+
+div.noteHeader
+{
+    width: 100%;
+
+}
+
+div.noteElementWrapper
+{
+    height: 60px;
+    display:inline-block;
+    float: left;
+}
+
+div.voteBox
+{
+    width: 20px;
+    float: left;
+    margin-left: 2px;
+    margin-right: 3px;
+    text-align: center;
+    color: gray;
+}
+
+div.noteTitle
+{
+    height: 60px;
+    line-height: 60px;
+    float: left;
+    padding-left: 5px;
+}
+
+div.noteTimeStamp
+{
+    height: 60px;
+    line-height: 60px;
+    float: right;
+    padding-right: 5px;
+}
+
+.noteHeader:before,
+.noteHeader:after {
+    content:"";
+    display:table;
+}
+.noteHeader:after {
+    clear:both;
+}
+
+div.noteContent
+{
+    border-top-style: solid;
+    border-top-color: darkgray;
+    border-top-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    padding: 3px;
+}
+
+a.noteLink
+{
+    color: gray;
+}
+
+@font-face 
+{
+    font-family: rosetta-icons;
+    src: url("rosetta-icons-Regular.woff") format('woff');
+}
+
+a.replyIcon:before 
+{
+    font-family: rosetta-icons;
+    content: "\f151";
+    color: rgb(128, 128, 128);
+    padding: 5px;
+}
+
+a.pinnedIcon:before 
+{
+    font-family: rosetta-icons;
+    content: "\f147";
+    color: rgb(128, 128, 128);
+    padding: 5px;
+}
+
+a.deleteIcon:before 
+{
+    font-family: rosetta-icons;
+    content: "\f154";
+    color: rgb(128, 128, 128);
+}
+
+a.reportIcon:before
+{
+    font-family: rosetta-icons;
+    content: "\f182";
+    color: rgb(128, 128, 128);
+}
+
+a.noteIcon 
+{
+    color: gray;
+    text-decoration: none;
+}
+
+
+a.reportIcon 
+{
+    margin: 5px;
+}
+
+div.noteControls 
+{
+    float: left;
+    margin-top: 2px;
+}
+
+div.noteTools 
+{
+    float: right;
+    margin-top: 2px;
+}
+
+div.noteFooter 
+{
+    height: 25px;
+}
