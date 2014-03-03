@@ -41,7 +41,9 @@ class NoteModel
 			{
 				$query .= ' AND isPublic = ';
 				$query .= ($condition === NoteType::PUBLIC_ONLY)? '1': '0';
+				
 			}
+			$query .= ' ORDER BY noteID DESC';
 			
 			$stmt = $db->prepare($query);
 			$stmt->bindParam(':ownerID', $ownerID);

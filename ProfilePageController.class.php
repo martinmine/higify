@@ -35,9 +35,7 @@ class ProfilePageController implements IPageController
 			$profileUser = UserController::requestUserByID($profileID);
 			if ($profileID === NULL) header('Location: mainpage.php');
 			
-			
-		
-			$vals['RESULTS'] = new NoteListView(NoteType::PUBLIC_ONLY);
+			$vals['RESULTS'] = new NoteListView($profileID, NoteType::PUBLIC_ONLY);
 			
 		}
 		else

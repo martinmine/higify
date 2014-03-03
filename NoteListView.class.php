@@ -16,11 +16,32 @@ class NoteListView extends WebPageElement
 {
 	private $notes = NULL;
 	
-	public function __construct($noteType)
+	/**
+	 * A view of desired notes from a user.
+	 * Parameters have to be set for security reasons.
+	 *
+	 * @param int $noteOwnerID ID of the owner of notes to display.
+	 * @param NoteType $noteType desired notes to display.
+	 */
+	public function __construct($noteOwnerID = NULL, $noteType = NoteType::NONE)
 	{
-		echo $noteType;
-		$userID = SessionController::requestLoggedinID();
-		$this->notes = NoteController::requestNotesFromUser($userID, $noteType);
+		//echo $noteType;
+		if ($noteOwnerID !== NULL)
+		{		
+			$userID = SessionController::requestLoggedinID();
+			if ($noteOwnerID === $userID || ($noteOwnerID !== $userID  &&  $noteType === NoteType::PUBLIC_ONLY))
+			{
+				$this->notes = NoteController::requestNotesFromUser($noteOwnerID, $noteType);
+			}
+			else
+			{
+				echo "Du har ikke tilgang til dette!"; // header('Location: mainpage.php');
+			}
+		}
+		else
+		{
+			echo "Ops!"; //header('Location: mainpage.php');
+		}
 	}
 	
 	/**

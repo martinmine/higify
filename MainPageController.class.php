@@ -90,17 +90,16 @@ class MainPageController implements IPageController
 			 */
 			if (isset($_POST['submit'])  &&  isset($_POST['content']))
 			{
+				$_POST['ownerID']  = $user->getUserID();
+				$_POST['username'] = $username;
+				
 				if (isset($_GET['noteID'])  &&  isset($_GET['edit']) &&  $_GET['edit'] === '1')
 				{
 					$_POST['noteID']   = $_GET['noteID'];
-					$_POST['ownerID']  = $user->getUserID();
-					$_POST['username'] = $username;
 					NoteController::requestEditNote($_POST);
 				} 
 				else
 				{	
-					$_POST['ownerID']  = $user->getUserID();
-					$_POST['username'] = $username;
 					NoteController::requestAddNote($_POST);
 				}
 			}
@@ -109,7 +108,7 @@ class MainPageController implements IPageController
 			$vals['USERNAME']      = $username;
 			$vals['CONTENT']       = ($displayContent)? $displayContent: NULL;
 			$vals['CANCEL'] 	   = ($edit)? "cancel": NULL;
-			$vals['NOTES']         = ($edit)? NULL: new NoteListView(NoteType::ALL);
+			$vals['NOTES']         = ($edit)? NULL: new NoteListView($user->getUserID(), NoteType::ALL);
 			$vals['EDIT']          = ($edit)? "?noteID=" . $noteID . "&edit=1": NULL;
 			$vals['ISPUBLIC']      = $isPublicCheck;
 			
