@@ -150,5 +150,11 @@ require_once('SessionController.class.php');
             else
                 return NULL;
         }
+        
+        public static function requestReplies($parentNode)
+        {
+           $replies = NoteModel::getReplies($parentNode);
+           return $replies;
+        }
 	}
 ?>

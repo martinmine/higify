@@ -104,6 +104,30 @@ class NoteModel
 		return $res;
 	}
     
+    
+    public static function getReplies($parentNote)
+    {
+        $query = "SELECT childNoteID
+                  FROM notereply
+                  WHERE parentNoteID = :parentNote";
+        
+        $db = DatabaseManager::getDB();
+        $stmt->bindParam(':parentNote', $parentNote);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            $timestamp = date('d M H:i', strtotime($row['timePublished']));
+            
+            $res[] = new Note($row['noteID'], $row['ownerID'],
+                              $row['content'], $row['isPublic'],
+                              $timestamp, $row['username']);
+        }
+        
+        return $res;
+        
+        
+    }
+    
     /**
      * Adds a reply to a note
      * @param $parentNote ID of orignial note that is being replied to
@@ -168,6 +192,8 @@ class NoteModel
 						 $obj['timePublished'],
 						 $obj['username']
 						);
+        
+        
 		return $note;	
 	}
 	
