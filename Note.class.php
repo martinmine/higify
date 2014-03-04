@@ -15,7 +15,7 @@ class Note
 	private $isPublic;			//  @var tinyint(1) 1 if note is public otherwise 0.
 	private $published;			//  @timestamp time and date for when the note was published.
 	private $ownerUsername;		//	@var varchar(30) username of the note owner.
-  
+    private $points;            //  @var The vote balance/karma for the note
   
 	/**
 	 *  Constructs a new note setting all variables.
@@ -25,7 +25,7 @@ class Note
 	 *  @param $content a string with the content.
 	 *  @param $isPublic boolean value 0 or 1.
 	 */
-	public function __construct($noteID, $ownerID, $content, $isPublic, $published, $username)
+	public function __construct($noteID, $ownerID, $content, $isPublic, $published, $username, $points)
 	{
 		$this->noteID = $noteID;
 		$this->ownerID = $ownerID;
@@ -33,6 +33,7 @@ class Note
 		$this->isPublic = $isPublic;
 		$this->published = $published;
 		$this->ownerUsername = $username;
+        $this->points = $points;
 	}
   
 	/**

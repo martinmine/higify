@@ -13,8 +13,6 @@ class WizzardController implements IPageController
         {
             
             ScheduleController::saveSchedule($_POST['scheduleData'], $userID);
-            echo $_POST['scheduleData'];
-            die();
             header('Location: mainpage.php');
         }
         

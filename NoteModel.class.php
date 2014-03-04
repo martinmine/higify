@@ -2,6 +2,7 @@
 require_once('databaseManager.class.php');
 require_once('NoteType.class.php');
 require_once('Note.class.php');
+require_once('VoteStatus.class.php');
 
 /**
  * 
@@ -32,7 +33,7 @@ class NoteModel
 		{
 			$db = DatabaseManager::getDB();
 			$res = array();
-			$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username
+			$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, points
 						FROM note
 						JOIN user ON (user.userID = ownerID)
 						WHERE ownerID = :ownerID';
@@ -54,7 +55,7 @@ class NoteModel
 				
 				$res[] = new Note($row['noteID'], $row['ownerID'],
 								  $row['content'], $row['isPublic'],
-								  $timestamp, $row['username']);
+								  $timestamp, $row['username'], $row['points']);
 			}
 			return $res;
 		}
@@ -177,7 +178,7 @@ class NoteModel
 	public static function getNote($noteID)
 	{
 		$db = DatabaseManager::getDB();
-		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username
+		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, points 
 				  FROM note
 				  JOIN user ON (user.userID = ownerID)
 				  WHERE noteID = :noteID';
@@ -190,10 +191,16 @@ class NoteModel
 						 $obj['content'],
 						 $obj['isPublic'],
 						 $obj['timePublished'],
+<<<<<<< HEAD
 						 $obj['username']
 						);
         
         
+=======
+						 $obj['username'],
+                         $obj['points']);
+                         
+>>>>>>> bdcde8289d8cc2b42da8b66a60d69599f263e630
 		return $note;	
 	}
 	
@@ -248,6 +255,55 @@ class NoteModel
         $stmt->bindparam(':attachment',$file['tmp_name']);
         $stmt->bindparam(':attachmentname',$fileName);
         $stmt->execute();
+    }
+    
+    /**
+     * Saves one vote
+     * @param integer $ownerID The user ID that owns the vote
+     * @param integer $noteID  The ID of the note being voted at
+     * @param integer $type    Type of vote (0 = downvote, 1 = upvote)
+     * @return integer: 
+     *  1 - Vote didn't exist, it has been created
+     *  2 - A vote of this type already existed and is now removed
+     *  3 - A down of the opposite type already existed and has been converted
+     */
+    public static function saveVote($noteID, $ownerID, $type)
+    {
+        $db = DatabaseManager::getDB();
+        
+        if ($type == 0) // downvote
+            $stmt = $db->prepare('CALL downvote(:noteid, :userid)');
+        else // upvote
+            $stmt = $db->prepare('CALL upvote(:noteid, :userid)');
+            
+        $stmt->bindParam(':noteid', $noteID);
+        $stmt->bindParam(':userid', $ownerID);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_NUM);
+        
+        return $result[0];
+    }
+    
+    /**
+     * Gets the note status for a note
+     * @param integer $noteID The ID of the note to get status from
+     * @param integer $userID The ID of the user which shall see his note status
+     * @return integer An enum which is defined in VoteStatus.class.php
+     */
+    public static function getVoteStatus($noteID, $userID)
+    {
+        $db = DatabaseManager::getDB();
+        
+        $stmt = $db->prepare('SELECT type FROM notevote WHERE noteID = :noteID AND userID = :userID');
+        $stmt->bindParam(':noteID', $noteID);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_NUM);
+        
+        if ($result[0] === NULL)
+            return VoteStatus::NO_VOTE;
+        else
+            return $result[0];
     }
 }
 
