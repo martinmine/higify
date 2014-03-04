@@ -150,5 +150,20 @@ require_once('SessionController.class.php');
             else
                 return NULL;
         }
+        
+        /**
+         * Registers a vote for a note
+         * @param integer $ownerID  The ID of the user that votes
+         * @param integer $noteID   The ID of the note which the user votes n
+         * @param integer $voteType Type of vote (0 = downvote, 1 = upvote)
+         * @return integer: 
+         *  1 - Vote didn't exist, it has been created
+         *  2 - A vote of this type already existed and is now removed
+         *  3 - A down of the opposite type already existed and has been converted
+         */
+        public static function registerVote($noteID, $ownerID, $voteType)
+        {
+            return NoteModel::saveVote($noteID, $ownerID, $voteType);
+        }
 	}
 ?>
