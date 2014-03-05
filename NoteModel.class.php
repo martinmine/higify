@@ -154,7 +154,7 @@ class NoteModel
 		$stmt1->execute();
             
         $query2 = 'INSERT INTO notereply(parentNoteID, childNoteID)
-                      VALUES(:parentNote, :childNote)';
+                   VALUES(:parentNote, :childNote)';
             
         $stmt2 = $db->prepare($query2);
         $stmt2->bindparam(':parentNode', $parentNode);
