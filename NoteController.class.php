@@ -121,8 +121,7 @@ require_once('SessionController.class.php');
 							 $values['content'],
 							 $isPublic,
 							 -1,
-							 $values['username']
-							);
+							 $values['username'],0);
 							 
 			NoteModel::editNote($note);
 		}
@@ -150,30 +149,13 @@ require_once('SessionController.class.php');
                 return NULL;
         }
         
-<<<<<<< HEAD
 
         public static function requestReplies($parentNode)
         {
             $replies = NoteModel::getReplies($parentNode);
             return $replies;
-
-            /**
-             * Registers a vote for a note
-             * @param integer $ownerID  The ID of the user that votes
-             * @param integer $noteID   The ID of the note which the user votes n
-             * @param integer $voteType Type of vote (0 = downvote, 1 = upvote)
-             * @return integer: 
-             *  1 - Vote didn't exist, it has been created
-             *  2 - A vote of this type already existed and is now removed
-             *  3 - A down of the opposite type already existed and has been converted
-             */
         }
-=======
-        public static function requestReplies($parentNode)
-        {
-           $replies = NoteModel::getReplies($parentNode);
-           return $replies;
-		   
+
         /**
          * Registers a vote for a note
          * @param integer $ownerID  The ID of the user that votes
@@ -184,7 +166,6 @@ require_once('SessionController.class.php');
          *  2 - A vote of this type already existed and is now removed
          *  3 - A down of the opposite type already existed and has been converted
          */
->>>>>>> addb41cf1038cf5d19e0113c51740986462d3023
         public static function registerVote($noteID, $ownerID, $voteType)
         {
             return NoteModel::saveVote($noteID, $ownerID, $voteType);

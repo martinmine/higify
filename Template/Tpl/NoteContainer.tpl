@@ -18,7 +18,6 @@
                     </div>
                     <div class="noteContent">
                         This is content
-                    </div>
                     <div class="noteContent">
                         <a class="noteAttachment" href="#">mordi.png</a> <a class="noteAttachment" href="#">fardin.jpg</a>
                     </div>
