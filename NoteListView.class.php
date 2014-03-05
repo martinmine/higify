@@ -66,14 +66,24 @@ class NoteListView extends WebPageElement
 			
 			$tpl = new Template();
 			$tpl->appendTemplate('NoteElement');
-			$tpl->setValue('USERNAME', $note->getUsername());
-			$tpl->setValue('CONTENT', $note->getContent());
-			$tpl->setValue('TIME', $note->getTime());
-			$tpl->setValue('NOTEID', $note->getNoteID());
-			$option1 = ($username === $noteOwner)? "edit": NULL;
-			$option2 = ($username === $noteOwner)? "delete": NULL;
-			$tpl->setValue('OPTION1', $option1);
-			$tpl->setValue('OPTION2', $option2);
+            
+            $tpl->setValue('USER_ID', $note->getOwnerID());
+            $tpl->setValue('USERNAME', $note->getUsername());
+            $tpl->setValue('TIME', $note->getTime());
+            $tpl->setValue('CONTENT', $note->getContent());
+            
+            $tpl->setValue('VOTE_BALANCE', '12'); // TODO
+            
+            $tpl->setValue('NOTE_ATTACHMENT_CONTAINER', ''); // TODO
+            $tpl->setValue('REPLY_COUNT', 12);
+            
+            $tpl->setValue('CATEGORY', '');
+            $tpl->setValue('CATEGORY_LINK', '');
+            
+            $tpl->setValue('DISPLAY_EDIT', ($username === $noteOwner));
+            $tpl->setValue('DISPLAY_DELETE', ($username === $noteOwner));
+            $tpl->setValue('DISPLAY_REPORT', ($username !== $noteOwner));
+			
 			$tpl->display();
 		}
 	}

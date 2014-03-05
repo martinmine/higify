@@ -7,7 +7,7 @@ div.hours
 
 div.timeObjectContainer
 {
-	width: 175px;
+	width: 95%;
 	height: 50px;
 	padding: 3px;
 	padding-top: 0px;
@@ -22,6 +22,8 @@ div.timeObjectContainer
 	margin-right: auto;
 	margin-top: 5px;
 	position: relative;
+    font-size: 14px;
+
 }
 
 div.timeBegin

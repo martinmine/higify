@@ -4,6 +4,7 @@ require_once('SessionController.class.php');
 require_once('NoteListView.class.php');
 //require_once('NoteType.class.php');
 require_once('Template/IPageController.interface.php');
+require_once('NoteCategoryView.class.php');
 
 /**
  * Retrieves all elements for the main-page.
@@ -106,7 +107,7 @@ class MainPageController implements IPageController
 			
 			$userID = $user->getUserID();
 			
-			$vals['IMG_ID']		= $userID;
+			$vals['USER_ID']    = $userID;
 			$vals['TOP']		= 'Top';	// Test;
 			$vals['USERNAME']	= $username;
 			$vals['CONTENT']	= ($displayContent)? $displayContent: NULL;
@@ -114,7 +115,7 @@ class MainPageController implements IPageController
 			$vals['NOTES']		= ($edit)? NULL: new NoteListView($userID, NoteType::ALL);
 			$vals['EDIT']		= ($edit)? "?noteID=" . $noteID . "&edit=1": NULL;
 			$vals['ISPUBLIC']	= $isPublicCheck;
-			
+            $vals['CREATE_NOTE_CATEGORIES'] = new NoteCategoryView();
 		}
 		else
 		{
