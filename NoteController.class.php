@@ -77,8 +77,7 @@ require_once('SessionController.class.php');
 							 $values['content'],
 							 $isPublic,
 							 -1,
-							 $values['username']
-							);
+							 $values['username'], 0);
 							
 			NoteModel::addNote($note);	
 		}
@@ -122,8 +121,7 @@ require_once('SessionController.class.php');
 							 $values['content'],
 							 $isPublic,
 							 -1,
-							 $values['username']
-							);
+							 $values['username'],0);
 							 
 			NoteModel::editNote($note);
 		}
@@ -153,9 +151,10 @@ require_once('SessionController.class.php');
         
         public static function requestReplies($parentNode)
         {
-           $replies = NoteModel::getReplies($parentNode);
-           return $replies;
+            $replies = NoteModel::getReplies($parentNode);
+            return $replies;
         }
+
         /**
          * Registers a vote for a note
          * @param integer $ownerID  The ID of the user that votes
