@@ -3,14 +3,15 @@
 require_once('Template/Template.class.php');
 require_once('ProfilePageController.class.php');
 require_once('UserController.class.php');
-//require_once('MainPageScheduleController.class.php');
+require_once('MainPageScheduleController.class.php');
 
 $user = UserController::requestUserByID($_GET['id']);
 
 if ($user !== NULL)
 {
 	$title = $user->getUsername();
-
+	$userID = $user->getUserID();
+	
 	$tpl = new Template();
 	$tpl->appendTemplate('ProfilePageHeader');
 	$tpl->setValue('PAGE_TITLE', $title);
@@ -18,7 +19,8 @@ if ($user !== NULL)
 	$tpl->appendTemplate('ProfilePageBanner');
 	$tpl->appendTemplate('ProfilePageLeft');
 	$tpl->appendTemplate('ProfilePageCenter');
-	//$tpl->registerController(new MainPageScheduleController());
+	$tpl->appendTemplate('MainPageScheduleContainer');
+	$tpl->registerController(new MainPageScheduleController($userID));
 	$tpl->appendTemplate('ProfilePageFooter');
 	$tpl->display();
 }
