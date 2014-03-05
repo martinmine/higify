@@ -23,7 +23,7 @@ class NoteListView extends WebPageElement
 	 * @param int $noteOwnerID ID of the owner of notes to display.
 	 * @param NoteType $noteType desired notes to display.
 	 */
-	public function __construct($noteOwnerID = NULL, $noteType = NoteType::NONE)
+	public function __construct($noteOwnerID = NULL, $noteType = NoteType::NONE, $parentNoteID = NULL)
 	{
 		//echo $noteType;
 		if ($noteOwnerID !== NULL)
@@ -33,6 +33,12 @@ class NoteListView extends WebPageElement
 			{
 				$this->notes = NoteController::requestNotesFromUser($noteOwnerID, $noteType);
 			}
+            
+            else if ($parentNoteID != NULL && $noteType === NoteType::REPLY)
+            {
+                $this->notes = NoteController::requestReplies($parentNoteID);
+            }
+            
 			else
 			{
 				echo "Du har ikke tilgang til dette!"; // header('Location: mainpage.php');

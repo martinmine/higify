@@ -16,6 +16,7 @@ class NoteType {
 	const ALL = 1;
 	const PUBLIC_ONLY = 2;
 	const PRIVATE_ONLY = 3;
+    const REPLY = 4;
 }
 
 ?>

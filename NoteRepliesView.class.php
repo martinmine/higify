@@ -12,13 +12,14 @@ class NoteRepliesView implements WebPageElement
     {
         $replies = NoteController::requestReplies($_GET['noteID']);
         
-        foreach ($replies as $reply)
-        {
-            $tpl = new Template();
-            $tpl->appendTemplate('NoteContainer');
-            $tpl->registerController(new NoteReplyController($reply));
-            $tpl->display();       
-        }
+        $tpl = new Template();
+        $tpl->appendTemplate('MainPageHeader');
+        $tpl->setValue('PAGE_TITLE', 'Your Higify');
+        $tpl->setValue('CSS', array('mainpage', 'search', 'menu'));
+        $tpl->appendTemplate('Replies');
+        $tpl->registerController(new NoteReplyController($reply));
+      
+        $tpl->display();
     }
 }
 

@@ -17,9 +17,9 @@
                         </div>
                     </div>
                     <div class="noteContent">
-                        This is content
+                        <?php echo $CONTENT ?>
                     <div class="noteContent">
-                        <a class="noteAttachment" href="#">mordi.png</a> <a class="noteAttachment" href="#">fardin.jpg</a>
+                        <a class="noteAttachment" href="reply.php?noteID=1">mordi.png</a> <a class="noteAttachment" href="#">fardin.jpg</a>
                     </div>
                     <div class="noteFooter">
                         <div class="noteControls">

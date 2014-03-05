@@ -108,25 +108,25 @@ class NoteModel
     
     public static function getReplies($parentNote)
     {
-        $query = "SELECT childNoteID
-                  FROM notereply
-                  WHERE parentNoteID = :parentNote";
+        $query = "SELECT noteID, ownerID, content, isPublic, timePublished, points
+                  FROM note
+                  JOIN notereply ON (note.noteID = notereply.childNoteID)
+                  WHERE notereply.parentNoteID = :parentNote";
         
         $db = DatabaseManager::getDB();
         $stmt->bindParam(':parentNote', $parentNote);
         $stmt->execute();
+        
         while($row = $stmt->fetch(PDO::FETCH_ASSOC))
         {
             $timestamp = date('d M H:i', strtotime($row['timePublished']));
             
             $res[] = new Note($row['noteID'], $row['ownerID'],
                               $row['content'], $row['isPublic'],
-                              $timestamp, $row['username']);
+                              $timestamp, $row['username'], $row['points']);
         }
         
         return $res;
-        
-        
     }
     
     /**
