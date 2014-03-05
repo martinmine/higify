@@ -108,7 +108,6 @@ class MainPageController implements IPageController
 			$userID = $user->getUserID();
 			
 			$vals['USER_ID']    = $userID;
-			$vals['TOP']		= 'Top';	// Test;
 			$vals['USERNAME']	= $username;
 			$vals['CONTENT']	= ($displayContent)? $displayContent: NULL;
 			$vals['CANCEL']		= ($edit)? "cancel": NULL;

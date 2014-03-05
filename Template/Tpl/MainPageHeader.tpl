@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="profileLinkWrapper">
-                    <a href="#" class="profileLink">martinmine</a>
+                    <a href="#" class="profileLink"><?php echo $USERNAME; ?></a>
                 </div>
                 <div class="profileWrapper">
                     <nav>
