@@ -149,16 +149,10 @@ require_once('SessionController.class.php');
         
         public static function requestReplies($parentNode)
         {
-<<<<<<< HEAD
            $replies = NoteModel::getReplies($parentNode);
            return $replies;
 		}
-=======
-            $replies = NoteModel::getReplies($parentNode);
-            return $replies;
-        }
 
->>>>>>> fd3e97ad00461c638c315ded8357dba894773088
         /**
          * Registers a vote for a note
          * @param integer $ownerID  The ID of the user that votes
