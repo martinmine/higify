@@ -294,6 +294,23 @@ class NoteModel
         else
             return $result[0];
     }
+    
+    /**
+     * Gets the count of replies for one note
+     * @param integer $noteID The note ID to get comments count from
+     * @return integer The reply count
+     */
+    public static function getReplyCount($noteID)
+    {
+        $db = DatabaseManager::getDB();
+        
+        $stmt = $db->prepare('SELECT COUNT(parentID) FROM notereply WHERE parentNoteID = :noteID');
+        $stmt->bindParam(':noteID', $noteID);
+        $stmt->execute();
+        
+        $result = $stmt->fetch(PDO::FETCH_NUM);
+        return $result[0];
+    }
 }
 
 ?>
