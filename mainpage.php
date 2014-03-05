@@ -9,14 +9,13 @@ $userID = SessionController::requestLoggedinID();
 
 $tpl = new Template();
 $tpl->appendTemplate('MainPageHeader');
-$tpl->setValue('PAGE_TITLE', 'Index');
+$tpl->setValue('PAGE_TITLE', 'Your Higify');
+$tpl->setValue('CSS', array('mainpage', 'search', 'menu'));
 $tpl->registerController(new MainPageController());
-$tpl->appendTemplate('MainPageTop');
-$tpl->appendTemplate('MainPageLeft');
 $tpl->appendTemplate('MainPageCenter');
-$tpl->appendTemplate('MainPageScheduleContainer');
+$tpl->appendTemplate('MainPageSideMenu');
+$tpl->registerController(new MainPageScheduleController());
 $tpl->registerController(new MainPageScheduleController($userID));
-$tpl->appendTemplate('MainPageFooter');
 $tpl->display();
 
 ?>
