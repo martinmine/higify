@@ -55,8 +55,6 @@ require_once('SessionController.class.php');
 		{
 			if ($this->user !== NULL)
 			{
-				
-			
 				return NULL;
 			}
 			return NULL;
