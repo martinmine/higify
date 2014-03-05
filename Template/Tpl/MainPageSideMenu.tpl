@@ -3,6 +3,9 @@
                 <div class="pageTitle">
                     Your schedule
                 </div>
+                <div class="hours">
+                     <?php echo $SCHEDULE; ?>
+                </div>
             </div>
             <div class="pageElement">
                 <div class="pageTitle">
