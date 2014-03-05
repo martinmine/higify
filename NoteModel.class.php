@@ -33,7 +33,7 @@ class NoteModel
 		{
 			$db = DatabaseManager::getDB();
 			$res = array();
-			$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, points
+			$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points
 						FROM note
 						JOIN user ON (user.userID = ownerID)
 						WHERE ownerID = :ownerID';
@@ -55,7 +55,7 @@ class NoteModel
 				
 				$res[] = new Note($row['noteID'], $row['ownerID'],
 								  $row['content'], $row['isPublic'],
-								  $timestamp, $row['username'], $row['points']);
+								  $timestamp, $row['username'], $row['category'], $row['points'], self::getReplyCount($row['noteID']));
 			}
 			return $res;
 		}
@@ -108,7 +108,7 @@ class NoteModel
     
     public static function getReplies($parentNote)
     {
-        $query = "SELECT noteID, username, ownerID, content, isPublic, timePublished, points
+        $query = "SELECT noteID, username, ownerID, content, isPublic, timePublished, category, points
                   FROM note
                   JOIN notereply ON (note.noteID = notereply.childNoteID)
                   JOIN user ON (note.ownerID = user.userID)
@@ -123,9 +123,8 @@ class NoteModel
         {
             $timestamp = date('d M H:i', strtotime($row['timePublished']));
             
-            $res[] = new Note($row['noteID'], $row['ownerID'],
-                              $row['content'], $row['isPublic'],
-                              $timestamp, $row['username'], $row['points']);
+            $res[] = new Note($row['noteID'], $row['ownerID'], $row['content'], $row['isPublic'],
+                              $timestamp, $row['username'], $row['category'], $row['points'], self::getReplyCount($row['noteID']));
         }
         
         return $res;
@@ -174,7 +173,7 @@ class NoteModel
 	public static function getNote($noteID)
 	{
 		$db = DatabaseManager::getDB();
-		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, points 
+		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points 
 				  FROM note
 				  JOIN user ON (user.userID = ownerID)
 				  WHERE noteID = :noteID';
@@ -188,7 +187,9 @@ class NoteModel
 						 $obj['isPublic'],
 						 $obj['timePublished'],
 						 $obj['username'],
-                         $obj['points']);
+                         $obj['category'],
+                         $obj['points'], 
+                         self::getReplyCount($row['noteID']));
 
         return $note;	
 	}
@@ -304,7 +305,7 @@ class NoteModel
     {
         $db = DatabaseManager::getDB();
         
-        $stmt = $db->prepare('SELECT COUNT(parentID) FROM notereply WHERE parentNoteID = :noteID');
+        $stmt = $db->prepare('SELECT COUNT(parentNoteID) FROM notereply WHERE parentNoteID = :noteID');
         $stmt->bindParam(':noteID', $noteID);
         $stmt->execute();
         

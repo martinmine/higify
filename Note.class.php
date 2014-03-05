@@ -15,7 +15,9 @@ class Note
 	private $isPublic;			//  @var tinyint(1) 1 if note is public otherwise 0.
 	private $published;			//  @timestamp time and date for when the note was published.
 	private $ownerUsername;		//	@var varchar(30) username of the note owner.
+    private $category;          //  @var string Which category this note was posted in
     private $points;            //  @var The vote balance/karma for the note
+    private $replyCount;        //  @var Amount of replies
   
 	/**
 	 *  Constructs a new note setting all variables.
@@ -25,7 +27,7 @@ class Note
 	 *  @param $content a string with the content.
 	 *  @param $isPublic boolean value 0 or 1.
 	 */
-	public function __construct($noteID, $ownerID, $content, $isPublic, $published, $username, $points)
+	public function __construct($noteID, $ownerID, $content, $isPublic, $published, $username, $category, $points, $replyCount)
 	{
 		$this->noteID = $noteID;
 		$this->ownerID = $ownerID;
@@ -33,7 +35,9 @@ class Note
 		$this->isPublic = $isPublic;
 		$this->published = $published;
 		$this->ownerUsername = $username;
+        $this->category = $category;
         $this->points = $points;
+        $this->replyCount = $replyCount;
 	}
   
 	/**
@@ -118,7 +122,34 @@ class Note
 	{
 		$this->isPublic = $isPublic;
 	}
-	  
+    
+    /**
+     * Gets the category in which his note was posted.
+     * If no category was made during posting, NULL is given
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+	
+    /**
+     * Returns the count of the replies that has been made to this note
+     * @return integer
+     */
+    public function getReplyCount()
+    {
+        return $this->replyCount;
+    }
+    
+    /**
+     * Gets the karma/vote balance for this note
+     * @return integer
+     */
+    public function getVoteBalance()
+    {
+        return $this->points;
+    }
 	/**
 	 * Implements PHP 5's magic __toString() method
 	 * 

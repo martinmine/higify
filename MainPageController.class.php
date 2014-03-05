@@ -2,7 +2,6 @@
 require_once('UserController.class.php');
 require_once('SessionController.class.php');
 require_once('NoteListView.class.php');
-//require_once('NoteType.class.php');
 require_once('Template/IPageController.interface.php');
 require_once('NoteCategoryView.class.php');
 

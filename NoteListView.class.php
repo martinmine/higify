@@ -67,17 +67,18 @@ class NoteListView extends WebPageElement
 			$tpl->appendTemplate('NoteElement');
             
             $tpl->setValue('USER_ID', $note->getOwnerID());
+            $tpl->setValue('NOTE_ID', $note->getNoteID());
             $tpl->setValue('USERNAME', $note->getUsername());
             $tpl->setValue('TIME', $note->getTime());
             $tpl->setValue('CONTENT', $note->getContent());
             
-            $tpl->setValue('VOTE_BALANCE', '12'); // TODO
+            $tpl->setValue('VOTE_BALANCE', $note->getVoteBalance());
             
             $tpl->setValue('NOTE_ATTACHMENT_CONTAINER', ''); // TODO
-            $tpl->setValue('REPLY_COUNT', 12);
+            $tpl->setValue('REPLY_COUNT', $note->getReplyCount());
             
-            $tpl->setValue('CATEGORY', '');
-            $tpl->setValue('CATEGORY_LINK', '');
+            $tpl->setValue('CATEGORY', $note->getCategory());
+            $tpl->setValue('CATEGORY_LINK', urlencode($note->getCategory()));
             
             $tpl->setValue('DISPLAY_EDIT', ($username === $noteOwner));
             $tpl->setValue('DISPLAY_DELETE', ($username === $noteOwner));
