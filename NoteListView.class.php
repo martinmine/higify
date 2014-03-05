@@ -34,20 +34,19 @@ class NoteListView extends WebPageElement
 				$this->notes = NoteController::requestNotesFromUser($noteOwnerID, $noteType);
 			}
             
-            else if ($parentNoteID != NULL && $noteType === NoteType::REPLY)
-            {
-                $this->notes = NoteController::requestReplies($parentNoteID);
-            }
-            
 			else
 			{
 				echo "Du har ikke tilgang til dette!"; // header('Location: mainpage.php');
 			}
 		}
-		else
-		{
-			echo "Ops!"; //header('Location: mainpage.php');
-		}
+        else if ($parentNoteID != NULL && $noteType === NoteType::REPLY)
+        {
+            $this->notes = NoteController::requestReplies($parentNoteID);
+        }
+        else if ($noteOwnerID === NULL && $noteType === NoteType::NONE)
+        {
+            $this->notes = array(NoteController::requestNote($parentNoteID));
+        }
 	}
 	
 	/**
