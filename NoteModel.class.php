@@ -108,12 +108,14 @@ class NoteModel
     
     public static function getReplies($parentNote)
     {
-        $query = "SELECT noteID, ownerID, content, isPublic, timePublished, points
+        $query = "SELECT noteID, username, ownerID, content, isPublic, timePublished, points
                   FROM note
                   JOIN notereply ON (note.noteID = notereply.childNoteID)
+                  JOIN user ON (note.ownerID = user.userID)
                   WHERE notereply.parentNoteID = :parentNote";
         
         $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);
         $stmt->bindParam(':parentNote', $parentNote);
         $stmt->execute();
         
@@ -146,26 +148,20 @@ class NoteModel
 		$content = $note->getContent();
 		$isPublic = 1;
         
-		try
-		{
-			$stmt1 = $db->prepare($query1);
-			$stmt1->bindParam(':ownerID',  $ownerID   );
-			$stmt1->bindParam(':content',  $content   );
-			$stmt1->bindParam(':isPublic', $isPublic  );
-			$stmt1->execute();
+		$stmt1 = $db->prepare($query1);
+		$stmt1->bindParam(':ownerID',  $ownerID   );
+		$stmt1->bindParam(':content',  $content   );
+		$stmt1->bindParam(':isPublic', $isPublic  );
+		$stmt1->execute();
             
-            $query2 = 'INSERT INTO notereply(parentNoteID, childNoteID)
+        $query2 = 'INSERT INTO notereply(parentNoteID, childNoteID)
                       VALUES(:parentNote, :childNote)';
             
-            $stmt2 = $db->prepare($query2);
-            $stmt2->bindparam(':parentNode', $parentNode);
-            $stmt2->bindparam(':childNode', $ownerID);
-            $stmt2->execute();
-		}
-		catch(Exception $e)
-		{
-			trigger_error($e);
-		}
+        $stmt2 = $db->prepare($query2);
+        $stmt2->bindparam(':parentNode', $parentNode);
+        $stmt2->bindparam(':childNode', $ownerID);
+        $stmt2->execute();
+		
 		return $res;
 	}
 	

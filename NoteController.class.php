@@ -87,8 +87,7 @@ require_once('SessionController.class.php');
                             $values['content'],
                             $isPublic,
                              -1,
-                             $values['username']
-                            );
+                             $values['username']);
             
 			NoteModel::addNotereply($parentNote,$note);	
         }
