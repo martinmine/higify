@@ -8,14 +8,30 @@ require_once('Schedule/ScheduleController.class.php');
 
 class MainPageScheduleController implements IPageController
 {
-    public function onDisplay()
-    {
-        $userID = SessionController::requestLoggedinID();
-        $dailySchedule = ScheduleController::fetchScheduleForTheDay($userID);
-        
-        $scheduleElement = new ScheduleObjectElement($dailySchedule);
-        
-        return array('SCHEDULE' => $scheduleElement);
+	private $profileID;
+	
+	public function __construct($profileID)
+	{
+		$this->profileID = $profileID;
+	}
+	
+	public function onDisplay()
+	{
+		$userID  = SessionController::requestLoggedinID();
+		$profile = UserController::requestUserByID($this->profileID);
+		
+		if ($userID !== NULL  &&  $profile !== NULL)
+		{
+			if ($userID === $this->profileID  ||  $profile->hasPublicTimeTable())
+			{
+				$dailySchedule = ScheduleController::fetchScheduleForTheDay($this->profileID);
+				
+				$scheduleElement = new ScheduleObjectElement($dailySchedule);
+				
+				return array('SCHEDULE' => $scheduleElement);
+			}
+		}
+		return array('SCHEDULE' => '');
     }
 }
 
