@@ -192,7 +192,6 @@ class NoteModel
 						 $obj['isPublic'],
 						 $obj['timePublished'],
 						 $obj['username'],
-                         $obj['username'],
                          $obj['points']);
 
         return $note;	
