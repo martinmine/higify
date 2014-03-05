@@ -109,11 +109,6 @@ div.profileContainer
     margin: 5px;
     width: 50px;
     height: 50px;
-    border-width: 1px;
-    border-color: rgb(128, 128, 128);
-    border-style: solid;
-    border-radius: 2px;
-    box-shadow: 2px 2px 3px #333333;
 }
 
 a.profileLink

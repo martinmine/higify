@@ -191,16 +191,9 @@ class NoteModel
 						 $obj['content'],
 						 $obj['isPublic'],
 						 $obj['timePublished'],
-<<<<<<< HEAD
-						 $obj['username']
-						);
-        
-        
-=======
 						 $obj['username'],
                          $obj['points']);
                          
->>>>>>> bdcde8289d8cc2b42da8b66a60d69599f263e630
 		return $note;	
 	}
 	
