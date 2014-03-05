@@ -155,7 +155,7 @@ require_once('SessionController.class.php');
         {
            $replies = NoteModel::getReplies($parentNode);
            return $replies;
-		   
+		}
         /**
          * Registers a vote for a note
          * @param integer $ownerID  The ID of the user that votes
