@@ -4,6 +4,7 @@ include_once('Template/WebPageElement.class.php');
 require_once('NoteType.class.php');
 require_once('NoteController.class.php');
 require_once('SessionController.class.php');
+require_once('VoteStatus.class.php');
 
  /**
   * The view listing all note-elements
@@ -54,13 +55,19 @@ class NoteListView extends WebPageElement
 	 */
 	public function generateHTML()
 	{
-		$user     = SessionController::acquireSession();
-		$username = $user->getUsername();
+        $userID = SessionController::requestLoggedinID();
 	
 		foreach($this->notes as $note)
 		{
-			$noteOwner = $note->getUsername();
-			
+			$noteOwner = $note->getOwnerID();
+            $voteStatus = NoteController::requestVoteStatus($note->getNoteID(), $userID);
+            $upvoteImage = 'upvote_unselected';
+            $downvoteImage = 'downvote_unselected';
+            
+            if ($voteStatus == VoteStatus::DOWNVOTED)
+                $downvoteImage = 'downvote_selected';
+            if ($voteStatus == VoteStatus::UPVOTED)
+                $upvoteImage = 'upvote_selected';
 			$tpl = new Template();
 			$tpl->appendTemplate('NoteElement');
             
@@ -74,13 +81,15 @@ class NoteListView extends WebPageElement
             
             $tpl->setValue('NOTE_ATTACHMENT_CONTAINER', ''); // TODO
             $tpl->setValue('REPLY_COUNT', $note->getReplyCount());
+            $tpl->setValue('UPVOTE_IMG', $upvoteImage);
+            $tpl->setValue('DOWNVOTE_IMG', $downvoteImage);
             
             $tpl->setValue('CATEGORY', $note->getCategory());
             $tpl->setValue('CATEGORY_LINK', urlencode($note->getCategory()));
             
-            $tpl->setValue('DISPLAY_EDIT', ($username === $noteOwner));
-            $tpl->setValue('DISPLAY_DELETE', ($username === $noteOwner));
-            $tpl->setValue('DISPLAY_REPORT', ($username !== $noteOwner));
+            $tpl->setValue('DISPLAY_EDIT', ($noteOwner === $userID));
+            $tpl->setValue('DISPLAY_DELETE', ($noteOwner === $userID));
+            $tpl->setValue('DISPLAY_REPORT', ($noteOwner !== $userID));
 			
 			$tpl->display();
 		}

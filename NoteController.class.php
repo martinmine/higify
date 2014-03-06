@@ -155,5 +155,10 @@ require_once('SessionController.class.php');
         {
             return NoteModel::saveVote($noteID, $ownerID, $voteType);
         }
+        
+        public static function requestVoteStatus($noteID, $userID)
+        {
+            return NoteModel::getVoteStatus($noteID, $userID);   
+        }
 	}
 ?>

@@ -2,9 +2,9 @@
                     <div class="noteHeader">
                         <div class="noteElementWrapper">
                             <div class="voteBox">
-                                <img src="static/upvote_unselected.png" />
+                                <a href="vote.php?noteid=<?php echo $NOTE_ID; ?>&type=1"><img src="static/<?php echo $UPVOTE_IMG; ?>.png" /></a>
                                 <?php echo $VOTE_BALANCE; ?>
-                                <img src="static/downvote_unselected.png" />
+                                <a href="vote.php?noteid=<?php echo $NOTE_ID; ?>&type=0"><img src="static/<?php echo $DOWNVOTE_IMG; ?>.png" /></a>
                             </div>
                             
                             <img src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="50" height="50"/>
