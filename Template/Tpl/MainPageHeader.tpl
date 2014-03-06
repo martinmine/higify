@@ -37,7 +37,7 @@
                     <nav>
                         <ul>
                             <li class="head">
-                                <a href="#"><img src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="100" /></a>
+                                <a href="#"><img src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="50" height="50" /></a>
                                 <ul>
                                     <li><a href="profile.php?id=<?php echo $USER_ID; ?>" class="menuItem">My Profile</a></li>
                                     <li><a href="mainpage.php" class="menuItem">Home</a></li>
