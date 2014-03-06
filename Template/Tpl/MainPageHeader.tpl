@@ -32,8 +32,8 @@
             <div class="pageControllerContainer">
                 <div class="searchWrapper">
                     <div class="searchContainer">
-                        <form class="form-wrapper cf">
-                            <input type="text" placeholder="Search by username..." required>
+                        <form class="form-wrapper cf" method="get" action="searchresults.php">
+                            <input type="text" name="searchterm" placeholder="Search by username..." required></input>
                             <button type="submit">Search</button>
                         </form>  
                     </div>

@@ -22,10 +22,15 @@ class Note
 	/**
 	 *  Constructs a new note setting all variables.
 	 *  
-	 *  @param $noteID the notes uniq ID.
-	 *  @param $ownerID a refernece to the owner by id.
-	 *  @param $content a string with the content.
-	 *  @param $isPublic boolean value 0 or 1.
+	 *  @param integer $noteID the notes unique ID.
+	 *  @param integer $ownerID a refernece to the owner by id.
+	 *  @param string $content Content of the note
+	 *  @param boolean $isPublic Indicating wether the note is public or not
+     *  @param string $published Time-stamp for when the note was published
+     *  @param string $username OP's username
+     *  @param string $category Category in which the post was posted
+     *  @param integer $points Point balance for the note
+     *  @param integer $replyCount Amount of replies made to the note
 	 */
 	public function __construct($noteID, $ownerID, $content, $isPublic, $published, $username, $category, $points, $replyCount)
 	{
@@ -82,14 +87,14 @@ class Note
 	}
 	  
 	/**
-	 * Retrieves the timestamp for when the note
-	 * was published.
+	 * Retrieves the formated timestamp for when the note
+	 * was published in the format d M H:i
 	 *
 	 * @return timestamp
 	 */
 	public function getTime()
 	{
-		return $this->published;
+        return date('d M H:i', strtotime($this->published));
 	}
 	
 	/**
@@ -150,6 +155,7 @@ class Note
     {
         return $this->points;
     }
+    
 	/**
 	 * Implements PHP 5's magic __toString() method
 	 * 

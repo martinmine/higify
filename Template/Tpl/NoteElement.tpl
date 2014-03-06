@@ -10,7 +10,7 @@
                             <img src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="50" height="50"/>
                         </div>
                         <div class="noteTitle">
-                            <a href="profile.php?id=<?php echo $USER_ID; ?>" class="noteLink"><?php echo $USERNAME; ?></a> posted in <a href="view_notes?cat=<?php echo $CATEGORY_LINK; ?>" class="noteLink"><?echo $CATEGORY; ?></a>
+                            <a href="profile.php?id=<?php echo $USER_ID; ?>" class="noteLink"><?php echo $USERNAME; ?></a> posted<?php if ($CATEGORY) { ?> in <a href="view_notes?cat=<?php echo $CATEGORY_LINK; ?>" class="noteLink"><?php echo $CATEGORY; ?></a><?php } ?>
                         </div>
                         <div class="noteTimeStamp">
                             <a href="view_note.php?id=<?php echo $NOTE_ID; ?>" class="noteLink"><?php echo $TIME; ?></a>

@@ -7,7 +7,7 @@ $tpl = new Template();
 $tpl->appendTemplate('MainPageHeader');
 
 $tpl->setValue('PAGE_TITLE', 'Schedule');
-$tpl->setValue('BANNER_TITLE', 'The Schedule');
+$tpl->setValue('BANNER_TITLE', 'Schedule For The Week');
 
 $tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'time_schedule'));
 $tpl->setValue('JS', array('jquery-latest.min', 'jquery.json-2.4.min', 'wgxpath.install', 'time_schedule'));

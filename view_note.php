@@ -6,8 +6,8 @@ require_once('BannerController.class.php');
 
 $tpl = new Template();
 $tpl->appendTemplate('MainPageHeader');
-$tpl->setValue('PAGE_TITLE', 'Mainpage');
-$tpl->setValue('BANNER_TITLE', 'Your Higify');
+$tpl->setValue('PAGE_TITLE', 'View Note');
+$tpl->setValue('BANNER_TITLE', 'View a Note');
 $tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'schedule', 'schedule_mainpage'));
 $tpl->registerController(new BannerController());
 $tpl->registerController(new ViewNoteController());

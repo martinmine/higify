@@ -42,21 +42,18 @@ class NoteModel
 			{
 				$query .= ' AND isPublic = ';
 				$query .= ($condition === NoteType::PUBLIC_ONLY)? '1': '0';
-				
 			}
+            
 			$query .= ' ORDER BY noteID DESC';
 			
 			$stmt = $db->prepare($query);
 			$stmt->bindParam(':ownerID', $ownerID);
 			$stmt->execute();
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+			while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 			{
-				$timestamp = date('d M H:i', strtotime($row['timePublished']));
-				
-				$res[] = new Note($row['noteID'], $row['ownerID'],
-								  $row['content'], $row['isPublic'],
-								  $timestamp, $row['username'], $row['category'], $row['points'], self::getReplyCount($row['noteID']));
+				$res[] = self::fetchNote($row);
 			}
+            
 			return $res;
 		}
 	}
@@ -71,17 +68,35 @@ class NoteModel
 		
 		
 	}
+    
+    /**
+     * Fetches a note from a database row
+     * @param Array $row The associative array from the row
+     * @return Note A fetched note object from the row
+     */
+    private static function fetchNote($row)
+    {
+        return new Note($row['noteID'],
+                        $row['ownerID'],
+                        $row['content'],
+                        $row['isPublic'],
+                        $row['timePublished'],
+                        $row['username'],
+                        $row['category'],
+                        $row['points'], 
+                        self::getReplyCount($row['noteID']));
+    }
 	
 	/**
 	 * Adds a new Note object with data int the library to the database
 	 *
 	 * @Param Note $note A Note object holding the data to be added
 	 *        to the database.
+     * @return The ID of the note which was created
 	 */
 	public static function addNote($note)
 	{
 		$db = DatabaseManager::getDB();
-		$res = 0;
 		$query = 'INSERT INTO note '
 			   . '(ownerID, content, category, isPublic) '
 			   . 'VALUES(:ownerID, :content, :category, :isPublic)';
@@ -91,20 +106,14 @@ class NoteModel
         $category = $note->getCategory();
 		$isPublic = $note->IsPublic();
 		   
-		try
-		{
-			$stmt = $db->prepare($query);
-			$stmt->bindParam(':ownerID',  $ownerID   );
-			$stmt->bindParam(':content',  $content   );
-			$stmt->bindParam(':isPublic', $isPublic  );
-            $stmt->bindParam(':category', $category  );
-			$stmt->execute();
-		}
-		catch(Exception $e)
-		{
-			trigger_error($e);
-		}
-		return $res;
+		$stmt = $db->prepare($query);
+		$stmt->bindParam(':ownerID',  $ownerID   );
+		$stmt->bindParam(':content',  $content   );
+		$stmt->bindParam(':isPublic', $isPublic  );
+        $stmt->bindParam(':category', $category  );
+		$stmt->execute();
+        
+        return $db->lastInsertId();
 	}
     
     
@@ -124,10 +133,7 @@ class NoteModel
         
         while($row = $stmt->fetch(PDO::FETCH_ASSOC))
         {
-            $timestamp = date('d M H:i', strtotime($row['timePublished']));
-            
-            $res[] = new Note($row['noteID'], $row['ownerID'], $row['content'], $row['isPublic'],
-                              $timestamp, $row['username'], $row['category'], $row['points'], self::getReplyCount($row['noteID']));
+            $res[] = self::fetchNote($row);
         }
         
         return $res;
@@ -135,38 +141,19 @@ class NoteModel
     
     /**
      * Adds a reply to a note
-     * @param $parentNote ID of orignial note that is being replied to
-     * @param $note The reply
-     * @return
+     * @param integer $parentNoteID ID of the parent note which we are posting a comment on
+     * @param integer $childNoteID The new reply we are inserting to the database
      */
-    public static function addNotereply($parentNote, $note)
+    public static function addNotereply($parentNoteID, $childNoteID)
 	{
 		$db = DatabaseManager::getDB();
-		$res = 0;
-		$query1 = 'INSERT INTO note(ownerID, content, category, isPublic)
-			       VALUES(:ownerID, :content, :category, :isPublic)';
-        
-		$ownerID = $note->getOwnerID();
-		$content = $note->getContent();
-        $category = $note->getCategory();
-		$isPublic = 1;
-        
-		$stmt1 = $db->prepare($query1);
-		$stmt1->bindParam(':ownerID',  $ownerID   );
-		$stmt1->bindParam(':content',  $content   );
-		$stmt1->bindParam(':isPublic', $isPublic  );
-        $stmt1->bindParam(':category', $category  );
-		$stmt1->execute();
-            
-        $query2 = 'INSERT INTO notereply(parentNoteID, childNoteID)
+        $query = 'INSERT INTO notereply(parentNoteID, childNoteID)
                    VALUES(:parentNote, :childNote)';
             
-        $stmt2 = $db->prepare($query2);
-        $stmt2->bindparam(':parentNode', $parentNode);
-        $stmt2->bindparam(':childNode', $ownerID);
-        $stmt2->execute();
-		
-		return $res;
+        $stmt = $db->prepare($query);
+        $stmt->bindparam(':parentNote', $parentNoteID);
+        $stmt->bindparam(':childNote', $childNoteID);
+        $stmt->execute();
 	}
 	
 	/**
@@ -186,17 +173,8 @@ class NoteModel
 		$stmt->bindParam(':noteID', $noteID);
 		$stmt->execute();
 		$obj = $stmt->fetch(PDO::FETCH_ASSOC);
-		$note = new Note($obj['noteID'],
-						 $obj['ownerID'],
-						 $obj['content'],
-						 $obj['isPublic'],
-						 $obj['timePublished'],
-						 $obj['username'],
-                         $obj['category'],
-                         $obj['points'], 
-                         self::getReplyCount($obj['noteID']));
 
-        return $note;	
+        return self::fetchNote($obj);	
 	}
 	
 	/**
@@ -316,22 +294,6 @@ class NoteModel
         
         $result = $stmt->fetch(PDO::FETCH_NUM);
         return $result[0];
-    }
-    
-    public static function getNoteCategory($noteID)
-    {
-        $db = DatabaseManager::getDB();
-        $query = "SELECT category
-                  FROM note
-                  WHERE noteID = :noteID";
-        
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':noteID', $noteID);
-        $stmt->execute();
-        
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        return $result['category'];
     }
 }
 

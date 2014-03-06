@@ -6,15 +6,16 @@
 						else {echo "<div class=" . "'" . "pageTitle" . "'" . ">Create a new note</div>";}
 					?>
 
-                <form action="create_note.php" method = "POST">
+                <form action="create_note.php<?php if (isset($PARENT_ID)) echo '?parent=' . $PARENT_ID; ?>" method = "POST">
                 <div class="createNoteWrapper">
                     <div>Category:</div>
                     <div>
                         <select class="categoryList" name="category">
 						<?php
-						foreach ($OPTIONS as $option => $desc)
+						foreach ($OPTIONS as $desc)
 						{
-							echo "<option value=" . $desc . ">" . $desc . "</option>";
+							$selected = ($desc == $SELECTED ? 'selected' : '');
+							echo "<option value='" . $desc . "'" . $selected . ">" . $desc . "</option>";
 						}
 						?>
                         </select>

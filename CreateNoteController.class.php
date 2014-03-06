@@ -1,34 +1,69 @@
 <?php
 require_once('Template/IPageController.interface.php');
-require_once('NoteController.class.php');
-require_once('UserController.class.php');
+require_once('Schedule/ScheduleController.class.php');
 require_once('SessionController.class.php');
+require_once('UserController.class.php');
 require_once('NoteType.class.php');
 require_once('NoteListView.class.php');
-require_once('Schedule/ScheduleController.class.php');
 require_once('NoteController.class.php');
 
 class CreateNoteController implements IPageController
 {   
     public function onDisplay()
-    {        
+    {
         $vals = array();
+        $categoryOptions = array();
+        $userID = SessionController::requestLoggedinID();
+        $vals['SELECTED'] = false;
         
-        if (isset($_GET['parent']))             // If this is a reply
+        if (isset($_GET['parent'])) // If this is a reply
         {
-            $vals['ORIGINAL'] = new NoteListView(NULL, NoteType::NONE, $_GET['parent']);
-            $vals['OPTIONS'] = NoteController::requestNoteCategory($_GET['parent']); // ------Denne er ikke testet
-            
-            if (count($_POST) > 0)
+            $parentNote = NoteController::requestNote($_GET['parent']);
+            if ($parentNote->getCategory()) // Add only if is not null
             {
-                if (strlen($_POST['content'] > 0))
-                {
-                    NoteController::addNoteReply($_GET['parent'], SessionController::requestLoggedinID(), $_POST['content'], $_POST['category']);
-                }     
+                $categoryOptions[] = htmlspecialchars($parentNote->getCategory()); // Add the category for the parent to the category list
+                $vals['SELECTED'] = htmlspecialchars($parentNote->getCategory());
             }
-        }  
+            else
+            {
+                $vals['SELECTED'] = 'Other';
+            }
             
-        $vals['OPTIONS'] = ScheduleController::getCourseElements(SessionController::requestLoggedinID());    
+            $vals['ORIGINAL'] = new NoteListView(NULL, NoteType::NONE, $_GET['parent']);
+            $vals['PARENT_ID'] = $_GET['parent'];
+        }
+        
+        if (isset($_GET['category']))
+            $vals['SELECTED'] = $_GET['category'];
+        
+        $attendingCourses = ScheduleController::getCourseElements($userID); 
+        foreach ($attendingCourses as $code => $desc) // Format all the course descriptions to the HTML document
+        {
+            $description = htmlspecialchars($desc);
+            if (!in_array($description, $categoryOptions))
+                $categoryOptions[] = $description;
+        }
+        
+        $categoryOptions[] = 'Other';
+        
+        if (isset($_POST['content']))
+        {
+            $public = !isset($_POST['notePrivate']);
+            
+            if (strlen($_POST['category']) == 0 || $_POST['category'] == 'Other')
+                $category = NULL;
+            else
+                $category = $_POST['category'];
+            
+            if (isset($_GET['parent']))
+                NoteController::addNoteReply($_GET['parent'], $userID, $_POST['content'], $public, $category);
+            else
+                NoteController::AddNote($userID, $_POST['content'], $category, $public);
+            
+            header('Location: mainpage.php');
+        }
+        
+        $vals['OPTIONS'] = $categoryOptions;
 
         return $vals;
     }

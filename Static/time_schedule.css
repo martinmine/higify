@@ -222,3 +222,10 @@ div.dayPadding
 {
 	border-top-color: rgb(215,215,215);
 }
+
+div.weekScheduleContainer
+{
+    background-color: white;
+    padding: 20px;
+    width: 1037px;
+}
