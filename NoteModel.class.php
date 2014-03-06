@@ -118,6 +118,7 @@ class NoteModel
         $stmt = $db->prepare($query);
         $stmt->bindParam(':parentNote', $parentNote);
         $stmt->execute();
+        $res = array();
         
         while($row = $stmt->fetch(PDO::FETCH_ASSOC))
         {
@@ -189,7 +190,7 @@ class NoteModel
 						 $obj['username'],
                          $obj['category'],
                          $obj['points'], 
-                         self::getReplyCount($row['noteID']));
+                         self::getReplyCount($obj['noteID']));
 
         return $note;	
 	}
