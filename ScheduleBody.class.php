@@ -41,7 +41,7 @@ class ScheduleBody extends WebPageElement
     public function generateHTML()
     {
         $tpl = new Template();
-        $tpl->appendTemplate('SchedulePrototypeBody');
+        $tpl->appendTemplate('ScheduleBody');
         $tpl->setValue('TABLEJS', new TableJavascriptElement($this->schedule, self::DAY_BEGIN, self::DAY_END));
         $tpl->setValue('HOURBEGIN', $this->hourBegin);
         $tpl->setValue('TIMELABELS', new TimeLabelElement($this->hourBegin, $this->hourEnd));
