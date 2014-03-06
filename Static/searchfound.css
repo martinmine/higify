@@ -2,27 +2,35 @@ div.searchresults
 {
 	padding: 5px;
 	/*padding-bottom: 0px;*/
-	background-color: #FFFFFF;*/
+	/*background-color: #FFFFFF;*/
 }
 
 
 div.hit
 {
 	padding: 4px;
-	background-color: #BBBBBB;
+	background-color: #F0F0F0;
 	margin-bottom: 10px;
 	height: 50px;
 }
 
 div.hit:hover
 {
-	background-color: #DDDDDD;
+	background-color: #D8D8D8;
+	color: #
 }
 
-div.img
+div.imgbox
 {
 	float: left;
 	width: 70px;
+}
+
+img.desaturate:hover
+{ 
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	filter: grayscale(100%);
 }
 
 a[id="res"]
