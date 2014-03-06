@@ -1,0 +1,26 @@
+.left
+{
+	float: left;
+	background-color: #000000;
+}
+/*
+.picture
+{
+	float: left;
+}*/
+
+.imgsize
+{
+	width: 100px;
+	height: 100px;
+}
+
+div.pageSideContainer
+{
+	float: left;
+}
+
+.mid
+{
+
+}
