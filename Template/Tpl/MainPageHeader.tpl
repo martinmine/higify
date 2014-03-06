@@ -32,14 +32,14 @@
             <div class="pageControllerContainer">
                 <div class="searchWrapper">
                     <div class="searchContainer">
-                        <form class="form-wrapper cf" method="get" action="searchresults.php">
-                            <input type="text" name="searchterm" placeholder="Search by username..." required>
+                        <form class="form-wrapper cf">
+                            <input type="text" placeholder="Search by username..." required>
                             <button type="submit">Search</button>
                         </form>  
                     </div>
                 </div>
                 <div class="profileLinkWrapper">
-                    <a href="#" class="profileLink"><?php echo $USERNAME; ?></a>
+                    <a href="mainpage.php" class="profileLink"><?php echo $USERNAME; ?></a>
                 </div>
                 <div class="profileWrapper">
                     <nav>

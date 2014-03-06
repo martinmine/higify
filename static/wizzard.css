@@ -86,28 +86,7 @@ a.itemAction
     float: right;
     font-style: italic;
 	margin-right: 5px;
-}
-
-
-a:link    
-{
-/* Applies to all unvisited links */
     text-decoration:  none;
-    color:            inherit;
-} 
-a:visited {
-/* Applies to all visited links */
-    text-decoration:  none;
-    color:            inherit;
-} 
-a:hover   {
-/* Applies to links under the pointer */
-    text-decoration:  underline;
-    color:            inherit;
-} 
-a:active  {
-    /* Applies to activated links */
-    text-decoration:  underline;
     color: inherit;
 }
 
