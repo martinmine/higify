@@ -7,7 +7,7 @@ require_once('NoteType.class.php');
 require_once('NoteListView.class.php');
 require_once('Schedule/ScheduleController.class.php');
 
-class ViewNoteController implements IPageController
+class CreateNoteController implements IPageController
 {   
     public function onDisplay()
     {        
@@ -17,9 +17,9 @@ class ViewNoteController implements IPageController
         {
             $vals['ORIGINAL'] = new NoteListView(NULL, NoteType::NONE, $_GET['id']);
         }
-            $vals['CATEGORY'] = 
-               
-            $vals['OPTIONS'] = 
+        $vals['CATEGORIES'] = 'wwwtec';
+           
+        $vals['OPTIONS'] = ScheduleController::getCourseElements(SessionController::getLoggedinID());
         
         return $vals;
     }

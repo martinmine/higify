@@ -3,6 +3,7 @@ require_once('Template/Template.class.php');
 require_once('NoteController.class.php');
 require_once('ViewNoteController.class.php');
 require_once('BannerController.class.php');
+require_once('CreateNoteController.class.php');
 
 $tpl = new Template();
 $tpl->appendTemplate('MainPageHeader');

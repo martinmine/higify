@@ -5,6 +5,12 @@
                     <div>Category:</div>
                     <div>
                         <select class="categoryList" name= <?php echo $CATEGORY ?> >
+						<?php
+						foreach ($OPTIONS as $option => $desc)
+						{
+							echo "<option value=" . $desc . ">" . $desc . "</option>";
+						}
+						?>
                         </select>
                     </div>
 
