@@ -82,12 +82,13 @@ class NoteModel
 	{
 		$db = DatabaseManager::getDB();
 		$res = 0;
-		$query = 'INSERT INTO Note '
-			   . '(ownerID, content, isPublic) '
-			   . 'VALUES(:ownerID, :content, :isPublic)';
+		$query = 'INSERT INTO note '
+			   . '(ownerID, content, category, isPublic) '
+			   . 'VALUES(:ownerID, :content, :category, :isPublic)';
 			   
 		$ownerID = $note->getOwnerID();
 		$content = $note->getContent();
+        $category = $note->getCategory();
 		$isPublic = $note->IsPublic();
 		   
 		try
@@ -96,6 +97,7 @@ class NoteModel
 			$stmt->bindParam(':ownerID',  $ownerID   );
 			$stmt->bindParam(':content',  $content   );
 			$stmt->bindParam(':isPublic', $isPublic  );
+            $stmt->bindParam(':category', $category  );
 			$stmt->execute();
 		}
 		catch(Exception $e)
@@ -141,17 +143,19 @@ class NoteModel
 	{
 		$db = DatabaseManager::getDB();
 		$res = 0;
-		$query1 = 'INSERT INTO note(ownerID, content, isPublic)
-			       VALUES(:ownerID, :content, :isPublic)';
+		$query1 = 'INSERT INTO note(ownerID, content, category, isPublic)
+			       VALUES(:ownerID, :content, :category, :isPublic)';
         
 		$ownerID = $note->getOwnerID();
 		$content = $note->getContent();
+        $category = $note->getCategory();
 		$isPublic = 1;
         
 		$stmt1 = $db->prepare($query1);
 		$stmt1->bindParam(':ownerID',  $ownerID   );
 		$stmt1->bindParam(':content',  $content   );
 		$stmt1->bindParam(':isPublic', $isPublic  );
+        $stmt1->bindParam(':category', $category  );
 		$stmt1->execute();
             
         $query2 = 'INSERT INTO notereply(parentNoteID, childNoteID)
@@ -312,6 +316,22 @@ class NoteModel
         
         $result = $stmt->fetch(PDO::FETCH_NUM);
         return $result[0];
+    }
+    
+    public static function getNoteCategory($noteID)
+    {
+        $db = DatabaseManager::getDB();
+        $query = "SELECT category
+                  FROM note
+                  WHERE noteID = :noteID";
+        
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':noteID', $noteID);
+        $stmt->execute();
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $result['category'];
     }
 }
 

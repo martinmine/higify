@@ -65,31 +65,25 @@ require_once('SessionController.class.php');
 		 *
 		 * @param Array of values that should be added ($_POST);
 		 */
-		public static function requestAddNote($values)
+		public static function AddNote($ownerID, $content, $category, $isPublic)
 		{
 			$isPublic = isset($values['isPublic'])? '1': '0';
 		
 		
 			$note = new Note(-1, 
-							 $values['ownerID'], 
-							 $values['content'],
+							 $ownerID, 
+							 $content,
 							 $isPublic,
 							 -1,
-							 $values['username'], 0);
+							  0);
 							
 			NoteModel::addNote($note);	
 		}
         
-        public static function addNoteReply($parentNote, $values)
+        public static function addNoteReply($parentNoteID, $ownerID, $content, $category)
         {
-            $note = new Note(-1, 
-                            $values['ownerID'], 
-                            $values['content'],
-                            $isPublic,
-                             -1,
-                             $values['username']);
-            
-			NoteModel::addNotereply($parentNote,$note);	
+            $note = new Note(-1, $ownerID, $content, $isPublic, -1, $content, "", $category, -1, 0);
+			NoteModel::addNotereply($parentNoteID,$note);	
         }
 		
 		/**
@@ -165,6 +159,11 @@ require_once('SessionController.class.php');
         public static function registerVote($noteID, $ownerID, $voteType)
         {
             return NoteModel::saveVote($noteID, $ownerID, $voteType);
+        }
+        
+        public static function requestNoteCategory($noteID)
+        {
+            return NoteModel::getNoteCategory($noteID);
         }
 	}
 ?>

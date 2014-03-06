@@ -1,10 +1,16 @@
             <div class="pageElement">
-                <div class="pageTitle">Create a new note</div>
+				<div>
+					<?php 
+						if(isset($ORIGINAL)) 
+						{echo $ORIGINAL . "<div class=" . "'" . "pageTitle" . "'" . ">Reply</div>";}
+						else {echo "<div class=" . "'" . "pageTitle" . "'" . ">Create a new note</div>";}
+					?>
+
                 <form action="create_note.php" method = "POST">
                 <div class="createNoteWrapper">
                     <div>Category:</div>
                     <div>
-                        <select class="categoryList" name= <?php echo $CATEGORY ?> >
+                        <select class="categoryList" name="category">
 						<?php
 						foreach ($OPTIONS as $option => $desc)
 						{
