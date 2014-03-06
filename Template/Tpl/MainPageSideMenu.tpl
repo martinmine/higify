@@ -5,6 +5,10 @@
                 </div>
                 <div class="hours">
                      <?php echo $SCHEDULE; ?>
+					 <div class="scheduleControls">
+						 <div class="scheduleEdit"><a href="edit_schedule.php" class="scheduleEditLink scheduleLink">Edit Schedule</a></div>
+						 <div class="scheduleDisplay"><a href="display_schedule.php" class="scheduleDisplayLink scheduleLink">Display Schedule</a></div>
+					 </div>
                 </div>
             </div>
             <div class="pageElement">

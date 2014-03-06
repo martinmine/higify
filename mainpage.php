@@ -18,6 +18,7 @@ $tpl->registerController(new MainPageController());
 $tpl->appendTemplate('MainPageCenter');
 $tpl->appendTemplate('MainPageSideMenu');
 $tpl->registerController(new MainPageScheduleController($userID));
+$tpl->appendTemplate('MainPageFooter');
 $tpl->display();
 
 ?>

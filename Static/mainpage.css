@@ -372,3 +372,43 @@ a.noteAttachment
 {
     color: gray;
 }
+
+div.scheduleEdit
+{
+    float: left;
+}
+
+div.scheduleDisplay
+{
+    float: right;
+}
+
+a.scheduleEditLink:before
+{
+    font-family: rosetta-icons;
+    content: "\f112";
+    color: rgb(128, 128, 128);
+}
+
+a.scheduleLink
+{
+    margin: 5px;
+    color: gray;
+}
+
+a.scheduleDisplayLink:before
+{
+    font-family: rosetta-icons;
+    content: "\f177";
+    color: rgb(128, 128, 128);
+}
+
+div.scheduleControls
+{
+    height: 21px;
+}
+
+div.spacer
+{
+    height: 10px;
+}

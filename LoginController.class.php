@@ -21,7 +21,7 @@ class LoginController implements IPageController
         if ($user !== NULL)
         {
             if ($user->hasPublicTimeTable() === NULL)
-                header('Location: welcome.php');
+                header('Location: edit_schedule.php?firsttime');
             else
                 header('Location: mainpage.php');
         }

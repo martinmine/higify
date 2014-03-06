@@ -9,6 +9,14 @@
 	{
 		echo '<link rel="stylesheet" type="text/css" href="static/' . $stylesheet . '.css"/> ';
 	}
+	
+	if (isset($JS))
+	{
+		foreach ($JS as $javascript)
+		{
+			echo '<script type="text/javascript" src="static/' . $javascript . '.js"></script> ';
+		}
+	}
 	?>
 </head>
 <body>

@@ -14,6 +14,10 @@ function onPageLoaded()
     $("#search").submit(onSubmit);
     $("#objectForm").submit(onSave);
     schedule = new Array();
+
+    // First time the user sees the page, load the items on the schedule
+    if (window.location.href.indexOf('firsttime') == -1)
+        loadElements();
 }
 
 /**
