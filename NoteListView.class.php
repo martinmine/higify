@@ -25,7 +25,6 @@ class NoteListView extends WebPageElement
 	 */
 	public function __construct($noteOwnerID = NULL, $noteType = NoteType::NONE, $parentNoteID = NULL)
 	{
-		//echo $noteType;
 		if ($noteOwnerID !== NULL)
 		{		
 			$userID = SessionController::requestLoggedinID();
@@ -33,10 +32,9 @@ class NoteListView extends WebPageElement
 			{
 				$this->notes = NoteController::requestNotesFromUser($noteOwnerID, $noteType);
 			}
-            
 			else
 			{
-				echo "Du har ikke tilgang til dette!"; // header('Location: mainpage.php');
+				header('Location: mainpage.php');
 			}
 		}
         else if ($parentNoteID != NULL && $noteType === NoteType::REPLY)
