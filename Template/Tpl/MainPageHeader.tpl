@@ -24,8 +24,8 @@
             <div class="pageControllerContainer">
                 <div class="searchWrapper">
                     <div class="searchContainer">
-                        <form class="form-wrapper cf">
-                            <input type="text" placeholder="Search by username..." required>
+                        <form class="form-wrapper cf" method="get" action="searchresults.php">
+                            <input type="text" name="searchterm" placeholder="Search by username..." required>
                             <button type="submit">Search</button>
                         </form>  
                     </div>
@@ -37,7 +37,7 @@
                     <nav>
                         <ul>
                             <li class="head">
-                                <a href="#"><img src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="50" height="50" /></a>
+                                <a href="#"><img src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="100" /></a>
                                 <ul>
                                     <li><a href="profile.php?id=<?php echo $USER_ID; ?>" class="menuItem">My Profile</a></li>
                                     <li><a href="mainpage.php" class="menuItem">Home</a></li>

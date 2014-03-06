@@ -44,6 +44,7 @@ class MainPageController implements IPageController
 			 */
 			if (isset($_GET['noteID'])  &&  isset($_GET['changeType']))
 			{
+				
 				$noteID     = $_GET['noteID'];
 				$changeType = $_GET['changeType'];
 				$note = NoteController::requestNote($noteID);
