@@ -166,7 +166,7 @@ class UserModel
     public static function registerUser($username, $password, $email, $emailActivated ,$publicTimeSchedule)
     {
         $query = "INSERT INTO User(username, password, email, emailActivated, publicTimeSchedule)
-                    VALUES (:username, :password, :email, :emailActivated)";
+                    VALUES (:username, :password, :email, :emailActivated, :publicTimeSchedule)";
             
         $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
             
@@ -176,6 +176,7 @@ class UserModel
         $stmt->bindparam(':password', $hashedPassword);
         $stmt->bindparam(':email', $email);
         $stmt->bindparam(':emailActivated', $emailActivated);
+		$stmt->bindparam(':publicTimeSchedule', $publicTimeSchedule);
         $stmt->execute();                                                           // Execute query
             
         return $db->lastInsertId();
