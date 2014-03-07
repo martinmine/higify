@@ -71,14 +71,14 @@ require_once('SessionController.class.php');
 		
 			$note = new Note(-1, $ownerID, $content, $isPublic, NULL, NULL, $category, 0, 0);
 
-			NoteModel::addNote($note);	
+			return NoteModel::addNote($note);	
 		}
         
         public static function addNoteReply($parentNoteID, $ownerID, $content, $isPublic, $category)
         {
             $note = new Note(-1, $ownerID, $content, $isPublic, NULL, NULL, $category, 0, 0);
             $newNoteID = NoteModel::addNote($note);
-			NoteModel::addNotereply($parentNoteID, $newNoteID);	
+			return NoteModel::addNotereply($parentNoteID, $newNoteID);	
         }
 		
 		/**
@@ -128,13 +128,13 @@ require_once('SessionController.class.php');
         
         public static function submitAttatchment($noteID, $file)
         {
-            $fileSize = $file['size'];
+           // $fileSize = $file['size'];
             $fileName = $file['name'];
-            if (is_uploaded_file($file['tmp_name']) && $fileSize < 15)  // If file is uploaded and is less then 15,5MB
+            
+            if (is_uploaded_file($file['tmp_name']))  // If file is uploaded 
             {
                 NoteModel::submitAttachment($noteID, $file, $fileName);
             }
-            
             else
                 return NULL;
         }

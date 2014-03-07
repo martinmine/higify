@@ -2,7 +2,7 @@
 			<div class="pageElement">
 				<div class="spacer"></div>
 			<?php if (isset($PARENT_ID)) echo $ORIGINAL; ?>
-                <form action="create_note.php<?php if (isset($PARENT_ID)) echo '?parent=' . $PARENT_ID; ?>" method = "POST">
+                <form action="create_note.php<?php if (isset($PARENT_ID)) echo '?parent=' . $PARENT_ID; ?>" method = "POST" enctype="multipart/form-data">
                 <div class="createNoteWrapper">
                     <div>		
 						<div id="wysihtml5-editor-toolbar">
@@ -69,8 +69,11 @@
 												
                             <input type="checkbox" class="privateNoteCheckbox" name="notePrivate" />This note is private
                         </div>
+						
+							<input type="file" name="file" id="file"></input>
+					
                         <div class="formButtons">
-                            <input type="submit" class="submitButton" name="submit" value="Save">
+                            <input type="submit" class="submitButton" name="submit" value="Save note">
                         </div>
                     </div>
                 </div>

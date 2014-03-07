@@ -46,8 +46,11 @@ class CreateNoteController implements IPageController
         
         $categoryOptions[] = 'Other';
         
-        if (isset($_POST['content']))
+        if (isset($_POST['content']) || isset($_FILES['file']))
         {
+            if (!isset($_POST['content']))
+                $_POST['content'] = "Attachment";
+                
             $public = !isset($_POST['notePrivate']);
             
             if (strlen($_POST['category']) == 0 || $_POST['category'] == 'Other')
@@ -56,11 +59,16 @@ class CreateNoteController implements IPageController
                 $category = $_POST['category'];
             
             if (isset($_GET['parent']))
-                NoteController::addNoteReply($_GET['parent'], $userID, $_POST['content'], $public, $category);
+               $noteID = NoteController::addNoteReply($_GET['parent'], $userID, $_POST['content'], $public, $category);
             else
-                NoteController::AddNote($userID, $_POST['content'], $category, $public);
+               $noteID = NoteController::AddNote($userID, $_POST['content'], $category, $public);
             
-            header('Location: mainpage.php');
+            if(isset($_FILES['file']))
+            {
+                NoteController::submitAttatchment($noteID, $_FILES['file']);
+            }
+            
+          //  header('Location: mainpage.php');
         }
         
         $vals['OPTIONS'] = $categoryOptions;

@@ -241,7 +241,6 @@ class NoteModel
         
         $query = "INSERT INTO NoteAttachment(noteID, attachment, attachmentName)
                   VALUES(:noteID, :attachment, :attachmentname)";
-        
         $stmt = $db->prepare($query);
         $stmt->bindparam(':noteID',$noteID);
         $stmt->bindparam(':attachment',$file['tmp_name']);

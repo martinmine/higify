@@ -1,9 +1,7 @@
 
 	<div class="pageSideContainer">
-        <div class="pageElement">
-			
-			<form action="editprofile.php" method="post" enctype="multipart/form-data">
-			
+        <div class="pageElement">	
+			<form action="edit_profile.php" method="post" enctype="multipart/form-data">
 				<div class="pageTitle">
 				  Profile Accessories
 				</div>
@@ -81,8 +79,6 @@
 						</div>
 					</div>
 				</div>
-				
-				
 			</form>
 		</div>
 	</div>
