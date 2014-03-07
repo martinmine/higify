@@ -21,7 +21,7 @@
 </head>
 <body>
     <div class="banner">
-		<div class="remainingWidthElement bannerPreWrapper">
+		<div id="bannerFloaterLeft" class="remainingWidthElement bannerPreWrapper">
 			<a href="mainpage.php" style="text-decoration: none;">
 				<div class="bannerTitle bannerLogo">
 					Higify
@@ -49,7 +49,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="remainingWidthElement bannerPostWrapper">
+		<div id="bannerFloaterRight" class="remainingWidthElement bannerPostWrapper">
 			<div class="profileWrapper">
 				<nav>
 					<ul>
