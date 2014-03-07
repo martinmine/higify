@@ -295,6 +295,21 @@ class NoteModel
         $result = $stmt->fetch(PDO::FETCH_NUM);
         return $result[0];
     }
+    
+    /**
+     * Stores the note report in the database
+     * @param integer $noteID The ID of the note we are reporting
+     * @param integer $userID The ID of the user which reports the note
+     */
+    public static function reportNote($noteID, $userID)
+    {
+        $db = DatabaseManager::getDB();
+        
+        $stmt = $db->prepare('REPLACE INTO ReportedNote (noteID, userID) VALUES (:noteID, :userID)');
+        $stmt->bindParam(':noteID', $noteID);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->execute();
+    }
 }
 
 ?>

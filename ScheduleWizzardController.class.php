@@ -12,16 +12,18 @@ class ScheduleWizzardController implements IPageController
         $vals = array();
         $userID = SessionController::requestLoggedinID();
         
+        
         if (isset($_POST['scheduleData']))
         {
             ScheduleController::saveSchedule($_POST['scheduleData'], $userID);
-            
+            echo $_POST['scheduleData'];
+            die();
             header('Location: mainpage.php');
         }
         
         $user = UserController::requestUserByID($userID);
         
-        $vals['IS_PUBLIC'] = $user->hasPublicTimeTable();
+        $vals['IS_PUBLIC'] = !$user->hasPublicTimeTable();
         $vals['FIRST_TIME'] = isset($_GET['firsttime']);
         
         return $vals;

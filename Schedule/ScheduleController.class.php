@@ -45,6 +45,8 @@ class ScheduleController
             }
         }
         
+        print_r($excludes);
+        
         foreach ($excludes as $excludeID => $type)  // This way we avoid DUPLICATE KEY error
             ScheduleModel::addExcludingTimeObject($userID, $excludeID, $type);
             

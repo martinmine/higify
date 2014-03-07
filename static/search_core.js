@@ -73,7 +73,8 @@ function setDataSet(data)
     {
         $.each(obj.results, function (jndex, scheduleObject)
         {
-            if (displayedElements.indexOf(scheduleObject.code) == -1) // Not yet displayed
+            var debug = displayedElements.indexOf(scheduleObject.code);
+            if (scheduleObject.enabled == 'true' && debug == -1) // Not yet displayed
             {
                 appendTimeObject(scheduleObject);
                 displayedElements.push(scheduleObject.code);
@@ -101,7 +102,7 @@ function receivedSearchResult(data)
 
         $.each(schedule, function(index, timeObject)    // set every other course with the same code to enabled
         {
-            var sameObject = timeObject.tryGet(course.code);
+            var sameObject = resultSetTryGet(timeObject, course.code);
             if (sameObject != null && sameObject.enabled == false)
             {
                 sameObject.enabled = true;
@@ -189,11 +190,11 @@ function removeTimeObject(id)
 
     $.each(schedule, function(index, resultSet)
     {
-        var code = resultSet.tryGet(id);
+        var code = resultSetTryGet(resultSet, id);
         if (code != null)
             code.enabled = false;
 
-        if (resultSet.enabledCount() == 0) // Add to to-remove list if is empty
+        if (resultSetEnabledCount(resultSet) == 0) // Add to to-remove list if is empty
             toRemove.push(resultSet);
     });
 
@@ -212,7 +213,7 @@ function courseExists(courseCode)
     var found = false;
     $.each(schedule, function (index, resultSet)
     {
-        var course = resultSet.tryGet(courseCode);
+        var course = resultSetTryGet(resultSet, courseCode);
         if (course != null && course.enabled)
             found = true;
     });
@@ -233,77 +234,79 @@ function createResultSet(type, info, desc, id)
         "info": info, // Information on the result set, eg IMT2321
         "desc": desc, // Description, eg. www-technology
         "results": new Array(), // All the course codes under the set
-
-        // returns the amount of items under the result set
-        count: function() 
-        {
-            return results.length;
-        },
-
-        // Returns the amount of enabled items in the result set, returns 0 if all the properties are enabled somewhere else
-        enabledCount: function() 
-        {
-            var count = 0;
-            var id = this.id;
-            this.results.forEach(function(element) 
-            {
-                if (element.enabled)
-                {
-                    var rendundant = false; // Enabled of this type in other places
-                    schedule.forEach(function (set)
-                    {
-                        if (set.id != id && set.hasCourseEnabled(element.code)) // Someone else has the code enabled, safe to disable here
-                            rendundant = true;
-                    });
-
-                    if (!rendundant) // If nowhere to be found other places - this cannot be removed, increase the count
-                        count++;
-                }
-            });
-
-            return count;
-        },
-
-        hasCourseEnabled: function(course)
-        {
-            var found = false;
-            this.results.forEach(function (element)
-            {
-                if (element.code == course && element.enabled)
-                    found = true;
-            });
-
-            return found;
-        },
-
-        // Returns true or false if the set contains the course given as parameter
-        contains: function(course) 
-        {
-            var found = false;
-            this.results.forEach(function(element) 
-            {
-                if (element.code == course)
-                    found = true;
-            });
-
-            return found;
-        },
-
-        // Tries to get a course from the set, returns null if none found
-        tryGet: function(course) 
-        {
-            var hit = null;
-            this.results.forEach(function(element) 
-            {
-                if (element.code == course)
-                    hit = element;
-            });
-            return hit;
-        }
     }
 
     return resultSet;
 }
+
+
+// returns the amount of items under the result set
+function resultSetCount(set) 
+{
+    return set.results.length;
+}
+
+// Returns the amount of enabled items in the result set, returns 0 if all the properties are enabled somewhere else
+function resultSetEnabledCount(set) 
+{
+    var count = 0;
+    var id = set.id;
+    set.results.forEach(function(element) 
+    {
+        if (element.enabled)
+        {
+            var rendundant = false; // Enabled of this type in other places
+            schedule.forEach(function (set)
+            {
+                if (set.id != id && resultSetHasCourseEnabled(set, element.code)) // Someone else has the code enabled, safe to disable here
+                    rendundant = true;
+            });
+
+            if (!rendundant) // If nowhere to be found other places - this cannot be removed, increase the count
+                count++;
+        }
+    });
+
+    return count;
+}
+
+function resultSetHasCourseEnabled(set, course)
+{
+    var found = false;
+    set.results.forEach(function (element)
+    {
+        if (element.code == course && element.enabled)
+            found = true;
+    });
+
+    return found;
+}
+
+// Returns true or false if the set contains the course given as parameter
+function resultSetContains(set, course) 
+{
+    var found = false;
+    set.results.forEach(function(element) 
+    {
+        if (element.code == course)
+            found = true;
+    });
+
+    return found;
+}
+
+// Tries to get a course from the set, returns null if none found
+function resultSetTryGet(set, course) 
+{
+    var hit = null;
+    set.results.forEach(function (element)
+    {
+        if (element.code == course)
+            hit = element;
+    });
+    return hit;
+}
+
 
 /**
 * Creates a course with a code and a description

@@ -5,22 +5,22 @@ class HigifyConfig
     /**
      * The host-name used for connecting to the databse. Can also be IP-address.
      */
-    const DB_HOST = 'phpmyadmin.obbahhost.com';
+    const DB_HOST = '128.39.41.101';
     
     /**
      * Username used when connecting to the database
      */
-    const DB_NAME = 'higify';
+    const DB_NAME = 's121050';
     
     /**
      * Name of the database
      */
-    const DB_USER = 'higifydev';
+    const DB_USER = 's121050';
     
     /**
      * Super secret database password
      */
-    const DB_PSSW = '6DLqsad9rbmFjcL7abvYDnzy';
+    const DB_PSSW = 'MfvZNb2f';
     
     /**
      * Private recaptcha API key

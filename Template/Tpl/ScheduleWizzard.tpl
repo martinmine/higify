@@ -20,7 +20,7 @@
 						Your schedule consists of:
 				</div>
 				<div class="wizzardWrapper">
-					<form id="objectForm" action="welcome.php" method="POST">		
+					<form id="objectForm" action="edit_schedule.php" method="POST">		
 						<div id="objectList">
 
 						</div>

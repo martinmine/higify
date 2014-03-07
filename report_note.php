@@ -1,17 +1,16 @@
 <?php
 require_once('Template/Template.class.php');
-require_once('NoteController.class.php');
 require_once('SessionController.class.php');
-
+require_once('NoteController.class.php');
 
 $userID = SessionController::requestLoggedinID();
-if (isset($_GET['noteid']) && isset($_GET['type']))
+if (isset($_GET['id']))
 {
-    NoteController::registerVote($_GET['noteid'], $userID, $_GET['type']);
+    NoteController::reportNote($_GET['id'], $userID);
 }
 
 $tpl = new Template();
 $tpl->appendTemplate('RedirectBack');
-$tpl->setValue('PAGE_TITLE', 'Vote Registered');
+$tpl->setValue('PAGE_TITLE', 'Vote Reported');
 $tpl->display();
 ?>

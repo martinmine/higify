@@ -137,8 +137,7 @@ require_once('SessionController.class.php');
         
         public static function requestReplies($parentNode)
         {
-           $replies = NoteModel::getReplies($parentNode);
-           return $replies;
+           return NoteModel::getReplies($parentNode);
 		}
 
         /**
@@ -156,9 +155,25 @@ require_once('SessionController.class.php');
             return NoteModel::saveVote($noteID, $ownerID, $voteType);
         }
         
+        /**
+         * Gets the vote status for a user for a note
+         * @param integer $noteID The ID of the note we need the status on
+         * @param integer $userID The ID of the user which wants to see their status
+         * @return integer An enum indicating the status, see VoteStatus.class.php
+         */
         public static function requestVoteStatus($noteID, $userID)
         {
             return NoteModel::getVoteStatus($noteID, $userID);   
+        }
+        
+        /**
+         * Flags a note for review by an administrator
+         * @param integer $noteID The ID of the note we are reporting
+         * @param integer $userID The ID of the user which reports the note
+         */
+        public static function reportNote($noteID, $userID)
+        {
+            NoteModel::reportNote($noteID, $userID);
         }
 	}
 ?>
