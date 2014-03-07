@@ -35,7 +35,7 @@
                         <div class="noteTools">
 						    <?php if ($DISPLAY_EDIT) { ?><a href="create_note.php?noteID=<?php echo $NOTE_ID; ?>" class="editIcon noteIcon">Edit</a><?php } ?>
                             <?php if ($DISPLAY_DELETE) { ?><a href="mainpage.php?noteID=<?php echo $NOTE_ID . "&changeType=1"; ?>" class="deleteIcon noteIcon">Delete</a><?php } ?>
-                            <?php if ($DISPLAY_REPORT) { ?><a href="report_note.php?id=<?php echo $NOTE_ID; ?>" class="reportIcon noteIcon"></a>Report<?php } ?>
+                            <?php if ($DISPLAY_REPORT) { ?><a href="report_note.php?id=<?php echo $NOTE_ID; ?>" class="reportIcon noteIcon">Report</a><?php } ?>
                         </div>
                     </div>
                 </div>
