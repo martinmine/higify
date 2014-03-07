@@ -110,7 +110,7 @@ class ScheduleModel
         
         $pdo = DatabaseManager::getDB();
         
-        $query = $pdo->prepare('SELECT content from ExludedTimeObject WHERE userID = :usrID');
+        $query = $pdo->prepare('SELECT content FROM ExludedTimeObject WHERE userID = :usrID');
         $query->bindParam(':usrID', $userID);
         $query->execute();
         

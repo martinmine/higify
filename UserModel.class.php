@@ -18,7 +18,7 @@ class UserModel
     public static function userExists($username)        // Boolean, checks if username is listed in database
     {                                                   // SQL query
         $query = "SELECT username               
-                  FROM user
+                  FROM User
                   WHERE username = :username";
         $db = DatabaseManager::getDB();
         $stmt = $db->prepare($query);                   // Preparing database
@@ -45,7 +45,7 @@ class UserModel
         if (UserModel::userExists($username))
         {                                                                                           // SQL query
             $query = "SELECT userID, username, email, emailActivated, publicTimeSchedule                                   
-                      FROM user
+                      FROM User
                       WHERE username = :username AND password = :password";
             
             $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
@@ -79,7 +79,7 @@ class UserModel
     public static function getUserByEmail($email)
     {
         $query = "SELECT userID, username, email, emailActivated, publicTimeSchedule                                   
-                      FROM user
+                      FROM User
                       WHERE email = :email";
         
         $db = DatabaseManager::getDB();
@@ -111,7 +111,7 @@ class UserModel
     public static function getUserByID($userID)
     {                                                                                        // SQL query
         $query = "SELECT username, email, emailActivated, publicTimeSchedule
-                  FROM user
+                  FROM User
                   WHERE userID = :userID";
         
         $db = DatabaseManager::getDB();                                                      // connects to db
@@ -139,7 +139,7 @@ class UserModel
     public static function getUserID($username)
     {
         $query = "SELECT userID 
-                  FROM user
+                  FROM User
                   WHERE username = :username";
         
         $db = DatabaseManager::getDB();
@@ -165,7 +165,7 @@ class UserModel
      */
     public static function registerUser($username, $password, $email, $emailActivated ,$publicTimeSchedule)
     {
-        $query = "INSERT INTO user(username, password, email, emailActivated, publicTimeSchedule)
+        $query = "INSERT INTO User(username, password, email, emailActivated, publicTimeSchedule)
                     VALUES (:username, :password, :email, :emailActivated)";
             
         $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
@@ -194,7 +194,7 @@ class UserModel
     public static function newPassword($userID, $oldPassword, $newPassword)
     {                                                                           // SQL query 
         $query = "SELECT password                                               
-                  FROM user
+                  FROM User
                   WHERE userID = :userID";
         
         $db = DatabaseManager::getDB();                                         // sets up db connection
@@ -226,7 +226,7 @@ class UserModel
     {
         $hashedNewPassword = hash_hmac('sha512', $newPassword . UserModel::SALT, UserModel::SITEKEY);
         $db = DatabaseManager::getDB();
-        $stmt = $db->prepare("UPDATE user                                       
+        $stmt = $db->prepare("UPDATE User                                       
                                SET password = :newPassword
                                WHERE userID = :userID");                 // Preparing database for query
         $stmt->bindparam(':newPassword', $hashedNewPassword);           // Binding parameters
@@ -265,7 +265,7 @@ class UserModel
         
         $db = DatabaseManager::getDB();                                         
         
-        $query = "UPDATE user
+        $query = "UPDATE User
                   SET profilePicture = :picture
                   WHERE userID = :userID";
         
@@ -284,7 +284,7 @@ class UserModel
     public static function activateEmail($userID)
     {
         $pdo = DatabaseManager::getDB();
-        $query = $pdo->prepare('UPDATE user 
+        $query = $pdo->prepare('UPDATE User 
                                 SET emailActivated = 1 
                                 WHERE userID = :userID');
         
@@ -294,7 +294,7 @@ class UserModel
     
     public static function newEmail($userID, $newEmail)
     {
-        $query = "UPDATE user 
+        $query = "UPDATE User 
                   SET email = :email
                   WHERE userID = :userID";
         
@@ -307,7 +307,7 @@ class UserModel
     
     public static function setPublicTimeSchedule($userID, $bool)
     {
-        $query = "UPDATE user 
+        $query = "UPDATE User 
                   SET publicTimeSchedule = :bool
                   WHERE userID = :userID";
         
@@ -327,7 +327,7 @@ class UserModel
     public static function fetchProfilePicture($userID)
     {
         $query = "SELECT profilePicture
-                  FROM user
+                  FROM User
                   WHERE userID = :userID";
         $db = DatabaseManager::getDB();
         
@@ -350,7 +350,7 @@ class UserModel
 		$res = array();
 		$db = DatabaseManager::getDB();
 		$query = "SELECT userID, username
-			        FROM user
+			        FROM User
 					WHERE username LIKE (:username)";
 		
 		$stmt = $db->prepare($query);
@@ -364,7 +364,6 @@ class UserModel
             $hits[] = $res;  
 		}
 	
- 
 		return $hits;
 	}
 }
