@@ -21,43 +21,54 @@
 </head>
 <body>
     <div class="banner">
+		<div class="remainingWidthElement bannerPreWrapper">
+			<a href="mainpage.php" style="text-decoration: none;">
+				<div class="bannerTitle bannerLogo">
+					Higify
+				</div>
+			</a>
+		</div>
         <div class="bannerWrapper">
+
             <div class="bannerCenterContainer">
-                <div class="bannerTitle">
+				<div class="bannerTitle">
                     <?php echo $BANNER_TITLE; ?>
                 </div>
             </div>
-        </div>
-        <div class="controllerWrapper">
-            <div class="pageControllerContainer">
-                <div class="searchWrapper">
-                    <div class="searchContainer">
-                        <form class="form-wrapper cf" method="get" action="searchresults.php">
-                            <input type="text" name="searchterm" placeholder="Search by username..." required></input>
-                            <button type="submit">Search</button>
-                        </form>  
-                    </div>
-                </div>
-                <div class="profileLinkWrapper">
-                    <a href="mainpage.php" class="profileLink"><?php echo $USERNAME; ?></a>
-                </div>
-                <div class="profileWrapper">
-                    <nav>
-                        <ul>
-                            <li class="head">
-                                <a href="#"><img src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="50" height="50" /></a>
-                                <ul>
-                                    <li><a href="profile.php?id=<?php echo $USER_ID; ?>" class="menuItem">My Profile</a></li>
-                                    <li><a href="mainpage.php" class="menuItem">Home</a></li>
-                                    <li><a href="edit_profile.php" class="menuItem">Settings</a></li>
-                                    <li><a href="logout.php" class="menuItem">Sign Out</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
+        
+			<div class="controllerWrapper">
+				<div class="pageControllerContainer">
+					<div class="searchWrapper">
+						<div class="searchContainer">
+							<form class="form-wrapper cf" method="get" action="searchresults.php">
+								<input type="text" name="searchterm" placeholder="Search by username..." required></input>
+								<button type="submit">Search</button>
+							</form>  
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="remainingWidthElement bannerPostWrapper">
+			<div class="profileWrapper">
+				<nav>
+					<ul>
+						<li class="head">
+							<a href="#"><img src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="50" height="50" /></a>
+							<ul>
+								<li><a href="profile.php?id=<?php echo $USER_ID; ?>" class="menuItem">My Profile</a></li>
+								<li><a href="mainpage.php" class="menuItem">Home</a></li>
+								<li><a href="edit_profile.php" class="menuItem">Settings</a></li>
+								<li><a href="logout.php" class="menuItem">Sign Out</a></li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="profileLinkWrapper">
+				<a href="mainpage.php" class="profileLink"><?php echo $USERNAME; ?></a>
+			</div>
+		</div>
     </div>
 
     <div class="pageContainer">

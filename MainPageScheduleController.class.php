@@ -4,6 +4,7 @@ require_once('Template/IPageController.interface.php');
 require_once('UserController.class.php');
 require_once('SessionController.class.php');
 require_once('ScheduleObjectElement.class.php');
+require_once('EmptyScheduleView.class.php');
 require_once('Schedule/ScheduleController.class.php');
 
 class MainPageScheduleController implements IPageController
@@ -20,18 +21,14 @@ class MainPageScheduleController implements IPageController
 		$userID  = SessionController::requestLoggedinID();
 		$profile = UserController::requestUserByID($this->profileID);
 		
-		if ($userID !== NULL  &&  $profile !== NULL)
-		{
-			if ($userID === $this->profileID  ||  $profile->hasPublicTimeTable())
-			{
-				$dailySchedule = ScheduleController::fetchScheduleForTheDay($this->profileID);
+		$dailySchedule = ScheduleController::fetchScheduleForTheDay($this->profileID);
 				
-				$scheduleElement = new ScheduleObjectElement($dailySchedule);
+        if (count($dailySchedule) > 0)
+			$scheduleElement = new ScheduleObjectElement($dailySchedule);
+        else
+            $scheduleElement = new EmptyScheduleView();
 				
-				return array('SCHEDULE' => $scheduleElement);
-			}
-		}
-		return array('SCHEDULE' => '');
+		return array('SCHEDULE' => $scheduleElement);
     }
 }
 
