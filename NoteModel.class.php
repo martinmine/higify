@@ -35,7 +35,7 @@ class NoteModel
 			$res = array();
 			$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points
 						FROM Note
-						JOIN user ON (user.userID = ownerID)
+						JOIN User ON (User.userID = ownerID)
 						WHERE ownerID = :ownerID';
 						
 			if ($condition !== NoteType::ALL)
@@ -121,9 +121,9 @@ class NoteModel
     {
         $query = "SELECT noteID, username, ownerID, content, isPublic, timePublished, category, points
                   FROM Note
-                  JOIN notereply ON (note.noteID = notereply.childNoteID)
-                  JOIN user ON (note.ownerID = user.userID)
-                  WHERE notereply.parentNoteID = :parentNote";
+                  JOIN NoteReply ON (Note.noteID = NoteReply.childNoteID)
+                  JOIN User ON (Note.ownerID = User.userID)
+                  WHERE NoteReply.parentNoteID = :parentNote";
         
         $db = DatabaseManager::getDB();
         $stmt = $db->prepare($query);
@@ -167,7 +167,7 @@ class NoteModel
 		$db = DatabaseManager::getDB();
 		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points 
 				  FROM Note
-				  JOIN User ON (user.userID = ownerID)
+				  JOIN User ON (User.userID = ownerID)
 				  WHERE noteID = :noteID';
 		$stmt = $db->prepare($query);
 		$stmt->bindParam(':noteID', $noteID);
@@ -184,7 +184,7 @@ class NoteModel
         
 		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points 
 				  FROM Note
-				  JOIN User ON (user.userID = ownerID)
+				  JOIN User ON (User.userID = ownerID)
 				  WHERE category = :cat';
 		$stmt = $db->prepare($query);
 		$stmt->bindParam(':cat', $category);
@@ -240,7 +240,7 @@ class NoteModel
         $db = DatabaseManager::getDB();                                         
         
         $query = "INSERT INTO NoteAttachment(noteID, attachment, attachmentName)
-                  Values(:noteID, :attachment, :attachmentname)";
+                  VALUES(:noteID, :attachment, :attachmentname)";
         
         $stmt = $db->prepare($query);
         $stmt->bindparam(':noteID',$noteID);
