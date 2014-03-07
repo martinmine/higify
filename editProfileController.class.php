@@ -85,6 +85,4 @@ class EditProfileController implements IPageController
         return $vals;
     }
 }
-
-
 ?>

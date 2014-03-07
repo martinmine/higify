@@ -46,33 +46,34 @@ class CreateNoteController implements IPageController
         
         $categoryOptions[] = 'Other';
         
-        if (isset($_POST['content']) || isset($_FILES['file']))
+        if (!empty($_POST['content']) || is_uploaded_file($_FILES['file']['tmp_name']))
         {
-            if (!isset($_POST['content']))
+            if (is_uploaded_file($_FILES['file']['tmp_name']))
+            {
                 $_POST['content'] = "Attachment";
-                
-            $public = !isset($_POST['notePrivate']);
+            }   
             
+            $public = !isset($_POST['notePrivate']);
+                
             if (strlen($_POST['category']) == 0 || $_POST['category'] == 'Other')
                 $category = NULL;
             else
                 $category = $_POST['category'];
-            
+                
             if (isset($_GET['parent']))
-               $noteID = NoteController::addNoteReply($_GET['parent'], $userID, $_POST['content'], $public, $category);
+                $noteID = NoteController::addNoteReply($_GET['parent'], $userID, $_POST['content'], $public, $category);
             else
-               $noteID = NoteController::AddNote($userID, $_POST['content'], $category, $public);
+                $noteID = NoteController::AddNote($userID, $_POST['content'], $category, $public);
             
-            if(isset($_FILES['file']))
+            if(is_uploaded_file($_FILES['file']['tmp_name']))
             {
                 NoteController::submitAttatchment($noteID, $_FILES['file']);
-            }
+            }   
             
-          //  header('Location: mainpage.php');
+            header('Location: mainpage.php');
         }
-        
         $vals['OPTIONS'] = $categoryOptions;
-
+        
         return $vals;
     }
 }

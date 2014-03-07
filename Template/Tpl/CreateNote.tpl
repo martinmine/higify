@@ -51,7 +51,7 @@
 						</div>
 	
 						<section>
-							<textarea id="wysihtml5-editor" spellcheck="false" wrap="off" autofocus placeholder="Enter something ...">
+							<textarea id="wysihtml5-editor" spellcheck="false" wrap="off" name="content" autofocus placeholder="Enter something ...">
 							</textarea>
 						</section>
                     </div>

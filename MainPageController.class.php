@@ -63,24 +63,19 @@ class MainPageController implements IPageController
 							$note = NoteController::requestNote($noteID);
 							$displayContent = $note->getContent();
 							if ($note->isPublic() === '1')
-								$isPublicCheck = "checked";
-							
-							
-						} break;
+								$isPublicCheck = "checked";							
+							break;
+						} 
 						case '1':			//	Delete a note:
 						{
 							NoteController::requestDeleteNote($_GET['noteID']);
-						
-						} break;
+						    break;
+						} 
 						default: 			//	Error:
 						{
 							throw new InvalidArgumentException('ChangeType');
-						} break;
+						} 
 					}
-				}
-				else
-				{
-					echo "</br></br>YOU do not have permission to do this!</br></br>";
 				}
 			}
 			
@@ -116,10 +111,7 @@ class MainPageController implements IPageController
 			$vals['ISPUBLIC']	= $isPublicCheck;
             $vals['CREATE_NOTE_CATEGORIES'] = new NoteCategoryView();
 		}
-		else
-		{
-			echo "No user is logged in";
-		}
+
         return $vals;
 	}
 }

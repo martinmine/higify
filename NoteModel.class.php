@@ -221,17 +221,25 @@ class NoteModel
 	
 	/**
 	 * Deleting a note from the database.
+     * The first query deletes the actuall note
+     * while the second query deletes attachment related to the note
 	 *
-	 * @Param ID objects unique id.
+	 * @Param ID Note objects unique id.
 	 */
 	public static function deleteNote($noteID)
 	{
 		$db = DatabaseManager::getDB();
-		$query = 'DELETE FROM Note
+		$query1 = 'DELETE FROM Note
 				   WHERE noteID = :noteID';
-		$stmt = $db->prepare($query);
-		$stmt->bindParam(':noteID', $noteID);
-		$stmt->execute();
+		$stmt1 = $db->prepare($query1);
+		$stmt1->bindParam(':noteID', $noteID);
+		$stmt1->execute();
+        
+        $query2 = 'DELETE FROM NoteAttachment
+                   WHERE noteID = :noteID';
+        $stmt2 = $db->prepare($query2);
+        $stmt2->bindparam(':noteID', $noteID);
+        $stmt2->execute();
 	}
     
     public static function submitAttachment($noteID, $file, $fileName)
