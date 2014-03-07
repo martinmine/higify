@@ -91,6 +91,9 @@ class NoteListView extends WebPageElement
             $tpl->setValue('CATEGORY', $note->getCategory());
             $tpl->setValue('CATEGORY_LINK', urlencode($note->getCategory()));
             
+            $tpl->setValue('OP', $note->getOriginalPoster());
+            $tpl->setValue('PARENT_ID', $note->getParentID());
+            
             $tpl->setValue('DISPLAY_EDIT', ($noteOwner === $userID));
             $tpl->setValue('DISPLAY_DELETE', ($noteOwner === $userID));
             $tpl->setValue('DISPLAY_REPORT', ($noteOwner !== $userID));

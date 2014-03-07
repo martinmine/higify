@@ -12,4 +12,3 @@ function setMenuFloaters()
     left.style.width = floaterWidth + "px";
     right.style.width = floaterWidth + "px";
 }
- 

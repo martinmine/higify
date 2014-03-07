@@ -3,6 +3,7 @@
     margin: 0px;
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
     background-image: url('../static/shattered.png');
+	height: 100%;
 }
 
 div.banner
