@@ -17,7 +17,10 @@
 							</div>
                         </div>
                         <div class="noteTitle">
-                            <a href="profile.php?id=<?php echo $USER_ID; ?>" class="noteLink"><?php echo $USERNAME; ?></a> posted<?php if ($CATEGORY) { ?> in <a href="view_notes?cat=<?php echo $CATEGORY_LINK; ?>" class="noteLink"><?php echo $CATEGORY; ?></a><?php } ?>
+                            <a href="profile.php?id=<?php echo $USER_ID; ?>" class="noteLink"><?php echo $USERNAME; ?></a> 
+							<?php if (empty($OP)) { ?>posted <?php } 
+							      else { ?> <a href="view_note.php?id=<?php echo $PARENT_ID; ?>" class="noteLink">replied to <?php echo $OP; ?></a><?php } ?>
+								  <?php if ($CATEGORY) { ?>in <a href="view_category.php?cat=<?php echo $CATEGORY_LINK; ?>" class="noteLink"><?php echo $CATEGORY; ?></a><?php } ?>
                         </div>
                         <div class="noteTimeStamp">
                             <a href="view_note.php?id=<?php echo $NOTE_ID; ?>" class="noteLink"><?php echo $TIME; ?></a>

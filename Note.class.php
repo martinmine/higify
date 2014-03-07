@@ -18,21 +18,25 @@ class Note
     private $category;          //  @var string Which category this note was posted in
     private $points;            //  @var The vote balance/karma for the note
     private $replyCount;        //  @var Amount of replies
-  
+    private $originalPoster;    //  @var string The username of OP
+    private $parentID;          //  @var integer The ID of the parent note
+    
 	/**
 	 *  Constructs a new note setting all variables.
 	 *  
 	 *  @param integer $noteID the notes unique ID.
 	 *  @param integer $ownerID a refernece to the owner by id.
-	 *  @param string $content Content of the note
+	 *  @param string  $content Content of the note
 	 *  @param boolean $isPublic Indicating wether the note is public or not
-     *  @param string $published Time-stamp for when the note was published
-     *  @param string $username OP's username
-     *  @param string $category Category in which the post was posted
+     *  @param string  $published Time-stamp for when the note was published
+     *  @param string  $username OP's username
+     *  @param string  $category Category in which the post was posted
      *  @param integer $points Point balance for the note
+     *  @param string  $op Username of OP
+     *  @param integer $parentID The ID of the parent post, NULL if has no parent
      *  @param integer $replyCount Amount of replies made to the note
 	 */
-	public function __construct($noteID, $ownerID, $content, $isPublic, $published, $username, $category, $points, $replyCount)
+	public function __construct($noteID, $ownerID, $content, $isPublic, $published, $username, $category, $points, $op, $parentID, $replyCount)
 	{
 		$this->noteID = $noteID;
 		$this->ownerID = $ownerID;
@@ -43,6 +47,8 @@ class Note
         $this->category = $category;
         $this->points = $points;
         $this->replyCount = $replyCount;
+        $this->originalPoster = $op;
+        $this->parentID = $parentID;
 	}
   
 	/**
@@ -147,6 +153,23 @@ class Note
         return $this->replyCount;
     }
     
+    /**
+     * Gets the username of the parent post
+     * @return string Username of parent poster, NULL if has no parent
+     */
+    public function getOriginalPoster()
+    {
+        return $this->originalPoster;
+    }
+    
+    /**
+     * Gets the ID of the parent post
+     * @return integer The ID of the parent note, NULL if has no parent
+     */
+    public function getParentID()
+    {
+        return $this->parentID;
+    }
     /**
      * Gets the karma/vote balance for this note
      * @return integer

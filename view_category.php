@@ -12,6 +12,7 @@ $tpl->appendTemplate('MainPageHeader');
 $tpl->setValue('PAGE_TITLE', 'View Note Category');
 $tpl->setValue('BANNER_TITLE', $_GET['cat']);
 $tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'schedule', 'schedule_mainpage'));
+$tpl->setValue('JS', array('jquery-latest.min', 'menu'));
 $tpl->registerController(new BannerController());
 $tpl->registerController(new NoteListCategoryController());
 $tpl->appendTemplate('NoteCategory');

@@ -18,6 +18,6 @@ if (isset($_GET['key']))
             header('Location: login.php?passwordchanged');
     }
 }
-die('key not set');
+
 header('Location: index.php');
 ?>

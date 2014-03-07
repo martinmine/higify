@@ -33,10 +33,14 @@ class NoteModel
 		{
 			$db = DatabaseManager::getDB();
 			$res = array();
-			$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points
-						FROM Note
-						JOIN User ON (User.userID = ownerID)
-						WHERE ownerID = :ownerID';
+			$query = 'SELECT Note.noteID, Note.ownerID, Note.content, Note.isPublic, Note.timePublished, User.username,
+                        Note.category, Note.points, PosterUser.username AS OP, NoteReply.parentNoteID as parent
+                        FROM Note
+                        JOIN User ON (User.userID = ownerID)
+                        LEFT OUTER JOIN NoteReply ON (Note.noteID = NoteReply.childNoteID)
+                        LEFT OUTER JOIN Note AS NoteParent ON (NoteReply.parentNoteID = NoteParent.noteID)
+                        LEFT OUTER JOIN User AS PosterUser ON (NoteParent.ownerID = PosterUser.userID)
+                        WHERE Note.ownerID = :ownerID';
 						
 			if ($condition !== NoteType::ALL)
 			{
@@ -83,7 +87,9 @@ class NoteModel
                         $row['timePublished'],
                         $row['username'],
                         $row['category'],
-                        $row['points'], 
+                        $row['points'],
+                        $row['OP'],
+                        $row['parent'],
                         self::getReplyCount($row['noteID']));
     }
 	
@@ -119,11 +125,14 @@ class NoteModel
     
     public static function getReplies($parentNote)
     {
-        $query = "SELECT noteID, username, ownerID, content, isPublic, timePublished, category, points
+        $query = 'SELECT Note.noteID, Note.ownerID, Note.content, Note.isPublic, Note.timePublished, User.username,
+                  Note.category, Note.points, PosterUser.username AS OP, NoteParent.noteID as parent
                   FROM Note
-                  JOIN NoteReply ON (Note.noteID = NoteReply.childNoteID)
-                  JOIN User ON (Note.ownerID = User.userID)
-                  WHERE NoteReply.parentNoteID = :parentNote";
+                  JOIN NoteReply AS Reply ON (Note.noteID = Reply.childNoteID)
+                  JOIN User ON (User.userID = ownerID)
+                  LEFT OUTER JOIN Note AS NoteParent ON (Reply.parentNoteID = NoteParent.noteID)
+                  LEFT OUTER JOIN User AS PosterUser ON (NoteParent.ownerID = PosterUser.userID)
+                  WHERE Reply.parentNoteID = :parentNote';
         
         $db = DatabaseManager::getDB();
         $stmt = $db->prepare($query);
@@ -165,10 +174,14 @@ class NoteModel
 	public static function getNote($noteID)
 	{
 		$db = DatabaseManager::getDB();
-		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points 
-				  FROM Note
-				  JOIN User ON (User.userID = ownerID)
-				  WHERE noteID = :noteID';
+		$query = 'SELECT Note.noteID, Note.ownerID, Note.content, Note.isPublic, Note.timePublished, User.username,
+                  Note.category, Note.points, PosterUser.username AS OP, NoteReply.parentNoteID as parent
+                  FROM Note
+                  JOIN User ON (User.userID = ownerID)
+                  LEFT OUTER JOIN NoteReply ON (Note.noteID = NoteReply.childNoteID)
+                  LEFT OUTER JOIN Note AS NoteParent ON (NoteReply.parentNoteID = NoteParent.noteID)
+                  LEFT OUTER JOIN User AS PosterUser ON (NoteParent.ownerID = PosterUser.userID)
+                  WHERE Note.noteID = :noteID';
 		$stmt = $db->prepare($query);
 		$stmt->bindParam(':noteID', $noteID);
 		$stmt->execute();
@@ -182,10 +195,14 @@ class NoteModel
         $res = array();
 		$db = DatabaseManager::getDB();
         
-		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points 
-				  FROM Note
-				  JOIN User ON (User.userID = ownerID)
-				  WHERE category = :cat';
+		$query = 'SELECT Note.noteID, Note.ownerID, Note.content, Note.isPublic, Note.timePublished, User.username,
+                  Note.category, Note.points, PosterUser.username AS OP, NoteReply.parentNoteID as parent
+                  FROM Note
+                  JOIN User ON (User.userID = ownerID)
+                  LEFT OUTER JOIN NoteReply ON (Note.noteID = NoteReply.childNoteID)
+                  LEFT OUTER JOIN Note AS NoteParent ON (NoteReply.parentNoteID = NoteParent.noteID)
+                  LEFT OUTER JOIN User AS PosterUser ON (NoteParent.ownerID = PosterUser.userID)
+                  WHERE Note.category = :cat';
 		$stmt = $db->prepare($query);
 		$stmt->bindParam(':cat', $category);
 		$stmt->execute();
