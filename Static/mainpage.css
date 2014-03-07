@@ -8,12 +8,18 @@
 div.banner
 {
     height: 100px;
-    width: 80%;
-    padding-left: 10%;
-    padding-right: 10%;
+    width: 100%;
     background-color: #0083a9;
     border-bottom-color: white;
     border-bottom-width: 1px;
+}
+
+div.bannerLogo
+{
+    padding-right: 60px;
+    text-align: right;
+    width: auto;
+    
 }
 
 div.pageContainer
@@ -44,6 +50,11 @@ div.pageWidgetContainer
 div.bannerCenterContainer
 {
     height: 100px;
+    float: left;
+    width: 60%;
+    padding: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
     display: table-cell;
     vertical-align: middle;
 }
@@ -53,25 +64,45 @@ div.pageControllerContainer
     display: table-cell;
     vertical-align: middle;
     height: 100px;
-    float: right;
 }
 
 div.controllerWrapper
 {
+    width: 35%;
+    padding: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
     float: right;
 }
 
 div.bannerWrapper
 {
+    width: 1000px;
+    height: inherit;
+    margin-left: auto;
+    margin-right: auto;
     float: left;
+
+}
+
+div.bannerPreWrapper 
+{
+    float: left;
+    height: inherit;
+}
+
+div.bannerPostWrapper 
+{
+    float: right;
+    height: inherit;
 }
 
 div.bannerTitle
 {
-
     font-size: 45px;
     color: white;
     height: auto;
+    line-height: 100px;
 }
 
 div.bannerControllers
@@ -92,12 +123,12 @@ div.searchWrapper
 
 div.searchContainer
 {
-    width: auto;
-    margin-right: 40px;
+    width: 330px;
 }
 
 div.profileWrapper
 {
+    padding-right: 10px;
     height: inherit;
     
     display: table-cell;
@@ -445,4 +476,10 @@ div.spacer
 div.pageElementContent
 {
 	padding: 10px;
+}
+
+
+div.remainingWidthElement
+{
+    width: 300px;
 }
