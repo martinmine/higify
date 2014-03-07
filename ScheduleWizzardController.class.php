@@ -16,8 +16,6 @@ class ScheduleWizzardController implements IPageController
         if (isset($_POST['scheduleData']))
         {
             ScheduleController::saveSchedule($_POST['scheduleData'], $userID);
-            echo $_POST['scheduleData'];
-            die();
             header('Location: mainpage.php');
         }
         

@@ -222,12 +222,41 @@ div.noteElementWrapper
 
 div.voteBox
 {
-    width: 20px;
+    width: auto;
+    height: inherit;
     float: left;
     margin-left: 2px;
     margin-right: 3px;
     text-align: center;
     color: gray;
+}
+
+div.upvote
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.downvote
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.voteCounter
+{
+    margin-left: auto;
+    margin-right: auto;
+
+    width: auto;
+}
+
+div.noteProfilePictureContainer
+{
+    float: left;
+    width: 50px;
+    height: 50px;
+    padding-top: 5px;
 }
 
 div.noteTitle

@@ -34,7 +34,7 @@ class NoteModel
 			$db = DatabaseManager::getDB();
 			$res = array();
 			$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points
-						FROM note
+						FROM Note
 						JOIN user ON (user.userID = ownerID)
 						WHERE ownerID = :ownerID';
 						
@@ -97,7 +97,7 @@ class NoteModel
 	public static function addNote($note)
 	{
 		$db = DatabaseManager::getDB();
-		$query = 'INSERT INTO note '
+		$query = 'INSERT INTO Note '
 			   . '(ownerID, content, category, isPublic) '
 			   . 'VALUES(:ownerID, :content, :category, :isPublic)';
 			   
@@ -120,7 +120,7 @@ class NoteModel
     public static function getReplies($parentNote)
     {
         $query = "SELECT noteID, username, ownerID, content, isPublic, timePublished, category, points
-                  FROM note
+                  FROM Note
                   JOIN notereply ON (note.noteID = notereply.childNoteID)
                   JOIN user ON (note.ownerID = user.userID)
                   WHERE notereply.parentNoteID = :parentNote";
@@ -147,7 +147,7 @@ class NoteModel
     public static function addNotereply($parentNoteID, $childNoteID)
 	{
 		$db = DatabaseManager::getDB();
-        $query = 'INSERT INTO notereply(parentNoteID, childNoteID)
+        $query = 'INSERT INTO NoteReply (parentNoteID, childNoteID)
                    VALUES(:parentNote, :childNote)';
             
         $stmt = $db->prepare($query);
@@ -166,8 +166,8 @@ class NoteModel
 	{
 		$db = DatabaseManager::getDB();
 		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points 
-				  FROM note
-				  JOIN user ON (user.userID = ownerID)
+				  FROM Note
+				  JOIN User ON (user.userID = ownerID)
 				  WHERE noteID = :noteID';
 		$stmt = $db->prepare($query);
 		$stmt->bindParam(':noteID', $noteID);
@@ -176,6 +176,25 @@ class NoteModel
 
         return self::fetchNote($obj);	
 	}
+    
+    public static function getNoteByCategory($category)
+    {
+        $res = array();
+		$db = DatabaseManager::getDB();
+        
+		$query = 'SELECT noteID, ownerID, content, isPublic, timePublished, username, category, points 
+				  FROM Note
+				  JOIN User ON (user.userID = ownerID)
+				  WHERE category = :cat';
+		$stmt = $db->prepare($query);
+		$stmt->bindParam(':cat', $category);
+		$stmt->execute();
+        
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+            $res[] = self::fetchNote($row);
+        
+        return $res;
+    }
 	
 	/**
 	 * Updating an existing note in the database.
@@ -185,8 +204,8 @@ class NoteModel
 	public static function editNote($note)
 	{
 		$db = DatabaseManager::getDB();
-		$query = 'UPDATE note
-				  SET content = :content, isPublic = :isPublic, timePublished = NOW()
+		$query = 'UPDATE Note
+				  SET Content = :content, isPublic = :isPublic, timePublished = NOW()
 				  WHERE noteID = :noteID';
 		$stmt = $db->prepare($query);
 		
@@ -208,7 +227,7 @@ class NoteModel
 	public static function deleteNote($noteID)
 	{
 		$db = DatabaseManager::getDB();
-		$query = 'DELETE FROM note
+		$query = 'DELETE FROM Note
 				   WHERE noteID = :noteID';
 		$stmt = $db->prepare($query);
 		$stmt->bindParam(':noteID', $noteID);
@@ -220,7 +239,7 @@ class NoteModel
         
         $db = DatabaseManager::getDB();                                         
         
-        $query = "INSERT INTO noteattachment(noteID, attachment, attachmentName)
+        $query = "INSERT INTO NoteAttachment(noteID, attachment, attachmentName)
                   Values(:noteID, :attachment, :attachmentname)";
         
         $stmt = $db->prepare($query);
@@ -267,7 +286,7 @@ class NoteModel
     {
         $db = DatabaseManager::getDB();
         
-        $stmt = $db->prepare('SELECT type FROM notevote WHERE noteID = :noteID AND userID = :userID');
+        $stmt = $db->prepare('SELECT type FROM NoteVote WHERE noteID = :noteID AND userID = :userID');
         $stmt->bindParam(':noteID', $noteID);
         $stmt->bindParam(':userID', $userID);
         $stmt->execute();
@@ -288,7 +307,7 @@ class NoteModel
     {
         $db = DatabaseManager::getDB();
         
-        $stmt = $db->prepare('SELECT COUNT(parentNoteID) FROM notereply WHERE parentNoteID = :noteID');
+        $stmt = $db->prepare('SELECT COUNT(parentNoteID) FROM NoteReply WHERE parentNoteID = :noteID');
         $stmt->bindParam(':noteID', $noteID);
         $stmt->execute();
         

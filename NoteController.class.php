@@ -92,6 +92,10 @@ require_once('SessionController.class.php');
 			return NoteModel::getNote($noteID);
 		}
 		
+        public static function requestNoteByCategory($category)
+        {
+            return NoteModel::getNoteByCategory($category);
+        }
         
 		/**
 		 * Updates a note based on new $values.

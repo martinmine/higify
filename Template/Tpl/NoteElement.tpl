@@ -2,12 +2,19 @@
                     <div class="noteHeader">
                         <div class="noteElementWrapper">
                             <div class="voteBox">
-                                <a href="vote.php?noteid=<?php echo $NOTE_ID; ?>&type=1"><img src="static/<?php echo $UPVOTE_IMG; ?>.png" /></a>
-                                <?php echo $VOTE_BALANCE; ?>
-                                <a href="vote.php?noteid=<?php echo $NOTE_ID; ?>&type=0"><img src="static/<?php echo $DOWNVOTE_IMG; ?>.png" /></a>
+								<div class="upvote">
+									<a href="vote.php?noteid=<?php echo $NOTE_ID; ?>&type=1"><img src="static/<?php echo $UPVOTE_IMG; ?>.png" /></a>
+								</div>
+                                <div class="voteCounter">
+									<?php echo $VOTE_BALANCE; ?>
+								</div>
+								<div class="downvote">
+									<a href="vote.php?noteid=<?php echo $NOTE_ID; ?>&type=0"><img src="static/<?php echo $DOWNVOTE_IMG; ?>.png" /></a>
+								</div>
                             </div>
-                            
-                            <img src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="50" height="50"/>
+                            <div class="noteProfilePictureContainer">
+								<img src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="50" height="50"/>
+							</div>
                         </div>
                         <div class="noteTitle">
                             <a href="profile.php?id=<?php echo $USER_ID; ?>" class="noteLink"><?php echo $USERNAME; ?></a> posted<?php if ($CATEGORY) { ?> in <a href="view_notes?cat=<?php echo $CATEGORY_LINK; ?>" class="noteLink"><?php echo $CATEGORY; ?></a><?php } ?>
