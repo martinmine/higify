@@ -44,11 +44,11 @@ class NoteModel
 						
 			if ($condition !== NoteType::ALL)
 			{
-				$query .= ' AND isPublic = ';
+				$query .= ' AND Note.isPublic = ';
 				$query .= ($condition === NoteType::PUBLIC_ONLY)? '1': '0';
 			}
             
-			$query .= ' ORDER BY noteID DESC';
+			$query .= ' ORDER BY Note.noteID DESC';
 			
 			$stmt = $db->prepare($query);
 			$stmt->bindParam(':ownerID', $ownerID);
