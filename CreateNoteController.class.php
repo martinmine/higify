@@ -46,7 +46,8 @@ class CreateNoteController implements IPageController
         
         $categoryOptions[] = 'Other';
         
-        if (!empty($_POST['content']) || is_uploaded_file($_FILES['file']['tmp_name']))
+		
+        if (!empty($_POST['content']) || !empty($_FILES['file']['tmp_name']))
         {
             if (is_uploaded_file($_FILES['file']['tmp_name']))
             {
