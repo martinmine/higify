@@ -441,3 +441,8 @@ div.spacer
 {
     height: 10px;
 }
+
+div.pageElementContent
+{
+	padding: 10px;
+}
