@@ -92,6 +92,11 @@ require_once('SessionController.class.php');
 			return NoteModel::getNote($noteID);
 		}
 		
+        /**
+         * Gets all the notes posted in a category
+         * @param string $category Category which we are looking for
+         * @return Array of Note
+         */
         public static function requestNoteByCategory($category)
         {
             return NoteModel::getNoteByCategory($category);
@@ -130,6 +135,21 @@ require_once('SessionController.class.php');
                 return NULL;
         }
         
+        /**
+         * Gets a note attachment if any
+         * @param integer $attachmentID ID of the attachment
+         * @return Array where the first index is the name and second is the binary content
+         */
+        public static function requestAttachment($attachmentID)
+        {
+            return NoteModel::getNoteAttachment($attachmentID);
+        }
+        
+        /**
+         * Gets all the replies for a note
+         * @param integer $parentNode ID of the parent note
+         * @return Array of all the Note childs
+         */
         public static function requestReplies($parentNode)
         {
            return NoteModel::getReplies($parentNode);

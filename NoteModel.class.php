@@ -268,9 +268,9 @@ class NoteModel
         $query = "INSERT INTO NoteAttachment(noteID, attachment, attachmentName)
                   VALUES(:noteID, :attachment, :attachmentname)";
         $stmt = $db->prepare($query);
-        $stmt->bindparam(':noteID',$noteID);
-        $stmt->bindparam(':attachment',$file['tmp_name']);
-        $stmt->bindparam(':attachmentname',$fileName);
+        $stmt->bindparam(':noteID', $noteID);
+        $stmt->bindparam(':attachment', file_get_contents($file['tmp_name']));
+        $stmt->bindparam(':attachmentname', $fileName);
         $stmt->execute();
     }
     
@@ -287,7 +287,7 @@ class NoteModel
                   FROM NoteAttachment
                   WHERE noteID = :noteID";
         $stmt = $db->prepare($query);
-        $stmt->bindparam(':noteID',$noteID);
+        $stmt->bindparam(':noteID', $noteID);
         $stmt->execute();
         
         $attachments = array();
@@ -296,6 +296,30 @@ class NoteModel
             $attachments[$row['attachmentID']] = $row['attachmentName'];
         
         return $attachments;
+    }
+    
+    /**
+     * Gets an note attachment from the database
+     * @param integer $attachmentID ID of the attachment
+     * @return Array where the first index is name and second is the content of the file
+     */
+    public static function getNoteAttachment($attachmentID)
+    {
+        $db = DatabaseManager::getDB();                                         
+        
+        $query = "SELECT attachment, attachmentName
+                  FROM NoteAttachment
+                  WHERE attachmentID = :attachmentID";
+        $stmt = $db->prepare($query);
+        $stmt->bindparam(':attachmentID', $attachmentID);
+        $stmt->execute();
+        
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($row === NULL)
+            return NULL;
+            
+        return array($row['attachmentName'], $row['attachment']);
     }
     
     /**
