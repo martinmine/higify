@@ -3,6 +3,7 @@ require_once('databaseManager.class.php');
 require_once('NoteType.class.php');
 require_once('Note.class.php');
 require_once('VoteStatus.class.php');
+require_once('ReportedNote.class.php');
 
 /**
  * 
@@ -320,6 +321,35 @@ class NoteModel
             return NULL;
             
         return array($row['attachmentName'], $row['attachment']);
+    }
+    
+    /**
+     * Gets the reported notes from database
+     * @return Array of ReportedNotes
+     */
+    public static function getReportedNotes()
+    {
+        $query = 'SELECT Note.noteID, Note.ownerID, Note.content, Note.isPublic, Note.timePublished, User.username,
+                  Note.category, Note.points, PosterUser.username AS OP, NoteReply.parentNoteID as parent, 
+                  ReportedNote.userID as reporterID, ReportingUser.username AS reporter
+                  FROM ReportedNote
+                  JOIN Note ON (ReportedNote.noteID = Note.noteID)
+                  JOIN User ON (User.userID = ownerID)
+                  LEFT OUTER JOIN NoteReply ON (Note.noteID = NoteReply.childNoteID)
+                  LEFT OUTER JOIN Note AS NoteParent ON (NoteReply.parentNoteID = NoteParent.noteID)
+                  LEFT OUTER JOIN User AS PosterUser ON (NoteParent.ownerID = PosterUser.userID)
+                  JOIN User AS ReportingUser ON (ReportingUser.userID = ReportedNote.userID)';
+                  
+        $notes = array();
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            $notes[] = new ReportedNote(self::fetchNote($row), $row['reporter'], $row['reporterID']);
+        }
+        
+        return $notes;
     }
     
     /**
