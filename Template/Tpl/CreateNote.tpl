@@ -2,7 +2,7 @@
 			<div class="pageElement">
 				<div class="spacer"></div>
 			<?php if (isset($PARENT_ID)) echo $ORIGINAL; ?>
-                <form action="create_note.php<?php if (isset($PARENT_ID)) echo '?parent=' . $PARENT_ID; ?>" method = "POST" enctype="multipart/form-data">
+                <form action="create_note.php<?php if (isset($PARENT_ID)) echo '?parent=' . $PARENT_ID; else if (isset($NOTE_ID)) echo '?edit_id=' . $NOTE_ID; ?>" method = "POST" enctype="multipart/form-data">
                 <div class="createNoteWrapper">
                     <div>		
 						<div id="wysihtml5-editor-toolbar">
@@ -52,6 +52,7 @@
 	
 						<section>
 							<textarea id="wysihtml5-editor" spellcheck="false" wrap="off" name="content" autofocus placeholder="Enter something ...">
+							<?php if (isset($NOTE_CONTENT)) echo $NOTE_CONTENT; ?>
 							</textarea>
 						</section>
                     </div>
@@ -67,7 +68,7 @@
 							?>
 							</select>
 												
-                            <input type="checkbox" class="privateNoteCheckbox" name="notePrivate" />This note is private
+                            <input type="checkbox" class="privateNoteCheckbox" name="notePrivate" <?php if (isset($IS_PRIVATE)) echo 'checked'; ?>/>This note is private
                         </div>
 						
 							<input type="file" name="file" id="file"></input>

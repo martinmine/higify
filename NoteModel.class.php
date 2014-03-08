@@ -222,17 +222,19 @@ class NoteModel
 	{
 		$db = DatabaseManager::getDB();
 		$query = 'UPDATE Note
-				  SET Content = :content, isPublic = :isPublic, timePublished = NOW()
+				  SET Content = :content, isPublic = :isPublic, category = :cat
 				  WHERE noteID = :noteID';
 		$stmt = $db->prepare($query);
 		
 		$content  = $note->getContent();
 		$isPublic = $note->isPublic();
 		$noteID   = $note->getNoteID();
+        $category = $note->getCategory();
 		
 		$stmt->bindParam(':content', $content);
 		$stmt->bindParam(':isPublic', $isPublic);
-		$stmt->bindParam(':noteID', $noteID );
+		$stmt->bindParam(':noteID', $noteID);
+        $stmt->bindParam(':cat', $category);
 		$stmt->execute();
 	}
 	
@@ -260,8 +262,7 @@ class NoteModel
 	}
     
     public static function submitAttachment($noteID, $file, $fileName)
-    {
-        
+    {   
         $db = DatabaseManager::getDB();                                         
         
         $query = "INSERT INTO NoteAttachment(noteID, attachment, attachmentName)
@@ -271,6 +272,30 @@ class NoteModel
         $stmt->bindparam(':attachment',$file['tmp_name']);
         $stmt->bindparam(':attachmentname',$fileName);
         $stmt->execute();
+    }
+    
+    /**
+     * Gets all the attachments which has been added to one note
+     * @param integer $noteID The ID of the note to get attachments for
+     * @return Associative array: AttachmentID => Name
+     */
+    public static function getNoteAttachments($noteID)
+    {
+        $db = DatabaseManager::getDB();                                         
+        
+        $query = "SELECT attachmentID, attachmentName
+                  FROM NoteAttachment
+                  WHERE noteID = :noteID";
+        $stmt = $db->prepare($query);
+        $stmt->bindparam(':noteID',$noteID);
+        $stmt->execute();
+        
+        $attachments = array();
+        
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+            $attachments[$row['attachmentID']] = $row['attachmentName'];
+        
+        return $attachments;
     }
     
     /**

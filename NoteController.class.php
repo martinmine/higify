@@ -102,17 +102,8 @@ require_once('SessionController.class.php');
 		 *
 		 * @Param Associated array that's replacing the notes values.
 		 */
-		public static function requestEditNote($values)
+		public static function requestEditNote($note)
 		{
-			$isPublic = isset($values['isPublic'])? '1': '0';
-			
-			$note = new Note($values['noteID'],
-							 $values['ownerID'],
-							 $values['content'],
-							 $isPublic,
-							 -1,
-							 $values['username'],0);
-							 
 			NoteModel::editNote($note);
 		}
 		
@@ -178,6 +169,16 @@ require_once('SessionController.class.php');
         public static function reportNote($noteID, $userID)
         {
             NoteModel::reportNote($noteID, $userID);
+        }
+        
+        /**
+         * Get the attachments for a note if any
+         * @param integer $noteID The ID of the note to get attachments for
+         * @return Associative array ID => attachment name
+         */
+        public static function requestAttachments($noteID)
+        {
+            return NoteModel::getNoteAttachments($noteID);
         }
 	}
 ?>

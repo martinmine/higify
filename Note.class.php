@@ -143,6 +143,15 @@ class Note
     {
         return $this->category;
     }
+    
+    /**
+     * Sets the categry of the note
+     * @param string $category Note category, NULL if has no category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
 	
     /**
      * Returns the count of the replies that has been made to this note

@@ -1,10 +1,12 @@
 <?php
 require_once('Template/Template.class.php');
-include_once('Template/WebPageElement.class.php');
+require_once('Template/WebPageElement.class.php');
+require_once('Template/EscapedHTMLView.class.php'); 
 require_once('NoteType.class.php');
 require_once('NoteController.class.php');
 require_once('SessionController.class.php');
 require_once('VoteStatus.class.php');
+require_once('NoteAttachmentContainerView.class.php');
 
  /**
   * The view listing all note-elements
@@ -79,11 +81,11 @@ class NoteListView extends WebPageElement
             $tpl->setValue('NOTE_ID', $note->getNoteID());
             $tpl->setValue('USERNAME', $note->getUsername());
             $tpl->setValue('TIME', $note->getTime());
-            $tpl->setValue('CONTENT', $note->getContent());
+            $tpl->setValue('CONTENT', new EscapedHTMLView($note->getContent()));
             
             $tpl->setValue('VOTE_BALANCE', $note->getVoteBalance());
             
-            $tpl->setValue('NOTE_ATTACHMENT_CONTAINER', ''); // TODO
+            $tpl->setValue('NOTE_ATTACHMENT_CONTAINER', new NoteAttachmentContainerView($note->getNoteID())); // TODO
             $tpl->setValue('REPLY_COUNT', $note->getReplyCount());
             $tpl->setValue('UPVOTE_IMG', $upvoteImage);
             $tpl->setValue('DOWNVOTE_IMG', $downvoteImage);

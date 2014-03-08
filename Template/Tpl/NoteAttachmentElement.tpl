@@ -1,1 +1,1 @@
-<a class="noteAttachment" href="#">mordi.png</a>
+<a class="noteAttachment" href="get_attachment.php?id=<?php echo $ID; ?>"><?php echo $FILE_NAME; ?></a>
