@@ -41,6 +41,7 @@ class ProfilePageController implements IPageController
 				$vals['USER_ID'] = $loggedinID;
 				$vals['PROFILE_ID']  = $profileID;
 				$vals['RESULTS'] = new NoteListView($profileID, NoteType::PUBLIC_ONLY);
+				
 			}
 			else
 			{
