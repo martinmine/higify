@@ -105,7 +105,7 @@ class UserController
             return $picture;
         }
         
-        return false;
+        return NULL;
     }
     
 
