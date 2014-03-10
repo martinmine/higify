@@ -9,13 +9,13 @@ require_once('VoteStatus.class.php');
 require_once('NoteAttachmentContainerView.class.php');
 
  /**
-  * The view listing all note-elements
+  * The view listing all reported note-elements
   *
   * @uses Template.class.php
   * @uses WebPageElement.class.php
   * @uses NoteType.class.php
   */
-class NoteListView extends WebPageElement
+class ReportedNoteListView extends WebPageElement
 {
 	private $notes = NULL;
 	
@@ -42,7 +42,7 @@ class NoteListView extends WebPageElement
 	
 		foreach($this->notes as $reportedNote)
 		{
-            
+            $note = $reportedNote->getNote();
 			$noteOwner = $note->getOwnerID();
             $voteStatus = NoteController::requestVoteStatus($note->getNoteID(), $userID);
             $upvoteImage = 'upvote_unselected';
@@ -75,8 +75,11 @@ class NoteListView extends WebPageElement
             $tpl->setValue('PARENT_ID', $note->getParentID());
             
             $tpl->setValue('DISPLAY_EDIT', ($noteOwner === $userID));
-            $tpl->setValue('DISPLAY_DELETE', ($noteOwner === $userID));
-            $tpl->setValue('DISPLAY_REPORT', ($noteOwner !== $userID));
+            $tpl->setValue('DISPLAY_DELETE', true);
+            $tpl->setValue('DISPLAY_REPORT', false);
+            
+            $tpl->setValue('REPORTER', $reportedNote->getReporterUsername());
+            $tpl->setValue('REPORTERID', $reportedNote->getReporterID());
 			
 			$tpl->display();
 		}

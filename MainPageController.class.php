@@ -4,6 +4,7 @@ require_once('SessionController.class.php');
 require_once('NoteListView.class.php');
 require_once('Template/IPageController.interface.php');
 require_once('NoteCategoryView.class.php');
+require_once('ReportedNoteView.class.php');
 
 /**
  * Retrieves all elements for the main-page.
@@ -52,7 +53,7 @@ class MainPageController implements IPageController
 				/** 
 				 * A check if the user has permission to both delete or edit the note:
 				 */
-				if ($note->getOwnerID() === $user->getUserID())
+				if ($note->getOwnerID() === $user->getUserID() || $user->getRank())
 				{
 					
 					switch($changeType)
@@ -110,6 +111,11 @@ class MainPageController implements IPageController
 			$vals['EDIT']		= ($edit)? "?noteID=" . $noteID . "&edit=1": NULL;
 			$vals['ISPUBLIC']	= $isPublicCheck;
             $vals['CREATE_NOTE_CATEGORIES'] = new NoteCategoryView();
+            
+            if ($user->getRank())
+            {
+                $vals['REPORTED'] = new ReportedNoteView();
+            }
 		}
 
         return $vals;
