@@ -259,18 +259,20 @@ class ScheduleController
         $timeTable = TimeEditAPIController::getTimeTable($id, $type, PullFormat::ICS, OutputType::TIME_TABLE, Minutes::now(), new Months(2), true);
         
         $timeTableIterator = $timeTable->getIterator();
-        
         foreach ($timeTableIterator as $timeObject)
         {
             if (is_array($timeObject->getCourseCodes()))
             {
                 foreach ($timeObject->getCourseCodes() as $keyValuePair)
                 {
-                    foreach ($keyValuePair as $courseCode => $courseDesc)
+                    if (is_array($keyValuePair))
                     {
-                        if (!isset($uniqueCourses[$courseCode]))
+                        foreach ($keyValuePair as $courseCode => $courseDesc)
                         {
-                            $uniqueCourses[$courseCode] = $courseDesc;
+                            if (!isset($uniqueCourses[$courseCode]))
+                            {
+                                $uniqueCourses[$courseCode] = $courseDesc;
+                            }
                         }
                     }
                 }

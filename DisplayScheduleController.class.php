@@ -12,7 +12,7 @@ class DisplayScheduleController implements IPageController
         $userID = SessionController::requestLoggedinID();
         $schedule = ScheduleController::fetchScheduleForWeek($userID);
 
-        return array('SCHEDULE' => new ScheduleBody($schedule, 8, 17));
+        return array('SCHEDULE' => new ScheduleBody($schedule, 8, 19));
     }
 }
 ?>
