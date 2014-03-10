@@ -42,23 +42,6 @@ require_once('SessionController.class.php');
 			}
 			return NULL;
 		}
-	
-		/**
-		 * EXTRA?
-		 * Retrieves all public notes by every user except the one logged in.
-		 * 
-		 * @param string $condition filter only desired notes.
-		 * @Order asc desc...
-		 * @return array of note-objects.
-		 */
-		public static function requestAllPublicNotes($condition, $order)
-		{
-			if ($this->user !== NULL)
-			{
-				return NULL;
-			}
-			return NULL;
-		}
 		
 		/**
 		 * Adding a new note to the database.
@@ -209,5 +192,6 @@ require_once('SessionController.class.php');
         {
             return NoteModel::getReportedNotes();
         }
+		
 	}
 ?>
