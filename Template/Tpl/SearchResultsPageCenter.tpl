@@ -2,7 +2,7 @@
 		<div class="mid">
 			<br>
 			<div class="searchresults">
-				<?php echo $RESULTS ?>
+				<?php echo $RESULTS; ?>
 			</div>
 		</div>
 	</div>

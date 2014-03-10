@@ -15,10 +15,9 @@ class SearchResultsListView extends WebPageElement
 {
 	private $results = NULL;
 	
-	public function __construct()
+	public function __construct($results)
 	{
-		$searchTerm = $_GET['searchterm'];
-		$this->results = UserController::requestSearchResults($searchTerm);
+		$this->results = $results;
 	}
 	
 	/**
@@ -28,7 +27,6 @@ class SearchResultsListView extends WebPageElement
 	 */
 	public function generateHTML()
 	{	
-		
 		foreach($this->results as $hit)
 		{			
 			$tpl = new Template();
@@ -38,7 +36,6 @@ class SearchResultsListView extends WebPageElement
 			$tpl->display();
 		}
 	}
-	
 }
 
 ?>

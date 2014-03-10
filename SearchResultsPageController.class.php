@@ -10,8 +10,7 @@ require_once('SearchResultsListView.class.php');
  * @uses UserController.class.php
  */
 class SearchResultsPageController implements IPageController
-{
-	
+{	
 	/**
 	 * Putting search results together.
 	 *
@@ -29,13 +28,16 @@ class SearchResultsPageController implements IPageController
 		 */
 		if ($user !== NULL  &&  $condition !== NULL)
 		{
+			$results = UserController::requestSearchResults($_GET['searchterm']);
 			
-			$vals['RESULTS'] = new SearchResultsListView();
-			
+			if (count($results) > 0)
+				$vals['RESULTS'] = new SearchResultsListView($results);
+			else
+				$vals['RESULTS'] = 'Nothing related to ' . $_GET['searchterm'] . ' was found.';
 		}
 		else
 		{
-			//$vals['ERROR_MSG'] = new ErrorMessageView('No user is logged in...');
+			$vals['RESULTS'] = 'It looks like you don\'t have permission to do this. Are you logged in?';
 		}
         return $vals;
 	}
