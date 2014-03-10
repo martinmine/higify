@@ -196,7 +196,7 @@ div.resourceContainer
 }
 
 
-a.resourceLink {
+div.resourceLink {
 	color: gray;
 	font: bold 17px "Helvetica";
 	text-decoration: none;
@@ -207,6 +207,12 @@ a.resourceLink {
 	transition: all 0.3s ease;
     line-height: 25px;
     float: left;
+}
+
+div.resourceContainer:hover
+{
+    background-color: lightgray;
+    color: darkgray;
 }
 
 div.linkbutton {

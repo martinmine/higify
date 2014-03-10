@@ -22,7 +22,6 @@ if ($user !== NULL)
 	$tpl->registerController(new BannerController());
 	$tpl->registerController(new ProfilePageController());
 	$tpl->appendTemplate('ProfilePageCenter');
-	$tpl->appendTemplate('MainPageScheduleContainer');
 	$tpl->registerController(new MainPageScheduleController($userID));
 	$tpl->appendTemplate('MainPageFooter');
 	$tpl->display();

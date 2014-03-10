@@ -1,1 +1,1 @@
-<div class="pageElementContent"><i style="color:gray;">Your schedule is empty for today</i></div>
+<div class="pageElementContent"><i style="color:gray;">This schedule is empty for today</i></div>
