@@ -164,6 +164,7 @@ class NoteModel
         $stmt->bindparam(':parentNote', $parentNoteID);
         $stmt->bindparam(':childNote', $childNoteID);
         $stmt->execute();
+        
 	}
 	
 	/**
@@ -268,9 +269,11 @@ class NoteModel
         
         $query = "INSERT INTO NoteAttachment(noteID, attachment, attachmentName)
                   VALUES(:noteID, :attachment, :attachmentname)";
+        
+        $theFile = file_get_contents($file['tmp_name']);          
         $stmt = $db->prepare($query);
         $stmt->bindparam(':noteID', $noteID);
-        $stmt->bindparam(':attachment', file_get_contents($file['tmp_name']));
+        $stmt->bindparam(':attachment', $theFile);
         $stmt->bindparam(':attachmentname', $fileName);
         $stmt->execute();
     }

@@ -85,7 +85,7 @@ class NoteListView extends WebPageElement
             
             $tpl->setValue('VOTE_BALANCE', $note->getVoteBalance());
             
-            $tpl->setValue('NOTE_ATTACHMENT_CONTAINER', new NoteAttachmentContainerView($note->getNoteID())); // TODO
+            $tpl->setValue('NOTE_ATTACHMENT_CONTAINER', new NoteAttachmentContainerView($note->getNoteID())); 
             $tpl->setValue('REPLY_COUNT', $note->getReplyCount());
             $tpl->setValue('UPVOTE_IMG', $upvoteImage);
             $tpl->setValue('DOWNVOTE_IMG', $downvoteImage);

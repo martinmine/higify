@@ -82,9 +82,9 @@ class CreateNoteController implements IPageController
             NoteController::requestEditNote($note);
             header('Location: mainpage.php');
         }
-        else if (!empty($_POST['content']) || !empty($_FILES['file']['tmp_name']))
+        else if (!empty($_POST['content']) || !empty($_FILES['file']))
         {
-            if (is_uploaded_file($_FILES['file']['tmp_name']))
+            if (is_uploaded_file($_FILES['file']['tmp_name']) && empty($_POST['content']))
             {
                 $_POST['content'] = "Attachment";
             }   
@@ -93,13 +93,15 @@ class CreateNoteController implements IPageController
                 $noteID = NoteController::addNoteReply($_GET['parent'], $userID, $_POST['content'], $public, $category);
             else
                 $noteID = NoteController::AddNote($userID, $_POST['content'], $category, $public);
-            
+
+          
             if(is_uploaded_file($_FILES['file']['tmp_name']))
             {
+                echo $noteID;
                 NoteController::submitAttatchment($noteID, $_FILES['file']);
             }   
             
-            header('Location: mainpage.php');
+            //header('Location: mainpage.php');
         }
         
         $vals['OPTIONS'] = $categoryOptions;

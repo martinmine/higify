@@ -69,16 +69,18 @@ require_once('SessionController.class.php');
 		{
 			$isPublic = isset($values['isPublic'])? '1': '0';
 		
-			$note = new Note(-1, $ownerID, $content, $isPublic, NULL, NULL, $category, 0, 0);
+			$note = new Note(-1, $ownerID, $content, $isPublic, NULL, NULL, $category, 0, NULL, NULL,0);
 
 			return NoteModel::addNote($note);	
 		}
-        
+
         public static function addNoteReply($parentNoteID, $ownerID, $content, $isPublic, $category)
         {
-            $note = new Note(-1, $ownerID, $content, $isPublic, NULL, NULL, $category, 0, 0);
+            $note = new Note(-1, $ownerID, $content, $isPublic, NULL, NULL, $category, 0, NULL, $parentNoteID,0);
             $newNoteID = NoteModel::addNote($note);
-			return NoteModel::addNotereply($parentNoteID, $newNoteID);	
+			NoteModel::addNotereply($parentNoteID, $newNoteID);	
+            
+            return $newNoteID;
         }
 		
 		/**
