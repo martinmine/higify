@@ -43,7 +43,10 @@ class CreateNoteController implements IPageController
             
             $vals['SELECTED'] = $note->getCategory();
             $vals['NOTE_CONTENT'] = new EscapedHTMLView($note->getContent());
-            $vals['IS_PRIVATE'] = !$note->isPublic();
+            
+            if (!$note->isPublic())
+                 $vals['IS_PRIVATE'] = "private";
+            
             $vals['NOTE_ID'] = $note->getNoteID();
             
             if (!$note->getCategory())
@@ -76,7 +79,7 @@ class CreateNoteController implements IPageController
         if (!empty($_GET['edit_id']) && !empty($_POST['content']))
         {
             $note->setContent($_POST['content']);
-            $note->setIsPublic($_POST['note_private']);
+            $note->setIsPublic(!isset($_POST['notePrivate']));
             $note->setCategory($category);
             
             NoteController::requestEditNote($note);
