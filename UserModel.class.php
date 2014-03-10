@@ -7,7 +7,7 @@ class UserModel
 {
     const SALT = 'abcfds11jhG';
     
-    const SITEKEY = 'verycodedwowsutchsecret';
+    const SITEKEY = 'n8eyr2nsdasd23119bh91b';
     
     /**
      * Sends a query to the database to see if the
@@ -167,18 +167,31 @@ class UserModel
     {
         $query = "INSERT INTO User(username, password, email, emailActivated, publicTimeSchedule)
                     VALUES (:username, :password, :email, :emailActivated, :publicTimeSchedule)";
-            
-        $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
-            
+        
+        $dummyPW = "xxx";
+  
         $db = DatabaseManager::getDB();
         $stmt = $db->prepare($query);                                               // Preparing database
         $stmt->bindparam(':username', $username);                                   // Binding variables
-        $stmt->bindparam(':password', $hashedPassword);
+        $stmt->bindparam(':password', $dummyPW);
         $stmt->bindparam(':email', $email);
         $stmt->bindparam(':emailActivated', $emailActivated);
 		$stmt->bindparam(':publicTimeSchedule', $publicTimeSchedule);
         $stmt->execute();                                                           // Execute query
             
+        $userID = $db->lastInsertId();
+        $hashedPassword = hash_hmac('sha512', $userID . $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
+        
+                                                                        // Seperate query needed to hash pw with userID
+        $query2 = "UPDATE User                                                      
+                   SET password = :hashedPassword
+                   WHERE userID = :userID";
+        
+        $stmt2 = $db->prepare($query2);
+        $stmt2->bindparam(':hashedPassword', $hashedPassword);
+        $stmt2->bindparam(':userID', $userID);
+        $stmt2->execute();
+        
         return $db->lastInsertId();
     }
     
@@ -206,7 +219,7 @@ class UserModel
      
         if(isset($res['password']))
         {
-            $oldPassword = hash_hmac('sha512', $oldPassword . UserModel::SALT, UserModel::SITEKEY);
+            $oldPassword = hash_hmac('sha512', $userID . $oldPassword . UserModel::SALT, UserModel::SITEKEY);
                                                
             if(strcmp($oldPassword,$res['password']) == 0)                       // If current PW matches the one in db
             {                                                                    // Query for updating password
@@ -225,7 +238,7 @@ class UserModel
      */
     public static function setPassword($userID, $newPassword)
     {
-        $hashedNewPassword = hash_hmac('sha512', $newPassword . UserModel::SALT, UserModel::SITEKEY);
+        $hashedNewPassword = hash_hmac('sha512', $userID . $newPassword . UserModel::SALT, UserModel::SITEKEY);
         $db = DatabaseManager::getDB();
         $stmt = $db->prepare("UPDATE User                                       
                                SET password = :newPassword
