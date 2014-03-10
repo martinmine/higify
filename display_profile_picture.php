@@ -6,7 +6,6 @@ header("Content-type: image/jpeg");
 
 if (isset($_GET['id']))
 {
-    $picture = NULL;
 	$picture = UserController::requestProfilePicture($_GET['id']);
 	
 	if ($picture === NULL)

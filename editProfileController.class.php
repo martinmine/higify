@@ -16,14 +16,18 @@ class EditProfileController implements IPageController
         
         if ($userID !== NULL)
         {
-            if (isset($_POST['public']))                                              
-                UserController::updatePublicTime($userID, ($_POST['public'] == '1' ? true : false));
+            if (isset($_POST['public']))
+            $public = true;
+            else
+            $public = false;
+            
+            UserController::updatePublicTime($userID, $public);
             
             $vals['PUBLIC'] = $user->hasPublicTimeTable() ? '1' : '0'; // With PHP, you'll never know...
             
-            if (isset($_POST['email']))         
+            if (!empty($_POST['email']))         
             {
-                if (isset($_POST['emailverification']))
+                if (!empty($_POST['emailverification']))
                 {
                     if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) == true)  // If correct email string format
                     {
@@ -48,7 +52,7 @@ class EditProfileController implements IPageController
             }
             
             
-            if (isset($_FILES['file']))                                             
+            if (!empty($_FILES['file']))                                             
             {
                 if ($_FILES['file']["error"] > 0)
                 {
@@ -62,9 +66,9 @@ class EditProfileController implements IPageController
             }
             
             
-            if (isset($_POST['newpassword']))
+            if (!empty($_POST['newpassword']))
             {
-               if (isset($_POST['oldpassword']))
+               if (!empty($_POST['oldpassword']))
                {
                    if(UserController::requestPasswordChange($userID,$_POST['oldpassword'],$_POST['newpassword']))
                    {

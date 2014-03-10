@@ -16,4 +16,6 @@ $tpl->registerController(new CreateNoteController());
 $tpl->appendTemplate('CreateNote');
 $tpl->appendTemplate('MainPageFooter');
 $tpl->display();
+
+print_r($_POST);
 ?>

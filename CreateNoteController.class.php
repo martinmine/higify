@@ -90,7 +90,7 @@ class CreateNoteController implements IPageController
             }   
                           
             if (isset($_GET['parent']))
-                $noteID = NoteController::addNoteReply($_GET['parent'], $userID, $_POST['content'], $public, $category);
+                $noteID = NoteController::addNoteReply($_GET['parent'], $userID, $_POST['content'], $category);
             else
                 $noteID = NoteController::AddNote($userID, $_POST['content'], $category, $public);
 

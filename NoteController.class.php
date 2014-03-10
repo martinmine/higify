@@ -50,16 +50,14 @@ require_once('SessionController.class.php');
 		 */
 		public static function AddNote($ownerID, $content, $category, $isPublic)
 		{
-			$isPublic = isset($values['isPublic'])? '1': '0';
-		
 			$note = new Note(-1, $ownerID, $content, $isPublic, NULL, NULL, $category, 0, NULL, NULL,0);
 
 			return NoteModel::addNote($note);	
 		}
 
-        public static function addNoteReply($parentNoteID, $ownerID, $content, $isPublic, $category)
+        public static function addNoteReply($parentNoteID, $ownerID, $content, $category)
         {
-            $note = new Note(-1, $ownerID, $content, $isPublic, NULL, NULL, $category, 0, NULL, $parentNoteID,0);
+            $note = new Note(-1, $ownerID, $content, 1, NULL, NULL, $category, 0, NULL, $parentNoteID,0);
             $newNoteID = NoteModel::addNote($note);
 			NoteModel::addNotereply($parentNoteID, $newNoteID);	
             
