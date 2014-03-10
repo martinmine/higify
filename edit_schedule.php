@@ -26,7 +26,7 @@ $tpl->setValue('PAGE_TITLE', $pageTitle);
 $tpl->setValue('BANNER_TITLE', $bannerTitle);
 
 $tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'wizzard'));
-$tpl->setValue('JS', array('jquery-latest.min', 'jquery.json-2.4.min', 'search_core'));
+$tpl->setValue('JS', array('jquery-latest.min', 'jquery.json-2.4.min', 'search_core', 'menu'));
 $tpl->registerController(new BannerController());
 $tpl->registerController(new ScheduleWizzardController());
 $tpl->appendTemplate('ScheduleWizzard');
