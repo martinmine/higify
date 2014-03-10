@@ -18,14 +18,7 @@ class LoginController implements IPageController
         $user = SessionController::acquireSession(true);
         $vals = array();
         
-        if ($user !== NULL)
-        {
-            if ($user->hasPublicTimeTable() === NULL)
-                header('Location: edit_schedule.php?firsttime');
-            else
-                header('Location: mainpage.php');
-        }
-        else if (isset($_POST['username']) && isset($_POST['password']))
+        if (isset($_POST['username']) && isset($_POST['password']))
         {
             $user = UserController::requestUser($_POST['username'], $_POST['password']);
             
@@ -58,6 +51,14 @@ class LoginController implements IPageController
         else if (isset($_GET['passwordchanged']))
         {
             $vals['ERROR_MSG'] = new WarningMessageView('An email with your username and a new password has been sent to your email address.');   
+        }
+        
+        if ($user !== NULL)
+        {
+            if ($user->hasPublicTimeTable() === NULL)
+                header('Location: edit_schedule.php?firsttime');
+            else
+                header('Location: mainpage.php');
         }
         
         return $vals;

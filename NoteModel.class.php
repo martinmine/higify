@@ -261,6 +261,12 @@ class NoteModel
         $stmt2 = $db->prepare($query2);
         $stmt2->bindparam(':noteID', $noteID);
         $stmt2->execute();
+		
+		$query3 = 'DELETE FROM NoteReply
+				   WHERE childNoteID = :noteID';
+		$stmt3 = $db->prepare($query3);
+		$stmt3->bindParam(':noteID', $noteID);
+		$stmt3->execute();
 	}
     
     public static function submitAttachment($noteID, $file, $fileName)

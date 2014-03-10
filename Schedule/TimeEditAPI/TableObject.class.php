@@ -266,19 +266,36 @@ class TableObject implements JsonSerializable
 	 */
 	public function match($tableObject)
 	{
-        if (isset($this->courseCodes[0]))
-        {
-            if (is_string($this->courseCodes[0]))
-                $keys = array($this->courseCodes[0]);
-            else 
-		        $keys = array_keys($this->courseCodes[0]);
-        }
-        else
-            $keys = array('');
-				
 		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
-			&& $this->room == $tableObject->room);
+			&& $this->getFirstRoom() == $tableObject->getFirstRoom() && $tableObject->getFirstCourseCode() == $tableObject->getFirstCourseCode());
 	}
+    
+    private function getFirstCourseCode()
+    {
+        if (count($this->courseCodes) > 0)
+        {
+            if (is_array($this->courseCodes[0]))
+            {
+                return array_keys($this->courseCodes[0])[0];
+            }
+            else
+            {
+                return $this->courseCodes[0];
+            }
+        }
+        
+        return NULL;
+    }
+    
+    private function getFirstRoom()
+    {
+        if (is_array($this->room) && count($this->room) > 0)
+        {
+            return $this->room[0];
+        }
+        
+        return $this->room;
+    }
 	
 	/**
 	 * Serializes self for a JSON object

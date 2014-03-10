@@ -166,10 +166,10 @@ class UserModel
      * @param $username, $password, $email$, $emailActivated ,$publicTimeSchedule
      * @return boolean
      */
-    public static function registerUser($username, $password, $email, $emailActivated ,$publicTimeSchedule)
+    public static function registerUser($username, $password, $email, $emailActivated)
     {
-        $query = "INSERT INTO User(username, password, email, emailActivated, publicTimeSchedule)
-                    VALUES (:username, :password, :email, :emailActivated, :publicTimeSchedule)";
+        $query = "INSERT INTO User(username, password, email, emailActivated)
+                    VALUES (:username, :password, :email, :emailActivated)";
         
         $dummyPW = "xxx";
   
@@ -179,7 +179,6 @@ class UserModel
         $stmt->bindparam(':password', $dummyPW);
         $stmt->bindparam(':email', $email);
         $stmt->bindparam(':emailActivated', $emailActivated);
-		$stmt->bindparam(':publicTimeSchedule', $publicTimeSchedule);
         $stmt->execute();                                                           // Execute query
             
         $userID = $db->lastInsertId();
@@ -195,7 +194,7 @@ class UserModel
         $stmt2->bindparam(':userID', $userID);
         $stmt2->execute();
         
-        return $db->lastInsertId();
+        return $userID;
     }
     
     /**

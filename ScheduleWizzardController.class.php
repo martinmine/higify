@@ -15,13 +15,14 @@ class ScheduleWizzardController implements IPageController
         
         if (isset($_POST['scheduleData']))
         {
+            UserController::updatePublicTime($userID, (isset($_POST['schedulePublic']) && $_POST['schedulePublic'] == 'private' ? false : true));
             ScheduleController::saveSchedule($_POST['scheduleData'], $userID);
             header('Location: mainpage.php');
         }
         
         $user = UserController::requestUserByID($userID);
         
-        $vals['IS_PUBLIC'] = !$user->hasPublicTimeTable();
+        $vals['IS_PUBLIC'] = $user->hasPublicTimeTable();
         $vals['FIRST_TIME'] = isset($_GET['firsttime']);
         
         return $vals;
