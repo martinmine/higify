@@ -49,25 +49,25 @@ class UserModel
     {
         if (UserModel::userExists($username))
         {                                                                                           // SQL query
-            $query = "SELECT User.userID, username, email, emailActivated, publicTimeSchedule, rank
+            $query = "SELECT User.userID, username, email, emailActivated, password, publicTimeSchedule, rank
                       FROM User
                       LEFT OUTER JOIN UserRank ON(UserRank.userID = User.userID)
-                      WHERE username = :username AND password = :password";
+                      WHERE username = :username";
             
-            $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
+          
            
             $db = DatabaseManager::getDB();
             $stmt = $db->prepare($query);                                                           // Preparing query
             $stmt->bindparam(':username', $username);                                   
-            $stmt->bindparam(':password', $hashedPassword);
             $stmt->execute();
             
             $result = array();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);                                            // Fetching associated
             
-            if ($result['userID'] && $result['username'])
-            {
-                return self::fetchUser($result);
+            if ($result['userID'])                                                                 
+            {                                                                                    // Hashing password
+                if ($result['password'] == hash_hmac('sha512', $result['userID'] . $password . UserModel::SALT, UserModel::SITEKEY))
+                    return self::fetchUser($result);
             }
         }
                  
