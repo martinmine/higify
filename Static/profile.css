@@ -1,4 +1,4 @@
-.imgsize 
+#imgsize 
 {
 	width: 200px;
 	height: 200px;
@@ -17,4 +17,9 @@
 	float: right;
 	width: 80px;
 	height: 200px;
+}
+
+#adjust
+{
+	
 }
