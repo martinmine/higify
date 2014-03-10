@@ -84,7 +84,7 @@ class UserController
      */
     public static function registerUser($username, $password, $email)
     {
-        $userID = UserModel::registerUser($username, $password, $email, false, false);
+        $userID = UserModel::registerUser($username, $password, $email, false);
         ActivationController::generateActivationKey($userID, $email, ActivationType::EMAIL);
     }
     

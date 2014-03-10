@@ -31,7 +31,7 @@
 						<div class="saveBtnWrapper">
 							
 							<input class="saveBtn" type="submit" value="Save" />
-							<button class="saveBtn"><?php echo (($FIRST_TIME) ? 'I\'ll do this later' : 'Cancel'); ?></button>
+							<a href="mainpage.php"><button type="button" class="saveBtn"><?php echo (($FIRST_TIME) ? 'I\'ll do this later' : 'Cancel'); ?></button></a>
 						</div>
 					</form>
 				</div>
