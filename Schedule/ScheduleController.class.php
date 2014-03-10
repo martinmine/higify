@@ -161,7 +161,7 @@ class ScheduleController
                 }
             }
             
-            if ($include)
+            if ($include && $timeObject->getTimeStart() < $end)
             {
                 $objColor = $colorFact->produceCode($objTitle);
                 $obj = new ScheduleObject($timeObject->getID(), $objTitle, $timeObject->getRoom(), $timeObject->getTimeStart(), $timeObject->getTimeEnd(), $objColor);
