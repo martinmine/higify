@@ -9,9 +9,9 @@ class BannerController implements IPageController
     {
         $userID = SessionController::requestLoggedinID();
         $user = UserController::requestUserByID($userID);
-        
+		
         $vals = array();
-        $vals['USERNAME'] = $user->getUsername();
+        $vals['USERNAME_BANNER'] = $user->getUsername();
         $vals['USER_ID'] = $userID;
         
         return $vals;

@@ -66,7 +66,7 @@
 				</nav>
 			</div>
 			<div class="profileLinkWrapper">
-				<a href="mainpage.php" class="profileLink"><?php echo $USERNAME; ?></a>
+				<a href="mainpage.php" class="profileLink"><?php echo $USERNAME_BANNER; ?></a>
 			</div>
 		</div>
     </div>
