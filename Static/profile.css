@@ -1,26 +1,20 @@
-.left
+.imgsize 
 {
-	float: left;
-	background-color: #000000;
-}
-/*
-.picture
-{
-	float: left;
-}*/
-
-.imgsize
-{
-	width: 100px;
-	height: 100px;
+	width: 200px;
+	height: 200px;
 }
 
-div.pageSideContainer
+.picture 
 {
-	float: left;
+	padding-top: 8px;
+	padding-left: 8px;
 }
 
-.mid
+.about
 {
-
+	padding-left: 4px;
+	padding-right: 50px;
+	float: right;
+	width: 80px;
+	height: 200px;
 }

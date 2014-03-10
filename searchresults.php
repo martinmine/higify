@@ -10,6 +10,7 @@ $tpl->appendTemplate('MainPageHeader');
 $tpl->setValue('PAGE_TITLE', 'search');
 $tpl->setValue('BANNER_TITLE', 'Results');
 $tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'searchfound'));
+$tpl->setValue('JS', array('jquery-latest.min', 'menu'));
 $tpl->registerController(new BannerController());
 $tpl->registerController(new SearchResultsPageController());
 $tpl->appendTemplate('SearchResultsPageCenter');

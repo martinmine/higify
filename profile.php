@@ -17,7 +17,7 @@ if ($user !== NULL)
 	$tpl->appendTemplate('MainPageHeader');
 	$tpl->setValue('PAGE_TITLE', $title);
 	$tpl->setValue('BANNER_TITLE', $title);
-	$tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'profile', 'schedule', 'schedule_mainpage'));
+	$tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'schedule', 'schedule_mainpage', 'profile'));
     $tpl->setValue('JS', array('jquery-latest.min', 'menu'));
 	$tpl->registerController(new BannerController());
 	$tpl->registerController(new ProfilePageController());
