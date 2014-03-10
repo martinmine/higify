@@ -341,6 +341,7 @@ class NoteModel
                   JOIN User AS ReportingUser ON (ReportingUser.userID = ReportedNote.userID)';
                   
         $notes = array();
+        $db = DatabaseManager::getDB();
         $stmt = $db->prepare($query);
         $stmt->execute();
         
