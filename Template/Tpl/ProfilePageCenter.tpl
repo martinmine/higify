@@ -12,7 +12,7 @@
 			<div class="picture">
 				<img src="display_profile_picture.php?id=<?php echo $PROFILE_ID; ?>" id="imgsize">
 				<div class="about">
-					<h3>About: <?php echo $USERNAME; ?></h3>
+					<h3><?php echo 'About ' . $USERNAME . ':'; ?></h3>
 				</div>
 			</div>
 		</div>

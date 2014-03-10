@@ -10,6 +10,7 @@ $tpl->setValue('BANNER_TITLE', 'Settings');
 $tpl->registerController(new BannerController());
 $tpl->registerController(new EditProfileController());
 $tpl->setValue('CSS', array('mainpage', 'search', 'menu',));
+$tpl->setValue('JS', array('jquery-latest.min', 'menu'));
 $tpl->appendTemplate('EditProfile');
 $tpl->appendTemplate('MainPageFooter');
 $tpl->display();
