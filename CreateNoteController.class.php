@@ -101,7 +101,7 @@ class CreateNoteController implements IPageController
                 NoteController::submitAttatchment($noteID, $_FILES['file']);
             }   
             
-            //header('Location: mainpage.php');
+            header('Location: mainpage.php');
         }
         
         $vals['OPTIONS'] = $categoryOptions;
