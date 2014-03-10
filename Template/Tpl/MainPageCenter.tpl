@@ -11,4 +11,6 @@
                 </div>
                 <?php echo $NOTES; ?>
             </div>
+			
+			<?php if (isset($REPORTED)) echo $REPORTED; ?>
         </div>
