@@ -27,7 +27,7 @@ class EscapedHTMLView extends WebPageElement
      */
     public function generateHTML()
     {
-        echo $this->content;
+        echo strip_tags($this->content, '<br><b><i><ul><li><ol><a><imr><h1><h2><h3><h4><span><div>');
     }
 }
 ?>
