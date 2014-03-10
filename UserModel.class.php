@@ -32,6 +32,11 @@ class UserModel
             return false;                               // User does not exist in database
     }
     
+    private static function fetchUser($row)
+    {
+        return new User($row['userID'], $row['username'], $row['email'],       // Creating new user object
+                        $row['emailActivated'], $row['publicTimeSchedule'], $row['rank']);          
+    }
     
     /**
      * Creates and returns a User object
@@ -44,8 +49,9 @@ class UserModel
     {
         if (UserModel::userExists($username))
         {                                                                                           // SQL query
-            $query = "SELECT userID, username, email, emailActivated, publicTimeSchedule                                   
+            $query = "SELECT User.userID, username, email, emailActivated, publicTimeSchedule, rank
                       FROM User
+                      LEFT OUTER JOIN UserRank ON(UserRank.userID = User.userID)
                       WHERE username = :username AND password = :password";
             
             $hashedPassword = hash_hmac('sha512', $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
@@ -61,9 +67,7 @@ class UserModel
             
             if ($result['userID'] && $result['username'])
             {
-                $user = new User($result['userID'], $result['username'], $result['email'],       // Creating new user object
-                                 $result['emailActivated'], $result['publicTimeSchedule']);             
-                return $user;                                                               // Returns the user object
+                return self::fetchUser($result);
             }
         }
                  
@@ -78,8 +82,9 @@ class UserModel
      */
     public static function getUserByEmail($email)
     {
-        $query = "SELECT userID, username, email, emailActivated, publicTimeSchedule                                   
+        $query = "SELECT User.userID, username, email, emailActivated, publicTimeSchedule, rank
                       FROM User
+                      LEFT OUTER JOIN UserRank ON(UserRank.userID = User.userID)
                       WHERE email = :email";
         
         $db = DatabaseManager::getDB();
@@ -92,9 +97,7 @@ class UserModel
         
         if ($result['userID'] && $result['username'])
         {
-            $user = new User($result['userID'], $result['username'], 
-                             $result['email'],  $result['emailActivated'], $result['publicTimeSchedule']);
-            return $user;
+            return self::fetchUser($result);
         }
         
         return NULL;
@@ -110,9 +113,10 @@ class UserModel
      */
     public static function getUserByID($userID)
     {                                                                                        // SQL query
-        $query = "SELECT username, email, emailActivated, publicTimeSchedule
+        $query = "SELECT User.userID, username, email, emailActivated, publicTimeSchedule, rank
                   FROM User
-                  WHERE userID = :userID";
+                  LEFT OUTER JOIN UserRank ON(UserRank.userID = User.userID)
+                  WHERE User.userID = :userID";
         
         $db = DatabaseManager::getDB();                                                      // connects to db
         $stmt = $db->prepare($query);                                                        // preparing db
@@ -122,8 +126,7 @@ class UserModel
         
         if(isset($res['username']) && isset($res['email']))                                  // if needed results
         {
-            $user = new User($userID, $res['username'], $res['email'], $res['emailActivated'], $res['publicTimeSchedule']); // create new user
-            return $user;                                                                    
+            return self::fetchUser($res);                                                             
         }
         else                                                                                // Needed data not achieved
         {

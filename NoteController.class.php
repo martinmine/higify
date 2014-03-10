@@ -200,5 +200,14 @@ require_once('SessionController.class.php');
         {
             return NoteModel::getNoteAttachments($noteID);
         }
+        
+        /**
+         * Gets the reported notes
+         * @return Array of ReportedNote
+         */
+        public static function requestReportedNotes()
+        {
+            return NoteModel::getReportedNotes();
+        }
 	}
 ?>

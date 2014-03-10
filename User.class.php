@@ -11,13 +11,16 @@ class User
     
     private $publicTimeSchedule; // type: boolean, true if user has set timetable to public
     
-    public function __construct($userID, $username, $email, $emailActivated, $scheduleState) // Constructor
+    private $rank; // type: integer or null, contains the rank of the user if has any rank
+    
+    public function __construct($userID, $username, $email, $emailActivated, $scheduleState, $rank) // Constructor
     {
         $this->userID = $userID;
         $this->username = $username;
         $this->email = $email;
         $this->emailActivated = $emailActivated;
         $this->publicTimeSchedule = $scheduleState;
+        $this->rank = $rank;
     }
     
 	/**
@@ -49,6 +52,16 @@ class User
 	{
 		return $this->email;
 	}
+    
+    /**
+    * Gets the rank of a user. Is null if has no rank.
+    *
+    * @returns integer 
+    */
+    public function getRank()
+    {
+        return $this->rank();
+    }
 	
 	/**
 	 * Returns the state of user's email activation
