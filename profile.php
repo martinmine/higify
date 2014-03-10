@@ -17,12 +17,11 @@ if ($user !== NULL)
 	$tpl->appendTemplate('MainPageHeader');
 	$tpl->setValue('PAGE_TITLE', $title);
 	$tpl->setValue('BANNER_TITLE', $title);
-	$tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'schedule', 'schedule_mainpage', 'profile'));
+	$tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'schedule', 'schedule_mainpage', 'profile', 'editor'));
     $tpl->setValue('JS', array('jquery-latest.min', 'menu'));
 	$tpl->registerController(new BannerController());
 	$tpl->registerController(new ProfilePageController());
 	$tpl->appendTemplate('ProfilePageCenter');
-	$tpl->appendTemplate('MainPageScheduleContainer');
 	$tpl->registerController(new MainPageScheduleController($userID));
 	$tpl->appendTemplate('MainPageFooter');
 	$tpl->display();
