@@ -21,7 +21,7 @@
 						<div class="linkbutton">></div>
 					</div>
 				</a>
-				<a href="schedule.php">
+				<a href="display_schedule.php">
 					<div class="resourceContainer">
 						<div class="resourceLink">Time schedule</div>
 						<div class="linkbutton">></div>
