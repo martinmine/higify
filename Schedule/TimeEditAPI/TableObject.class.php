@@ -267,34 +267,50 @@ class TableObject implements JsonSerializable
 	public function match($tableObject)
 	{
 		return ($this->timeStart == $tableObject->timeStart && $this->timeEnd == $tableObject->timeEnd
-			&& $this->getFirstRoom() == $tableObject->getFirstRoom() && $tableObject->getFirstCourseCode() == $tableObject->getFirstCourseCode());
+            && self::compareArrays($this->getCourseCodeList(), $tableObject->getCourseCodeList()) // Have all the same courses
+            && self::compareArrays($this->getRooms(), $tableObject->getRooms()));                 // And all the same rooms
 	}
     
-    private function getFirstCourseCode()
+    private function getRooms()
     {
-        if (count($this->courseCodes) > 0)
-        {
-            if (is_array($this->courseCodes[0]))
-            {
-                return array_keys($this->courseCodes[0])[0];
-            }
-            else
-            {
-                return $this->courseCodes[0];
-            }
-        }
-        
-        return NULL;
+        if (is_string($this->room))
+            return array($this->room);
+        else
+            return $this->room;
     }
     
-    private function getFirstRoom()
+    private function getCourseCodeList()
     {
-        if (is_array($this->room) && count($this->room) > 0)
+        $array = $this->courseCodes;
+        if (is_string($array))
         {
-            return $this->room[0];
+            return array($array);
         }
+        else if (is_array($array[0]))
+        {
+            $contents = array();
+            foreach ($array as $subarray)
+            {
+                foreach ($subarray as $key => $value)
+                    $contents[] = $key;
+            }
+            return $contents;
+        }
+        else
+        {
+            return $array;
+        }
+    }
+
+    // Compares two arrays, returns true if equals
+    private static function compareArrays($first, $second)
+    {
+        if (count($first) != count($second))
+            return false;
         
-        return $this->room;
+        // Two checks are needed as array_diff only checks if there are any items from 
+        // the first argument array that is not present in the second argument array
+        return (count(array_diff($first, $second)) == 0 && count(array_diff($second, $first)) == 0);
     }
 	
 	/**
