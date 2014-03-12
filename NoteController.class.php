@@ -192,6 +192,11 @@ require_once('SessionController.class.php');
         {
             return NoteModel::getReportedNotes();
         }
+        
+        public static function ignoreReportedNote($noteID, $reporterID)
+        {
+            NoteModel::ignoreReportedNote($noteID, $reporterID);
+        }
 		
 	}
 ?>

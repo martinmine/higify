@@ -442,6 +442,16 @@ class NoteModel
         $stmt->bindParam(':userID', $userID);
         $stmt->execute();
     }
+    
+    public static function ignoreReportedNote($noteID, $reporterID)
+    {
+        $db = DatabaseManager::getDB();
+        
+        $stmt = $db->prepare('DELETE FROM ReportedNote WHERE noteID = :noteID AND userID = :userID');
+        $stmt->bindParam(':noteID', $noteID);
+        $stmt->bindParam(':userID', $reporterID);
+        $stmt->execute();
+    }
 }
 
 ?>
