@@ -99,6 +99,7 @@ class NoteListView extends WebPageElement
             $tpl->setValue('DISPLAY_EDIT', ($noteOwner === $userID));
             $tpl->setValue('DISPLAY_DELETE', ($noteOwner === $userID));
             $tpl->setValue('DISPLAY_REPORT', ($noteOwner !== $userID));
+            $tpl->setValue('DISPLAY_IGNORE', false);
 			
 			$tpl->display();
 		}

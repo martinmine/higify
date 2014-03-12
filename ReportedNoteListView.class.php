@@ -63,7 +63,7 @@ class ReportedNoteListView extends WebPageElement
             
             $tpl->setValue('VOTE_BALANCE', $note->getVoteBalance());
             
-            $tpl->setValue('NOTE_ATTACHMENT_CONTAINER', new NoteAttachmentContainerView($note->getNoteID())); // TODO
+            $tpl->setValue('NOTE_ATTACHMENT_CONTAINER', new NoteAttachmentContainerView($note->getNoteID()));
             $tpl->setValue('REPLY_COUNT', $note->getReplyCount());
             $tpl->setValue('UPVOTE_IMG', $upvoteImage);
             $tpl->setValue('DOWNVOTE_IMG', $downvoteImage);
@@ -77,6 +77,7 @@ class ReportedNoteListView extends WebPageElement
             $tpl->setValue('DISPLAY_EDIT', ($noteOwner === $userID));
             $tpl->setValue('DISPLAY_DELETE', true);
             $tpl->setValue('DISPLAY_REPORT', false);
+            $tpl->setValue('DISPLAY_IGNORE', true);
             
             $tpl->setValue('REPORTER', $reportedNote->getReporterUsername());
             $tpl->setValue('REPORTERID', $reportedNote->getReporterID());

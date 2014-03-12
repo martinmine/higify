@@ -383,6 +383,13 @@ a.reportIcon:before
     color: rgb(128, 128, 128);
 }
 
+a.ignoreIcon:before
+{
+    font-family: rosetta-icons;
+    content: "\f184";
+    color: rgb(128, 128, 128);
+}
+
 a.editIcon:before
 {
     font-family: rosetta-icons;
