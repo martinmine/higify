@@ -28,7 +28,7 @@
 				</div>
 			</a>
 		</div>
-        <div class="bannerWrapper">
+        <div class="bannerWrapper" id="bannerCenter">
 
             <div class="bannerCenterContainer">
 				<div class="bannerTitle">
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 		<div id="bannerFloaterRight" class="remainingWidthElement bannerPostWrapper">
-			<div class="profileWrapper">
+			<div class="profileWrapper" id="bannerProfilePicture">
 				<nav>
 					<ul>
 						<li class="head">
@@ -65,7 +65,7 @@
 					</ul>
 				</nav>
 			</div>
-			<div class="profileLinkWrapper">
+			<div class="profileLinkWrapper" id="bannerUsername">
 				<a href="mainpage.php" class="profileLink"><?php echo $USERNAME_BANNER; ?></a>
 			</div>
 		</div>

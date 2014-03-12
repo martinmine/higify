@@ -204,7 +204,9 @@ class NoteModel
                   LEFT OUTER JOIN NoteReply ON (Note.noteID = NoteReply.childNoteID)
                   LEFT OUTER JOIN Note AS NoteParent ON (NoteReply.parentNoteID = NoteParent.noteID)
                   LEFT OUTER JOIN User AS PosterUser ON (NoteParent.ownerID = PosterUser.userID)
-                  WHERE Note.category = :cat';
+                  WHERE Note.category = :cat
+                  ORDER BY Note.noteID DESC';
+                  
 		$stmt = $db->prepare($query);
 		$stmt->bindParam(':cat', $category);
 		$stmt->execute();
