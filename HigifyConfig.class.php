@@ -42,6 +42,51 @@ class HigifyConfig
      * The domain used in the website
      */
     const SITE_DOMAIN = 'localhost';
+    
+    /**
+     * Salt used for salting the users password
+     */
+    const SALT = 'abcfds11jhG';
+    
+     /**
+     * Site key used for initializing the users password
+     */
+    const SITEKEY = 'n8eyr2nsdasd23119bh91b';
+    
+     /**
+     * 
+     */
+    const MAIL_HOST = 'mail.dongsecurity.com';                // Specify main and backup server
+    
+    /**
+     * Use AMPTH authentication for mail
+     */
+    const MAIL_SMTP_AUTH = true;
+    
+    /**
+     * The username for the mail account
+     */
+    const MAIL_USERNAME = 'activation@obbahhost.com';
+    
+    /**
+     * Password for mail account
+     */
+    const MAIL_PASSWORD = 'Vtft32XRp8FVZQGvETu4vpmM';
+    
+    /**
+     * SMTP port
+     */
+    const MAIL_PORT = 94;
+    
+    /**
+     * Who the email is from
+     */
+    const MAIL_TITLE_FROM = 'activation@obbahhost.com';
+    
+    /**
+     * And the title on the from name
+     */
+    const MAIL_TITLE_FROM_NAME = 'The Higify Team';
 }
 
 ?>
