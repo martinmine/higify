@@ -22,7 +22,12 @@ if ($user !== NULL)
 	$tpl->registerController(new BannerController());
 	$tpl->registerController(new ProfilePageController());
 	$tpl->appendTemplate('ProfilePageCenter');
-	$tpl->registerController(new MainPageScheduleController($userID));
+    
+    if ($user->hasPublicTimeTable())
+	    $tpl->registerController(new MainPageScheduleController($userID));
+    else
+        $tpl->setValue('SCHEDULE', 'This user has no public schedule');
+        
 	$tpl->appendTemplate('MainPageFooter');
 	$tpl->display();
 }
