@@ -77,7 +77,7 @@ class Template
         
         foreach ($this->templates as $tplURI)
         {
-            include('Tpl/' . $tplURI . '.tpl');
+            require('Tpl/' . $tplURI . '.tpl');
             echo "\n";
         }
     }
