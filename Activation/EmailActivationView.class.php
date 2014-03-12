@@ -22,6 +22,11 @@ class EmailActivationView implements IActivationView
         
         return $builder->toString();
     }
+    
+    public static function getEmailSubject()
+    {
+        return "Activate your Higify account";
+    }
 }
 
 ?>

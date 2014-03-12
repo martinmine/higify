@@ -24,6 +24,11 @@ class PasswordActivationView implements IActivationView
         
         return $builder->toString();
     }
+    
+    public static function getEmailSubject()
+    {
+        return "Lost password on Higify";
+    }
 }
 
 ?>

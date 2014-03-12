@@ -27,8 +27,9 @@ class ActivationController
         $key = ActivationModel::createKey($userID, $type);
         $view = ActivationViewFactory::getView($type);
         $emailContent = $view->getEmailContent($key);
+        $emailSubject = $view->getEmailSubject();
         
-        ActivationModel::sendEmail($email, $emailContent);
+        ActivationModel::sendEmail($email, $emailContent, $emailSubject);
         
         return $key;
     }

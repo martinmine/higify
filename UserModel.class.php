@@ -1,13 +1,10 @@
 <?php
-require_once ('DatabaseManager.class.php');
-require_once ('User.class.php');
-
+require_once('DatabaseManager.class.php');
+require_once('User.class.php');
+require_once('HigifyConfig.class.php');
 
 class UserModel
 {
-    const SALT = 'abcfds11jhG';
-    
-    const SITEKEY = 'n8eyr2nsdasd23119bh91b';
     
     /**
      * Sends a query to the database to see if the
@@ -66,7 +63,7 @@ class UserModel
             
             if ($result['userID'])                                                                 
             {                                                                                    // Hashing password
-                if ($result['password'] == hash_hmac('sha512', $result['userID'] . $password . UserModel::SALT, UserModel::SITEKEY))
+                if ($result['password'] == hash_hmac('sha512', $result['userID'] . $password . HigifyConfig::SALT, HigifyConfig::SITEKEY))
                     return self::fetchUser($result);
             }
         }
@@ -182,7 +179,7 @@ class UserModel
         $stmt->execute();                                                           // Execute query
             
         $userID = $db->lastInsertId();
-        $hashedPassword = hash_hmac('sha512', $userID . $password . UserModel::SALT, UserModel::SITEKEY); // Hashing password
+        $hashedPassword = hash_hmac('sha512', $userID . $password . HigifyConfig::SALT, HigifyConfig::SITEKEY); // Hashing password
         
                                                                         // Seperate query needed to hash pw with userID
         $query2 = "UPDATE User                                                      
@@ -221,7 +218,7 @@ class UserModel
      
         if(isset($res['password']))
         {
-            $oldPassword = hash_hmac('sha512', $userID . $oldPassword . UserModel::SALT, UserModel::SITEKEY);
+            $oldPassword = hash_hmac('sha512', $userID . $oldPassword . HigifyConfig::SALT, HigifyConfig::SITEKEY);
                                                
             if(strcmp($oldPassword,$res['password']) == 0)                       // If current PW matches the one in db
             {                                                                    // Query for updating password
@@ -240,7 +237,7 @@ class UserModel
      */
     public static function setPassword($userID, $newPassword)
     {
-        $hashedNewPassword = hash_hmac('sha512', $userID . $newPassword . UserModel::SALT, UserModel::SITEKEY);
+        $hashedNewPassword = hash_hmac('sha512', $userID . $newPassword . HigifyConfig::SALT, HigifyConfig::SITEKEY);
         $db = DatabaseManager::getDB();
         $stmt = $db->prepare("UPDATE User                                       
                                SET password = :newPassword

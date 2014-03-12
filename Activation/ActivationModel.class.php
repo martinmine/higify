@@ -1,5 +1,6 @@
 <?php
 require_once('./DatabaseManager.class.php');
+require_once('./HigifyConfig.class.php');
 require_once('PHPMailer/PHPMailerAutoload.php');
 require_once('ActivationType.class.php');
 require_once('./UserController.class.php');
@@ -91,26 +92,28 @@ class ActivationModel
      * Sends an email
      * @param string $receiver The receiver of the email
      * @param string $content  The content of the email
+     * @param string $subject  The subject of the email
      */
-    public static function sendEmail($receiver, $content)
+    public static function sendEmail($receiver, $content, $subject)
     {
         $mail = new PHPMailer();
 
         $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'mail.dongsecurity.com';                // Specify main and backup server
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'activation@obbahhost.com';         // SMTP username
-        $mail->Password = 'Vtft32XRp8FVZQGvETu4vpmM';         // SMTP password
-        $mail->Port = 94;
+        $mail->Host = HigifyConfig::MAIL_HOST;                // Specify main and backup server
+        $mail->SMTPAuth = HigifyConfig::MAIL_SMTP_AUTH;                               // Enable SMTP authentication
+        $mail->Username = HigifyConfig::MAIL_USERNAME;         // SMTP username
+        $mail->Password = HigifyConfig::MAIL_PASSWORD;         // SMTP password
+        $mail->Port = HigifyConfig::MAIL_PORT;
 
-        $mail->From = 'activation@obbahhost.com';
-        $mail->FromName = 'The Higify Team';
+        $mail->From = HigifyConfig::MAIL_TITLE_FROM;
+        $mail->FromName = HigifyConfig::MAIL_TITLE_FROM_NAME;
+        
         $mail->addAddress($receiver);                         // Name is optional
 
         $mail->WordWrap = 50;                                 // Set word wrap to 50 characters
         $mail->isHTML(true);                                  // Set email format to HTML
 
-        $mail->Subject = 'Activation';
+        $mail->Subject = $subject;
         $mail->Body    = $content;
         
         $mail->send();
