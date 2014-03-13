@@ -17,3 +17,5 @@ The PHP file Application/HigifyConfig.class.php contains configuration for the f
 - SMTP configuration
 - Hash and salt keys
 - reCAPTCHA public and private key
+
+Execute the Higify.sql file on the database you want to use with Higify.
