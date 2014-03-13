@@ -22,6 +22,7 @@ class ColorFactory
      * The default CSS rule
      */
     const DEFAULT_COLOR = 'grayTimeObject';
+    
     /**
      * Amount of rules in $COLORS
      */

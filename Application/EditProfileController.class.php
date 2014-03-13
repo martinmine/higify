@@ -17,9 +17,9 @@ class EditProfileController implements IPageController
         if ($userID !== NULL)
         {
             if (isset($_POST['public']))
-            $public = true;
+                $public = true;
             else
-            $public = false;
+                $public = false;
             
             UserController::updatePublicTime($userID, $public);
             
@@ -33,7 +33,8 @@ class EditProfileController implements IPageController
                     {
                         if ($_POST['email'] == $_POST['emailverification'])
                         {
-                            UserController::updateEmail($userID,$_POST['email']);     // Updates users email
+                            UserController::updateEmail($userID,$_POST['email']);    // Updates users email
+                            $vals['ERROR_PASSWORD'] = new WarningMessageView('Your email has been changed');
                         }
                         else
                         {
@@ -70,9 +71,9 @@ class EditProfileController implements IPageController
             {
                if (!empty($_POST['oldpassword']))
                {
-                   if(UserController::requestPasswordChange($userID,$_POST['oldpassword'],$_POST['newpassword']))
+                   if (UserController::requestPasswordChange($userID, $_POST['oldpassword'], $_POST['newpassword']))
                    {
-                        //  o/
+                        $vals['ERROR_PASSWORD'] = new WarningMessageView('Your password has been changed');
                    }
                    else
                    {

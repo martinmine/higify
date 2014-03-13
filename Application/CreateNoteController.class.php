@@ -21,6 +21,7 @@ class CreateNoteController implements IPageController
         if (isset($_GET['parent'])) // If this is a reply
         {
             $parentNote = NoteController::requestNote($_GET['parent']);
+
             if ($parentNote->getCategory()) // Add only if is not null
             {
                 $categoryOptions[] = htmlspecialchars($parentNote->getCategory()); // Add the category for the parent to the category list
@@ -57,6 +58,7 @@ class CreateNoteController implements IPageController
             $vals['SELECTED'] = $_GET['category'];
         
         $attendingCourses = ScheduleController::getCourseElements($userID); 
+        
         foreach ($attendingCourses as $code => $desc) // Format all the course descriptions to the HTML document
         {
             $description = htmlspecialchars($desc);
@@ -96,7 +98,6 @@ class CreateNoteController implements IPageController
                 $noteID = NoteController::addNoteReply($_GET['parent'], $userID, $_POST['content'], $category);
             else
                 $noteID = NoteController::AddNote($userID, $_POST['content'], $category, $public);
-
           
             if(is_uploaded_file($_FILES['file']['tmp_name']))
             {

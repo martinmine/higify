@@ -18,15 +18,14 @@ class SearchResultsPageController implements IPageController
 	 */
 	public function onDisplay()
 	{
-		$condition = (isset($_GET['searchterm'])) ? $_GET['searchterm'] : NULL;
-		$userID = SessionController::requestLoggedinID();
+		$userID = SessionController::requestLoggedinID(); // Force a user to be signed on
 		$vals = array();
 		
 		/**
 		 * Can only view a mainpage for logged in users
 		 * else a warning message is displayed.
 		 */
-		if ($condition !== NULL)
+		if (isset($_GET['searchterm']))
 		{
 			$results = UserController::requestSearchResults($_GET['searchterm']);
 			
@@ -39,6 +38,7 @@ class SearchResultsPageController implements IPageController
 		{
 			$vals['RESULTS'] = 'It looks like you don\'t have permission to do this. Are you logged in?';
 		}
+
         return $vals;
 	}
 }

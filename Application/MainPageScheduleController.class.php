@@ -9,6 +9,10 @@ require_once('Schedule/ScheduleController.class.php');
 
 class MainPageScheduleController implements IPageController
 {
+	/**
+	 * ID of the profile to display
+	 * @var integer
+	 */
 	private $profileID;
 	
 	public function __construct($profileID)

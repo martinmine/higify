@@ -41,6 +41,13 @@ require_once('NoteModel.class.php');
 			return NoteModel::addNote($note);	
 		}
 
+        /**
+         * Adds a reply to a note
+         * @param integer $parentNoteID The ID of the parent note
+         * @param integer $ownerID      ID of the owner of the new post
+         * @param string  $content      Content of the new note
+         * @param string  $category     Category to post the new note in
+         */
         public static function addNoteReply($parentNoteID, $ownerID, $content, $category)
         {
             $note = new Note(-1, $ownerID, $content, 1, NULL, NULL, $category, 0, NULL, $parentNoteID,0);
@@ -91,6 +98,12 @@ require_once('NoteModel.class.php');
 			NoteModel::deleteNote($noteID);
 		}
         
+        /**
+         * Adds an attachment to a note
+         * @param  integer $noteID ID of the note we are adding an attachment to
+         * @param  array   $file   The array containing information about the uploaded file
+         * @return mixed           NULL if no attachment was uploaded
+         */
         public static function submitAttatchment($noteID, $file)
         {
             $fileName = $file['name'];
@@ -180,6 +193,11 @@ require_once('NoteModel.class.php');
             return NoteModel::getReportedNotes();
         }
         
+        /**
+         * Ignores a reported note
+         * @param  integer $noteID     The ID of the reported note which we are ignoring
+         * @param  integer $reporterID The userID of the user who reported something
+         */
         public static function ignoreReportedNote($noteID, $reporterID)
         {
             NoteModel::ignoreReportedNote($noteID, $reporterID);

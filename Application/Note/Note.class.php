@@ -9,17 +9,71 @@
 
 class Note
 { 
-	private $noteID;			//  @var int(10) notes uniq id.
-	private $ownerID;			//  @var int(10) a reference to the owner by id.
-	private $content;			//  @var text the content of the note.
-	private $isPublic;			//  @var tinyint(1) 1 if note is public otherwise 0.
-	private $published;			//  @timestamp time and date for when the note was published.
-	private $ownerUsername;		//	@var varchar(30) username of the note owner.
-    private $category;          //  @var string Which category this note was posted in
-    private $points;            //  @var The vote balance/karma for the note
-    private $replyCount;        //  @var Amount of replies
-    private $originalPoster;    //  @var string The username of OP
-    private $parentID;          //  @var integer The ID of the parent note
+	/**
+	 * ID of thenote
+	 * @var integer
+	 */
+	private $noteID;
+
+	/**
+	 * A reference to the notes owner ID
+	 * @var integer
+	 */
+	private $ownerID;
+
+	/**
+	 * The content of the note
+	 * @var string
+	 */
+	private $content;
+
+	/**
+	 * If a note is public or not
+	 * @var boolean
+	 */
+	private $isPublic;
+
+	/**
+	 * When the note was published
+	 * @var string
+	 */
+	private $published;
+
+	/**
+	 * Username of the note owner
+	 * @var string
+	 */
+	private $ownerUsername;
+
+	/**
+	 * Which category which this note was posted in
+	 * @var string
+	 */
+    private $category;
+
+    /**
+     * The vote balance/karma for the note
+     * @var integer
+     */
+    private $points;
+
+    /**
+     * Amount of replies
+     * @var integer
+     */
+    private $replyCount;
+
+    /**
+     * The username of the parent post
+     * @var string
+     */
+    private $originalPoster;
+
+    /**
+     * The note ID of the parent note
+     * @var integer
+     */
+    private $parentID;
     
 	/**
 	 *  Constructs a new note setting all variables.
@@ -32,7 +86,7 @@ class Note
      *  @param string  $username OP's username
      *  @param string  $category Category in which the post was posted
      *  @param integer $points Point balance for the note
-     *  @param string  $op Username of OP
+     *  @param string  $op Username of OP of parent post
      *  @param integer $parentID The ID of the parent post, NULL if has no parent
      *  @param integer $replyCount Amount of replies made to the note
 	 */
@@ -179,6 +233,7 @@ class Note
     {
         return $this->parentID;
     }
+    
     /**
      * Gets the karma/vote balance for this note
      * @return integer

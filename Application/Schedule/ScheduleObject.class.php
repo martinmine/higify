@@ -80,7 +80,7 @@ class ScheduleObject
     
     /**
      * Gets the ID of the schedule object
-     * @return integer
+     * @return integer ID
      */
     public function getID()
     {
@@ -89,7 +89,7 @@ class ScheduleObject
     
     /**
      * Gets the title of the schedule object
-     * @return string
+     * @return string Schedule title
      */
     public function getTitle()
     {
@@ -98,7 +98,7 @@ class ScheduleObject
     
     /**
      * Gets the location of the schedule objct
-     * @return string
+     * @return string Room or location
      */
     public function getLocation()
     {
@@ -107,7 +107,7 @@ class ScheduleObject
     
     /**
      * Get the start point for the object
-     * @return DateTime
+     * @return DateTime start time
      */
     public function getStart()
     {
@@ -116,7 +116,7 @@ class ScheduleObject
     
     /**
      * The time when the object ends
-     * @return DateTime
+     * @return DateTime end time
      */
     public function getEnd()
     {
@@ -125,7 +125,7 @@ class ScheduleObject
     
     /**
      * Get indentation for the object
-     * @return intger
+     * @return intger Current indent of the object
      */
     public function getIndent()
     {
@@ -143,7 +143,7 @@ class ScheduleObject
     
     /**
      * Gets the max indent for the object
-     * @return integer
+     * @return integer Maximum indent on the object
      */
     public function getIndentMax()
     {
@@ -161,7 +161,7 @@ class ScheduleObject
     
     /**
      * Gets the previous item in the formated group if any
-     * @return ScheduleObject
+     * @return ScheduleObject Previous schedule object
      */
     public function getPrevious()
     {
@@ -179,7 +179,7 @@ class ScheduleObject
     
     /**
      * Gets the style of the schedule object: CSS rule to write in HTML
-     * @return string
+     * @return string CSS style
      */
     public function getStyle()
     {
@@ -187,9 +187,9 @@ class ScheduleObject
     }
     
     /**
-     * Checks if two items overlaps
+     * Checks if two items occurs within the same time span (find crashing time objects)
      * @param ScheduleObject $item The item to compare with
-     * @return boolean
+     * @return boolean Trye if they overlap each other, otherwise false
      */
     public function overlaps(ScheduleObject $item)
     {

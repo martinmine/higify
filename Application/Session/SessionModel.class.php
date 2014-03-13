@@ -4,17 +4,13 @@ require_once('Application/HigifyConfig.class.php');
 
 class SessionModel
 {
+
     /**
-     * The salt used to create new tokens
+     * Flag for if the session is started or not
+     * @var boolean
      */
-    const COOKIE_SALT = 'xEvMHDfVbM6SYZN7EsBQ6NUFpT7PyGnYfSfbWFeTETb7vJ4Y2zFtBmxd6uysYpEFMvp7ZFqdPbJHPbbjFEhUPQb524ZMRpaJcy9qCS5h8aPgad9JZ4ArcqXy';
-    
-    /**
-     * Random key used for initializing the hash function
-     */
-    const HASH_INIT = 'hQVJ5TaKt7QTaScYrvFsaPPJKEpB56X6y9QzEYKcNvST8DpYDymrx7JWfGDUBHSpBugzw3L2Ce9MuAeGe6KNw2MCvMsjCnmEwtuHDgWyXHV2HVW7K3GQgT7g'; 
-    
     private static $sessionStarted = false;
+    
     /**
      * Creates a new token from the key
      * @param string Can be old token or the user's password hash
@@ -22,7 +18,7 @@ class SessionModel
      */
     private static function createToken($key)
     {
-        return substr(hash_hmac('sha512', $key . self::COOKIE_SALT, self::HASH_INIT), 0, 30);
+        return substr(hash_hmac('sha512', $key . HigifyConfig::COOKIE_SALT, HigifyConfig::HASH_INIT), 0, 30);
     }
     
     /**
@@ -67,13 +63,9 @@ class SessionModel
                 setcookie('TOKEN', NULL, -1);
                 return false;
             }
-            
-            return $_COOKIE['LOGIN_ID'];   
         }
-        else
-        {
-            return false;
-        }
+        
+        return false;
     }
     
     /**

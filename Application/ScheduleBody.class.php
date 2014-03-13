@@ -25,7 +25,14 @@ class ScheduleBody extends WebPageElement
      */
     private $hourEnd;
     
+    /**
+     * Which day number the schedule begins on (Monday = 1)
+     */
+    
     const DAY_BEGIN = 1;
+    /**
+     * Which day number the schedule ends on (Friday = 5)
+     */
     const DAY_END = 5;
     
     public function __construct($schedule, $hourBegin, $hourEnd)

@@ -42,6 +42,7 @@ class ForgottenPasswordController implements IPageController
             {
                 ActivationController::generateActivationKey($user->getUserID(), $user->getEmail(), ActivationType::PASSWORD);
                 header('Location: login.php?passwordsent');
+                exit;
             }
         }
         

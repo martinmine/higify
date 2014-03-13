@@ -52,6 +52,7 @@ class ReportedNoteListView extends WebPageElement
                 $downvoteImage = 'downvote_selected';
             if ($voteStatus == VoteStatus::UPVOTED)
                 $upvoteImage = 'upvote_selected';
+            
 			$tpl = new Template();
 			$tpl->appendTemplate('NoteElement');
             

@@ -21,7 +21,7 @@ class StringBuilder
     
     /**
      * Appends one line to the string builder with a newline+br-tag
-     * @param string $txt 
+     * @param string $txt Text to append
      */
     public function appendLine($txt = '')
     {

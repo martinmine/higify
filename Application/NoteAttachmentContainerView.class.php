@@ -6,6 +6,10 @@ require_once('NoteAttachmentListView.class.php');
 
 class NoteAttachmentContainerView extends WebPageElement
 {
+    /**
+     * Attachements we are displaying
+     * @var Array
+     */
     private $attachments;
     
     public function __construct($noteID)

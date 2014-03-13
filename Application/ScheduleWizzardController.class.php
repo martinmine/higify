@@ -18,6 +18,7 @@ class ScheduleWizzardController implements IPageController
             UserController::updatePublicTime($userID, (isset($_POST['schedulePublic']) && $_POST['schedulePublic'] == 'private' ? false : true));
             ScheduleController::saveSchedule($_POST['scheduleData'], $userID);
             header('Location: mainpage.php');
+            exit;
         }
         
         $user = UserController::requestUserByID($userID);

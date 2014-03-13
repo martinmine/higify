@@ -54,7 +54,11 @@ class LoginController implements IPageController
         {
             $vals['ERROR_MSG'] = new WarningMessageView('An email with your username and a new password has been sent to your email address. If you did not receive an email, check your spam folder.');   
         }
-        
+        else if (isset($_GET['loggedout']))
+        {
+            $vals['ERROR_MSG'] = new WarningMessageView('You have been signed out.');   
+        }
+
         if ($user !== NULL)
         {
             if ($user->hasPublicTimeTable() === NULL)

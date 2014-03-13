@@ -1,18 +1,51 @@
 <?php
 class User
 {
-    private $userID;    // type: int, containing the unique userID
+	/**
+	 * Users ID
+	 * @var integer
+	 */
+    private $userID;
  
-    private $username;  // type: string, containing unique username
+ 	/**
+ 	 * Users username
+ 	 * @var string
+ 	 */
+    private $username;
     
-    private $email;     // type: string, containing unique email adress
+    /**
+     * The users email address
+     * @var string
+     */
+    private $email;
     
-    private $emailActivated; // type: boolean, true if user's email is activated
+    /**
+     * Indicates if the users email address is activated or not
+     * @var boolean
+     */
+    private $emailActivated;
     
-    private $publicTimeSchedule; // type: boolean, true if user has set timetable to public
+    /**
+     * Inficates if the user has a public or private schedule
+     * @var boolean
+     */
+    private $publicTimeSchedule;
     
-    private $rank; // type: integer or null, contains the rank of the user if has any rank
+    /**
+     * The rank of the user if the user has any
+     * @var integer
+     */
+    private $rank;
     
+    /**
+     * Constructs a new User
+     * @param integer $userID         ID
+     * @param string $username        Username
+     * @param string $email           Email
+     * @param string $emailActivated  If the user has activated their email
+     * @param boolean $scheduleState  Public or private schedule
+     * @param integer $rank           The users rank if has any
+     */
     public function __construct($userID, $username, $email, $emailActivated, $scheduleState, $rank) // Constructor
     {
         $this->userID = $userID;
@@ -74,10 +107,11 @@ class User
 	
 	/**
 	 * Gets the state of the time schedule for the user
-     * True: Schedule can be viewed by anyone
-     * False: Schedule private
-     * DNBULL: User has not yet signed in and depends setting up the time schedule
 	 * @return mixed
+     *         True: Schedule can be viewed by anyone
+     *         False: Schedule private
+     *         NULL: User has not yet signed in and depends setting up the time schedule
+	 * 
 	 */
 	public function hasPublicTimeTable()
     {

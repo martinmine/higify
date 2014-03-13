@@ -54,7 +54,7 @@ class UserModel
           
            
             $db = DatabaseManager::getDB();
-            $stmt = $db->prepare($query);                                                           // Preparing query
+            $stmt = $db->prepare($query);                                                        // Preparing query
             $stmt->bindparam(':username', $username);                                   
             $stmt->execute();
             
@@ -68,14 +68,14 @@ class UserModel
             }
         }
                  
-        return NULL;                                                                       // Something went wrong!
+        return NULL;
     }
     
     /**
      * Fetches a user using the unique email adress
      * 
      * @param $email
-     * @return
+     * @return User object or NULL if no user was found
      */
     public static function getUserByEmail($email)
     {
@@ -122,13 +122,9 @@ class UserModel
         $res = $stmt->fetch(PDO::FETCH_ASSOC);                                               // fetching results
         
         if(isset($res['username']) && isset($res['email']))                                  // if needed results
-        {
             return self::fetchUser($res);                                                             
-        }
-        else                                                                                // Needed data not achieved
-        {
+        else                                                                                 // Needed data not achieved
             return NULL;
-        }
     }
     
     /**
@@ -195,14 +191,13 @@ class UserModel
     }
     
     /**
-     * Summary of newPassword
-     * 
      * Comparing the current user password from $db to the current password requested from user.
      * If they match the users promt to a new password is accepted.
      * The new password overwrites the old in $db
-     * 
-     * Status: tested
-     * 
+     * @param  integer $userID      ID of the user who changes the password
+     * @param  string $oldPassword  Old password in plaintext
+     * @param  string $newPassword  New password in plaintext
+     * @return boolean              True if password was changed, otherwise false 
      */
     public static function newPassword($userID, $oldPassword, $newPassword)
     {                                                                           // SQL query 
@@ -305,6 +300,11 @@ class UserModel
         $query->execute();
     }
     
+    /**
+     * Changes the email for a user
+     * @param  integer $userID   UserID
+     * @param  string $newEmail  Their new email
+     */
     public static function newEmail($userID, $newEmail)
     {
         $query = "UPDATE User 
@@ -318,6 +318,11 @@ class UserModel
         $stmt->execute();
     }
     
+    /**
+     * Updates a users flag if they want public or private time schedule
+     * @param integer $userID The user ID
+     * @param boolean $bool   If the schedule is private or public
+     */
     public static function setPublicTimeSchedule($userID, $bool)
     {
         $query = "UPDATE User 
@@ -356,6 +361,11 @@ class UserModel
         return NULL;
     }
 	
+    /**
+     * Searches for a user by username, orders by relevance
+     * @param  string $username Username to search for
+     * @return Array            Associated array from the row
+     */
 	public static function getSearchResults($username)
 	{
 		$res = array();

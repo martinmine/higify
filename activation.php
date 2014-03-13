@@ -23,8 +23,6 @@ if (isset($_GET['key']))
             header('Location: login.php?passwordchanged');
             exit;
         }
-        else 
-            die('Unknown type: ' . $type);
     }
 }
 

@@ -10,12 +10,12 @@ require_once('Application/ScheduleWizzardController.class.php');
 $tpl = new Template();
 $tpl->appendTemplate('MainPageHeader');
 
-if (isset($_GET['firsttime']))
+if (isset($_GET['firsttime'])) // User has not setup the schedule yet
 {
     $pageTitle = 'Schedule Setup';
     $bannerTitle = 'Setup Your Schedule';
 }
-else
+else // Selected change schedule from settings or mainpage
 {
     $pageTitle = 'Change Schedule';
     $bannerTitle = 'Change Your Schedule';

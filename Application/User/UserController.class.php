@@ -27,7 +27,6 @@ class UserController
         return UserModel::getUserByID($userID);
     }
     
-    
     /**
      * Looks up user using email adress, returns user object
      * @param $email
@@ -83,6 +82,10 @@ class UserController
         return UserModel::registerUser($username, $password, $email, false);
     }
     
+    /**
+     * Activates a users email
+     * @param  integer $userID The ID of the user to activate
+     */
     public static function activateUserEmail($userID)
     {
         UserModel::activateEmail($userID);
@@ -91,19 +94,23 @@ class UserController
     /**
      * Requests a profilepicture by userID
      * @param $userID
-     * @return
+     * @return The picture 
      */
     public static function requestProfilePicture($userID)
     {
         if ($picture = UserModel::fetchProfilePicture($userID))
-        {
             return $picture;
-        }
         
         return NULL;
     }
     
-
+    /**
+     * Updates a user settings
+     * @param  string $oldPassword Their old password
+     * @param  string $newPassword Their new password
+     * @param  string $newEmail    Their new email
+     * @param  mixed  $picture      Picture data
+     */
     public static function updateUser($oldPassword, $newPassword, $newEmail, $picture)
     {
         $userID = SessionController::requestLoggedinID();
@@ -112,6 +119,7 @@ class UserController
         UserModel::newEmail($userID, $newEmail);
         UserModel::newPassword($userID,$oldPassword,$newPassword);
     }
+
     /**
      * Resets the users password and returns the content of the email that shall be sent to the user
      * @param User $user The user
@@ -123,7 +131,6 @@ class UserController
         UserModel::setPassword($user->getUserID(), $newPassword);
         
         $builder = new StringBuilder();
-        
         $builder->appendLine('Greeting Higify User!');
         $builder->appendLine();
         $builder->appendLine('Your password has been changed. You can now sign in with the following username and password:');
@@ -149,7 +156,7 @@ class UserController
     
     /**
      * Updates state of the boolean publicTimeSchedule 
-     * @param $userID
+     * @param $userID ID of the user
      * @param $bool true: set to public, false: set to private
      */
     public static function updatePublicTime($userID, $bool)
@@ -157,6 +164,13 @@ class UserController
         UserModel::setPublicTimeSchedule($userID, $bool);
     }
     
+    /**
+     * Requests a password change for a user
+     * @param  integer $userID      The ID of the user
+     * @param  string $oldpassword  The users old password in plaintext
+     * @param  string $newpassword  The users ew password in plaintext
+     * @return boolean              True if password was changed, otherwise false (old password doesnt match db values)
+     */
     public static function requestPasswordChange($userID,$oldpassword,$newpassword)
     {
         if (UserModel::newPassword($userID,$oldpassword,$newpassword))

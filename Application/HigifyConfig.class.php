@@ -87,6 +87,16 @@ class HigifyConfig
      * And the title on the from name
      */
     const MAIL_TITLE_FROM_NAME = 'The Higify Team';
+
+    /**
+     * The salt used to create new tokens
+     */
+    const COOKIE_SALT = 'xEvMHDfVbM6SYZN7EsBQ6NUFpT7PyGnYfSfbWFeTETb7vJ4Y2zFtBmxd6uysYpEFMvp7ZFqdPbJHPbbjFEhUPQb524ZMRpaJcy9qCS5h8aPgad9JZ4ArcqXy';
+    
+    /**
+     * Random key used for initializing the hash function
+     */
+    const HASH_INIT = 'hQVJ5TaKt7QTaScYrvFsaPPJKEpB56X6y9QzEYKcNvST8DpYDymrx7JWfGDUBHSpBugzw3L2Ce9MuAeGe6KNw2MCvMsjCnmEwtuHDgWyXHV2HVW7K3GQgT7g'; 
 }
 
 ?>

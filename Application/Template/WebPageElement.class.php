@@ -14,6 +14,9 @@ abstract class WebPageElement
         return '';
     }
     
+    /**
+     * Gererates the HTML content of the web page element to the user output
+     */
     public abstract function generateHTML();
 }
 

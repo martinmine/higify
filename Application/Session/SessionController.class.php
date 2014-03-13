@@ -34,10 +34,12 @@ class SessionController
     public static function setLoggedIn($userID, $rememberPassword = false)
     {
         SessionModel::setLoginID($userID, $rememberPassword);
-        $location = 'Location: mainpage.php?id=' . $userID;
-        header($location);
+        header('Location: mainpage.php');
     }
     
+    /**
+     * Logs the user out and invalidates the session data
+     */
     public static function logout()
     {
         SessionModel::destroySession();
