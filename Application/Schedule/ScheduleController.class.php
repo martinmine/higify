@@ -125,6 +125,7 @@ class ScheduleController
         $schedule = array();
         $colorFact = new ColorFactory();
         
+        
         $iterator = $includedObjects->getIterator();
         foreach ($iterator as $timeObject)
         {
@@ -195,6 +196,7 @@ class ScheduleController
     public static function searchSchedule($searchText, $searchType)
     {
         $response = TimeEditAPIController::search($searchType, $searchText, 1);
+
         $results = array();
 
         if ($searchType == ObjectType::COURSECODE) // No need to request further data

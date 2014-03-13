@@ -12,7 +12,6 @@ class ScheduleWizzardController implements IPageController
         $vals = array();
         $userID = SessionController::requestLoggedinID();
         
-        
         if (isset($_POST['scheduleData']))
         {
             UserController::updatePublicTime($userID, (isset($_POST['schedulePublic']) && $_POST['schedulePublic'] == 'private' ? false : true));
