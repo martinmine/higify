@@ -38,8 +38,7 @@ class CreateNoteController implements IPageController
         if (!empty($_GET['edit_id']))
         {
             $note = NoteController::requestNote($_GET['edit_id']);
-            
-            if ($note === NULL)
+            if ($note === NULL || $note->getOwnerID() !== $userID)
                 header('Location: mainpage.php'); // No note found
             
             $vals['SELECTED'] = $note->getCategory();
