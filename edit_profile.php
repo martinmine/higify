@@ -1,7 +1,7 @@
 <?php
-require_once('Template/Template.class.php');
-require_once('editProfileController.class.php');
-require_once('BannerController.class.php');
+require_once('Application/Template/Template.class.php');
+require_once('Application/EditProfileController.class.php');
+require_once('Application/BannerController.class.php');
 
 $tpl = new Template();
 $tpl->appendTemplate('MainPageHeader');

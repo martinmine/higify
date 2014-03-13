@@ -1,6 +1,6 @@
 <?php
-require_once('Schedule/ScheduleController.class.php');
-require_once('SessionController.class.php');
+require_once('Application/Schedule/ScheduleController.class.php');
+require_once('Application/Session/SessionController.class.php');
 
 $userID = SessionController::requestLoggedinID();
 

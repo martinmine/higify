@@ -1,6 +1,6 @@
 <?php
-require_once('Template/Template.class.php');
-require_once('LoginController.class.php');
+require_once('Application/Template/Template.class.php');
+require_once('Application/LoginController.class.php');
 
 $tpl = new Template();
 $tpl->appendTemplate('FrontPageHeader');

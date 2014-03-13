@@ -1,11 +1,11 @@
 <?php
 
-require_once('Template/Template.class.php');
-require_once('MainPageController.class.php');
-require_once('MainPageScheduleController.class.php');
-require_once('SessionController.class.php');
-require_once('BannerController.class.php');
-require_once('ScheduleWizzardController.class.php');
+require_once('Application/Template/Template.class.php');
+require_once('Application/Session/SessionController.class.php');
+require_once('Application/MainPageController.class.php');
+require_once('Application/MainPageScheduleController.class.php');
+require_once('Application/BannerController.class.php');
+require_once('Application/ScheduleWizzardController.class.php');
 
 $tpl = new Template();
 $tpl->appendTemplate('MainPageHeader');

@@ -1,7 +1,7 @@
 <?php
-require_once('Template/Template.class.php');
-require_once('NoteController.class.php');
-require_once('SessionController.class.php');
+require_once('Application/Template/Template.class.php');
+require_once('Application/Note/NoteController.class.php');
+require_once('Application/Session/SessionController.class.php');
 
 
 $userID = SessionController::requestLoggedinID();

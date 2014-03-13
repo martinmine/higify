@@ -1,5 +1,5 @@
 <?php
-require_once('NoteController.class.php');
+require_once('Application/Note/NoteController.class.php');
 
 if (!isset($_GET['id']))
     header('Location: mainpage.php');

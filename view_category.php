@@ -1,8 +1,8 @@
 <?php
-require_once('Template/Template.class.php');
-require_once('NoteController.class.php');
-require_once('BannerController.class.php');
-require_once('NoteListCategoryController.class.php');
+require_once('Application/Template/Template.class.php');
+require_once('Application/Note/NoteController.class.php');
+require_once('Application/BannerController.class.php');
+require_once('Application/NoteListCategoryController.class.php');
 
 if (!isset($_GET['cat']))
     header('Location: mainpage.php');

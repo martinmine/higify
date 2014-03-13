@@ -1,7 +1,7 @@
 <?php
-require_once('Activation/ActivationController.class.php');
-require_once('Activation/ActivationType.class.php');
-require_once('UserController.class.php');
+require_once('Application/Activation/ActivationController.class.php');
+require_once('Application/Activation/ActivationType.class.php');
+require_once('Application/User/UserController.class.php');
 
 if (isset($_GET['key']))
 {

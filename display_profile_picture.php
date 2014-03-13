@@ -1,6 +1,6 @@
 <?php
-require_once('SessionController.class.php');
-require_once('UserController.class.php');
+require_once('Application/Session/SessionController.class.php');
+require_once('Application/User/UserController.class.php');
 
 header("Content-type: image/jpeg");
 

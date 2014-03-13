@@ -1,6 +1,6 @@
 <?php
-require_once('Template/Template.class.php');
-require_once('RegistrationController.class.php');
+require_once('Application/Template/Template.class.php');
+require_once('Application/RegistrationController.class.php');
 
 $tpl = new Template();
 $tpl->appendTemplate('FrontPageHeader');

@@ -1,5 +1,5 @@
 <?php
-require_once('SessionController.class.php');
+require_once('Application/Session/SessionController.class.php');
 
 SessionController::logout();
 

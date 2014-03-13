@@ -1,6 +1,6 @@
 <?php
-require_once('Template/Template.class.php');
-require_once('ReportNoteController.class.php');
+require_once('Application/Template/Template.class.php');
+require_once('Application/ReportNoteController.class.php');
 
 $tpl = new Template();
 $tpl->appendTemplate('RedirectBack');

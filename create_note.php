@@ -1,9 +1,9 @@
 <?php
-require_once('Template/Template.class.php');
-require_once('NoteController.class.php');
-require_once('ViewNoteController.class.php');
-require_once('BannerController.class.php');
-require_once('CreateNoteController.class.php');
+require_once('Application/Template/Template.class.php');
+require_once('Application/Note/NoteController.class.php');
+require_once('Application/ViewNoteController.class.php');
+require_once('Application/BannerController.class.php');
+require_once('Application/CreateNoteController.class.php');
 
 $tpl = new Template();
 $tpl->appendTemplate('MainPageHeader');

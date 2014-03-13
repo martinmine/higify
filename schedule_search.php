@@ -1,5 +1,5 @@
 <?php
-require_once('Schedule/ScheduleController.class.php');
+require_once('Application/Schedule/ScheduleController.class.php');
 
 $json = ScheduleController::searchSchedule(urldecode($_GET['searchText']), intval(urldecode($_GET['searchType'])));
 

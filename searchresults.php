@@ -1,9 +1,9 @@
 <?php
 
-require_once('Template/Template.class.php');
-require_once('SearchResultsPageController.class.php');
-require_once('MainPageScheduleController.class.php');
-require_once('BannerController.class.php');
+require_once('Application/Template/Template.class.php');
+require_once('Application/SearchResultsPageController.class.php');
+require_once('Application/MainPageScheduleController.class.php');
+require_once('Application/BannerController.class.php');
 
 $tpl = new Template();
 $tpl->appendTemplate('MainPageHeader');
