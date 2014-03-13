@@ -1,3 +1,8 @@
+Higify
+============================
+A social network for notes and schedule integration towards TimeEdit
+
+
 Requirements
 ============================
 - PHP version 5.4.0
