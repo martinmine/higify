@@ -2,6 +2,7 @@
 require_once('Template/IPageController.interface.php');
 require_once('User/UserController.class.php');
 require_once('Session/SessionController.class.php');
+require_once('Note/NoteController.class.php');
 require_once('NoteListView.class.php');
 require_once('NoteCategoryView.class.php');
 require_once('ReportedNoteView.class.php');
@@ -24,6 +25,13 @@ class MainPageController implements IPageController
         $user = UserController::requestUserByID($userID);
 		$vals = array();								// Array, values that fills the page with requested input.
 		
+        if (isset($_GET['changeType']))
+        {
+            $note = NoteController::requestNote($_GET['noteID']);
+            if ($note !== NULL && $note->getOwnerID() === $userID)
+                NoteController::requestDeleteNote($_GET['noteID']);
+        }
+        
 		$vals['NOTES']	                = new NoteListView($userID, NoteType::ALL);
         $vals['CREATE_NOTE_CATEGORIES'] = new NoteCategoryView();
             

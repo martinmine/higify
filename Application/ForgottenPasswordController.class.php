@@ -10,12 +10,12 @@ class ForgottenPasswordController implements IPageController
 {
     public function onDisplay()
     {
-        $user = SessionController::acquireSession(true);    // Send the user home if he is logged in
+        $userID = SessionController::requestLoggedinID(true);    // Send the user home if he is logged in
         $vals = array();
         
         $vals['RECAPTCHA_PUBLIC_KEY'] = HigifyConfig::RECAPTCHA_PUBLIC_KEY;
         
-        if ($user !== NULL)
+        if ($userID !== NULL)
         {
             header('Location: index.php');
             exit;

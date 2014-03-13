@@ -1,12 +1,12 @@
 
 	<div class="pageSideContainer">
         <div class="pageElement">	
-			<form action="edit_profile.php" method="post" enctype="multipart/form-data">
 				<div class="pageTitle">
 				  Profile Accessories
 				</div>
 				<div class="pageElementContent">
 					<div>
+					<form action="edit_profile.php" method="post" enctype="multipart/form-data">
 						<?php if (isset($ERROR_PROFILEPIC)) echo $ERROR_PROFILEPIC; ?>
 						<label for="file">Upload a new profile picture</label>
 						<div>
@@ -15,6 +15,7 @@
 						<div>
 							<input type="submit" value="Apply"></input>
 						</div>
+					</form>
 					</div>
 				</div>
 				
@@ -23,6 +24,7 @@
 				</div>
 				  <div class="pageElementContent">
 					<?php if (isset($ERROR_EMAIL)) echo $ERROR_EMAIL; ?> 
+					<form action="edit_profile.php" method="post">
 				    <div>
 						<label for="email">New email</label>
 						<div>
@@ -38,6 +40,7 @@
 							<input type="submit" value="Apply"></input>
 						</div>
 					</div>
+					</form>
 				  </div>
 				<div class="pageTitle">
 				Timetable Options
@@ -48,13 +51,15 @@
 					</div>
 					<br />
 					<div>
-						<label for="public">Check the box to set your timetable to public</label>    
-						<div>
-							<input type="checkbox" name="public" value ="1" <?php if ($PUBLIC)echo 'checked';?>></input>
-						</div>
-						<div>
-							<input type="submit" value="Apply"></input>
-						</div>
+						<form action="edit_profile.php" method="post">
+							<label for="public">Check the box to set your timetable to public</label>    
+							<div>
+								<input type="checkbox" name="public" value ="1" <?php if ($PUBLIC)echo 'checked';?>></input>
+							</div>
+							<div>
+								<input type="submit" value="Apply"></input>
+							</div>
+						</form>
 					</div>
 				</div>
 				
@@ -63,6 +68,7 @@
 				</div>
 				<div class="pageElementContent">
 				  <?php if (isset($ERROR_PASSWORD)) echo $ERROR_PASSWORD; ?>
+				  <form action="edit_profile.php" method="post" enctype="multipart/form-data">
 				    <div>
 						<label for="oldpassword">Current password</label>
 					    <div>
@@ -78,6 +84,7 @@
 							<input type="submit" value="Apply"></input>
 						</div>
 					</div>
+					</form>
 				</div>
 			</form>
 		</div>

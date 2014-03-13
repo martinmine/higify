@@ -43,7 +43,7 @@ class RegistrationController implements IPageController
             {
                 $vals['ERROR_USR'] = new ErrorMessageView('Please enter a username');
             }
-            else if (UserController::userExists($username)) // User already exists TODO: move userexists to UserController
+            else if (UserController::userExists($username)) // User already exists
             {
                 $vals['ERROR_USR'] = new ErrorMessageView('A user with this username already exists. Try another one.');
                 $_POST['username'] = '';
