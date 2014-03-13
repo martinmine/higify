@@ -57,7 +57,7 @@ class EditProfileController implements IPageController
             {
                 if ($_FILES['file']["error"] > 0)
                 {
-                    $vals['ERROR_PROFILEPIC'] = new ErrorMessageView($_FILES["file"]["error"]);
+                    $vals['ERROR_PROFILEPIC'] = new ErrorMessageView('No profile picture subitted');
                 }
                 else
                 {
