@@ -358,16 +358,27 @@ class UserModel
 	
 	public static function getSearchResults($username)
 	{
-		$term = "%" . $username . "%";
-		
 		$res = array();
+        $both = '%' . $username . '%';
+        $suffix = $username . '%';
+        $prefix = '%' . $username;
 		$db = DatabaseManager::getDB();
 		$query = "SELECT userID, username
-			        FROM User
-					WHERE username LIKE (:username)";
+                    FROM User
+                    WHERE username LIKE (:both)
+                    GROUP BY username
+                    ORDER BY CASE WHEN username LIKE (:single) THEN 0
+                                  WHEN username LIKE (:suffix) THEN 1
+			                      WHEN username LIKE (:prefix) THEN 2
+                                  WHEN username LIKE (:both) THEN 3
+                                  ELSE 4
+                             END, username";
 		
 		$stmt = $db->prepare($query);
-		$stmt->bindParam(':username', $term);
+		$stmt->bindParam(':both', $both);
+        $stmt->bindParam(':single', $username);
+        $stmt->bindParam(':suffix', $suffix);
+        $stmt->bindParam(':prefix', $prefix);
 		$stmt->execute();
 		
 		$hits = array();
