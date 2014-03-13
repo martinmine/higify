@@ -62,17 +62,6 @@ class NoteModel
 			return $res;
 		}
 	}
-	
-	/**
-	 * Get all notes on some condition. limited condition of course
-	 * Change comment when done... obviously :
-	 */
-	public function getAllPublicNotes($condition = NULL)
-	{
-		
-		
-		
-	}
     
     /**
      * Fetches a note from a database row

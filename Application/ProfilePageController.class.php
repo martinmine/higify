@@ -25,7 +25,7 @@ class ProfilePageController implements IPageController
 		
 		/**
 		 * Can only view mainpage for logged in users
-		 * else a warning message is displayed.
+		 * 
 		 */
 		if ($loggedinID !== NULL)
 		{
@@ -48,10 +48,7 @@ class ProfilePageController implements IPageController
 				header('Location: mainpage.php');
 			}
 		}
-		else
-		{
-			//$vals['ERROR_MSG'] = new ErrorMessageView('No user is logged in...');
-		}
+
         return $vals;
 	}
 }

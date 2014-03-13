@@ -26,16 +26,31 @@ class ReportedNote
         $this->reporterID = $userID;
     }
     
+	/**
+	 * Retrieves a note from the database.  
+	 *
+	 * @return a note Object.
+	 */
     public function getNote()
     {
         return $this->note;
     }
-    
+
+	/**
+	 * Retrieves the username who reported a note. 
+	 *
+	 * @return varchar the username of a user.
+	 */
     public function getReporterUsername()
     {
         return $this->reporterUsername;
     }
     
+	/**
+	 * Retrieves the id from a user who have reported a note. 
+	 *
+	 * @return int ID userID.
+	 */
     public function getReporterID()
     {
         return $this->reporterID;

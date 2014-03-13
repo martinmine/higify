@@ -187,18 +187,6 @@ class Note
     {
         return $this->points;
     }
-    
-	/**
-	 * Implements PHP 5's magic __toString() method
-	 * 
-	 * @return string a string encoding of the Note object.
-	 */
-	public function __toString()
-	{
-		return "noteID: {$this->noteID}, ownerID: {$this->ownerID}, "
-				. "content: {$this->content}, isPublic; {$this->isPublic}"
-				. "ownerName; {$this->ownerName}";
-	}
 }
 
 ?>

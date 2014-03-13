@@ -93,7 +93,6 @@ require_once('NoteModel.class.php');
         
         public static function submitAttatchment($noteID, $file)
         {
-           // $fileSize = $file['size'];
             $fileName = $file['name'];
             
             if (is_uploaded_file($file['tmp_name']))  // If file is uploaded 
@@ -101,7 +100,9 @@ require_once('NoteModel.class.php');
                 NoteModel::submitAttachment($noteID, $file, $fileName);
             }
             else
+			{
                 return NULL;
+			}
         }
         
         /**
