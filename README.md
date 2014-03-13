@@ -15,4 +15,5 @@ Configuration
 The PHP file Application/HigifyConfig.class.php contains configuration for the following options:
 - Database configuration
 - SMTP configuration
-- Hash keys
+- Hash and salt keys
+- reCAPTCHA public and private key
