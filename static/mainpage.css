@@ -1,0 +1,498 @@
+﻿body 
+{
+    margin: 0px;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    background-image: url('../static/shattered.png');
+	height: 100%;
+}
+
+div.banner
+{
+    height: 100px;
+    width: 100%;
+    background-color: #0083a9;
+    border-bottom-color: white;
+    border-bottom-width: 1px;
+}
+
+div.bannerLogo
+{
+    padding-right: 60px;
+    text-align: right;
+    width: auto;
+    
+}
+
+div.pageContainer
+{
+    height: 100%;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.pageSideContainer
+{
+    float: left;
+    width: 60%;
+    height: 40px;
+    margin: 10px;
+}
+
+div.pageWidgetContainer
+{
+
+    float: right;
+    width: 35%;
+    height: 40px;
+    margin: 10px;
+}
+
+div.bannerCenterContainer
+{
+    height: 100px;
+    float: left;
+    width: 60%;
+    padding: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.pageControllerContainer
+{
+    display: table-cell;
+    vertical-align: middle;
+    height: 100px;
+}
+
+div.controllerWrapper
+{
+    width: 35%;
+    padding: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    float: right;
+}
+
+div.bannerWrapper
+{
+    width: 1000px;
+    height: inherit;
+    margin-left: auto;
+    margin-right: auto;
+    float: left;
+
+}
+
+div.bannerPreWrapper 
+{
+    float: left;
+    height: inherit;
+}
+
+div.bannerPostWrapper 
+{
+    float: right;
+    height: inherit;
+}
+
+div.bannerTitle
+{
+    font-size: 45px;
+    color: white;
+    height: auto;
+    line-height: 100px;
+}
+
+div.bannerControllers
+{
+    float: right;
+    width: 300px;
+    height: 75px;
+    
+}
+
+div.searchWrapper
+{
+    height: inherit;
+    
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.searchContainer
+{
+    width: 330px;
+}
+
+div.profileWrapper
+{
+    padding-right: 10px;
+    height: inherit;
+    
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.profileContainer
+{
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+}
+
+a.profileLink
+{
+    color: white;
+    padding-right: 10px;
+}
+
+div.profileLinkWrapper 
+{
+    height: inherit;
+    
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.pageElement
+{
+    background-color: white;
+    width: 100%;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+}
+
+div.pageTitle
+{
+    font-size: 35px;
+    font-weight: 200;
+    padding-left: 8px;
+}
+
+div.resourceCenterContainer
+{
+    display: table-cell;
+    vertical-align: middle;
+    height: 50px;
+}
+
+div.resourceContainer
+{
+    margin-top: -1px;
+    border-top-color: darkgray;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 25px;
+}
+
+
+div.resourceLink {
+	color: gray;
+	font: bold 17px "Helvetica";
+	text-decoration: none;
+
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+    line-height: 25px;
+    float: left;
+}
+
+div.resourceContainer:hover
+{
+    background-color: lightgray;
+    color: darkgray;
+}
+
+div.linkbutton {
+	background: gray;
+	color: #FFF;
+	content: ">";
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	margin-left: 10px;
+	text-align: center;
+	width: 25px;
+	
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+    font: bold 17px "Helvetica";
+	text-decoration: none;
+    float: right;
+    line-height: 25px;
+
+}
+
+
+div.noteContainer
+{
+    margin: 5px;
+    border-style: solid;
+    border-color: darkgray;
+    border-width: 1px;
+}
+
+div.noteHeader
+{
+    width: 100%;
+
+}
+
+div.noteElementWrapper
+{
+    height: 60px;
+    display:inline-block;
+    float: left;
+}
+
+div.voteBox
+{
+    width: auto;
+    height: inherit;
+    float: left;
+    margin-left: 2px;
+    margin-right: 3px;
+    text-align: center;
+    color: gray;
+}
+
+div.upvote
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.downvote
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.voteCounter
+{
+    margin-left: auto;
+    margin-right: auto;
+
+    width: auto;
+}
+
+div.noteProfilePictureContainer
+{
+    float: left;
+    width: 50px;
+    height: 50px;
+    padding-top: 5px;
+}
+
+div.noteTitle
+{
+    height: 60px;
+    line-height: 60px;
+    float: left;
+    padding-left: 5px;
+}
+
+div.noteTimeStamp
+{
+    height: 60px;
+    line-height: 60px;
+    float: right;
+    padding-right: 5px;
+}
+
+.noteHeader:before,
+.noteHeader:after {
+    content:"";
+    display:table;
+}
+.noteHeader:after {
+    clear:both;
+}
+
+div.noteContent
+{
+    border-top-style: solid;
+    border-top-color: darkgray;
+    border-top-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    padding: 3px;
+    margin-top: -1px;
+}
+
+a.noteLink
+{
+    color: gray;
+}
+
+@font-face 
+{
+    font-family: rosetta-icons;
+    src: url("rosetta-icons-Regular.woff") format('woff');
+}
+
+a.replyIcon:before 
+{
+    font-family: rosetta-icons;
+    content: "\f151";
+    color: rgb(128, 128, 128);
+    padding: 5px;
+}
+
+a.pinnedIcon:before 
+{
+    font-family: rosetta-icons;
+    content: "\f147";
+    color: rgb(128, 128, 128);
+    padding: 5px;
+}
+
+a.viewReplyIcon:before 
+{
+    font-family: rosetta-icons;
+    content: "\f157";
+    color: rgb(128, 128, 128);
+    padding: 5px;
+}
+
+a.deleteIcon:before 
+{
+    font-family: rosetta-icons;
+    content: "\f154";
+    color: rgb(128, 128, 128);
+}
+
+a.reportIcon:before
+{
+    font-family: rosetta-icons;
+    content: "\f182";
+    color: rgb(128, 128, 128);
+}
+
+a.ignoreIcon:before
+{
+    font-family: rosetta-icons;
+    content: "\f184";
+    color: rgb(128, 128, 128);
+}
+
+a.editIcon:before
+{
+    font-family: rosetta-icons;
+    content: "\f112";
+    color: rgb(128, 128, 128);
+}
+
+a.noteIcon 
+{
+    color: gray;
+    text-decoration: none;
+}
+
+a.noteIcon 
+{
+    margin: 5px;
+}
+
+div.noteControls 
+{
+    float: left;
+    margin-top: 2px;
+}
+
+div.noteTools 
+{
+    float: right;
+    margin-top: 2px;
+}
+
+div.noteFooter 
+{
+    height: 25px;
+}
+
+div.newNoteCategory
+{
+    margin-top: -1px;
+    border-top-color: darkgray;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 25px;
+}
+
+
+a.noteAttachment
+{
+    color: gray;
+}
+
+div.scheduleEdit
+{
+    float: left;
+}
+
+div.scheduleDisplay
+{
+    float: right;
+}
+
+a.scheduleEditLink:before
+{
+    font-family: rosetta-icons;
+    content: "\f112";
+    color: rgb(128, 128, 128);
+}
+
+a.scheduleLink
+{
+    margin: 5px;
+    color: gray;
+}
+
+a.scheduleDisplayLink:before
+{
+    font-family: rosetta-icons;
+    content: "\f177";
+    color: rgb(128, 128, 128);
+}
+
+div.scheduleControls
+{
+    height: 21px;
+}
+
+div.spacer
+{
+    height: 10px;
+}
+
+div.pageElementContent
+{
+	padding: 10px;
+}
+
+img
+{
+    max-width:100%;
+}
