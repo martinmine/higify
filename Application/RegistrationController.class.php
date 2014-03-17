@@ -71,7 +71,7 @@ class RegistrationController implements IPageController
             {
                 $vals['ERROR_EMAIL'] = new ErrorMessageView('Please specify a valid email address');
             }
-            else if (UserController::requestUserByEmail($email) !== NULL) // A user already exists with this email
+            else if (UserController::requestUserByEmail($email)) // A user already exists with this email
             {
                 $vals['ERROR_EMAIL'] = new ErrorMessageView('An user with this email already exists');
             }
@@ -85,7 +85,7 @@ class RegistrationController implements IPageController
                 $vals['ERROR_CAPTCHA'] = new ErrorMessageView('Invalid security code');
             }
            
-            if (!isset($vals['ERROR_CAPTCHA']))
+            if (count($vals) == 1)
             {
                 $userID = UserController::registerUser($username, $password, $email);
                 ActivationController::generateActivationKey($userID, $email, ActivationType::EMAIL);
