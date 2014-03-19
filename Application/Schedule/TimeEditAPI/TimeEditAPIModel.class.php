@@ -3,6 +3,7 @@ require_once('TableObject.class.php');
 require_once('TimeTable.class.php');
 require_once('PullFormat.class.php');
 require_once('SearchResult.class.php');
+require_once('Application/DatabaseManager.class.php');
 
 /**
  * Holds all the functions responsible for parsing and merging data from TimeEdit
@@ -48,7 +49,31 @@ class TimeEditAPIModel
 	 */
 	private function pullResponse($format)
 	{
-        return file_get_contents(sprintf($this->queryURL, $format));
+        $url = sprintf($this->queryURL, $format);
+        
+        $pdo = DatabaseManager::getDB();
+        $pdo->exec('DELETE FROM TimeEditResponse WHERE requestTime != CURDATE()'); // Remove old elements
+        $query = $pdo->prepare('SELECT response FROM TimeEditResponse WHERE url = :url');
+        $query->bindParam(':url', $url);
+        $query->execute();
+        
+        $response = $query->fetch(PDO::FETCH_ASSOC);
+        
+        if ($response) // Cache hit
+        {
+            return $response['response'];
+        }
+        else // Cache miss
+        {
+            $response = file_get_contents($url);
+            $query = $pdo->prepare('INSERT INTO TimeEditResponse (url, requestTime, response) VALUES (:url, CURDATE(), :response)');
+            $query->bindParam(':url', $url);
+            $query->bindParam(':response', $response);
+            $query->execute();
+            return $response;
+            
+        }
+        
 /*		$cURL = curl_init();
 		
 		curl_setopt($cURL, CURLOPT_HEADER, 0);
