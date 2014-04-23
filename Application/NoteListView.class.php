@@ -72,7 +72,7 @@ class NoteListView extends WebPageElement
 		foreach($this->notes as $note)
 		{
             // If the note is public and the user has a rank
-            if ($note->isPublic() || (!$note->isPublic() && ($this->userRank || $note->getOwnerID() != $userID)))
+            if ($note->isPublic() || (!$note->isPublic() && ($this->userRank || $note->getOwnerID() == $userID)))
             {
 			    $noteOwner = $note->getOwnerID();
                 $voteStatus = NoteController::requestVoteStatus($note->getNoteID(), $userID);
