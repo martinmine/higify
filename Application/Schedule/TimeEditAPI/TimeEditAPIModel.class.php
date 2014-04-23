@@ -143,7 +143,7 @@ class TimeEditAPIModel
 		$lineCount = count($lines);
 		$rowDefinitions = TimeEditAPIModel::parseCSVRow($lines[TimeEditAPIModel::CSV_LINE_NUM - 1]);	
         $counter = 0;
-        
+		
 		for ($i = TimeEditAPIModel::CSV_LINE_NUM; $i < $lineCount; $i++)
 		{
 			if (strlen($lines[$i]) == 0)	// Yes, I know this is bad (For the sake of indent)
@@ -236,6 +236,7 @@ class TimeEditAPIModel
 							}
 						
 						case '':
+						case 'Kommentar':
 						case 'info':	// Ignore this element
 							{
 								break;
@@ -335,6 +336,8 @@ class TimeEditAPIModel
 	{
 		$keyContainer = $destination->getTableKeys();
 		$keyCount = count($keyContainer);
+		$keyCount = ($source->count() > $destination->count()) ?  $destination->count() : $source->count();
+		
 		for ($i = 0; $i < $keyCount; $i++)
 		{
 			$srcElement = NULL;
