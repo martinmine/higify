@@ -240,6 +240,7 @@ div.linkbutton {
 div.noteContainer
 {
     margin: 5px;
+	margin-top: 20px;
     border-style: solid;
     border-color: darkgray;
     border-width: 1px;
@@ -338,6 +339,62 @@ a.noteLink
 {
     color: gray;
 }
+
+/*
+CSS for new divs for feedback on notes
+added by: Thomas
+See: notefeedback.js
+*/
+
+.onDelete
+{
+	display: none;
+	background-color: #85C5E6;
+}
+
+.deleteOption
+{
+	margin-top: 4px;
+	width: 75px;
+	text-align: center;
+	height: 16px;
+	line-height: 16px;
+	background-color: #DDDDDD;
+	border: 1px solid #DDDDDD;
+	color: #000000;
+	font-size: small;
+	border-radius: 5px;
+}
+
+.deleteOption:hover
+{
+	border-color: #BBBBBB;
+	background-color: #BBBBBB;
+}
+
+.infoOption
+{
+	line-height: 25px;
+	margin-left: 10px;
+	font-size: medium;
+	float: left;
+}
+
+#confirmButton
+{
+	float: left;
+	margin-left: 4%;
+}
+
+#cancelButton
+{
+	float: left;
+	margin-left: 2%;
+}
+
+/*
+End: feedback css on notes.
+*/
 
 @font-face 
 {

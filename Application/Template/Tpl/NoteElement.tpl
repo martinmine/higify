@@ -31,14 +31,23 @@
                         <?php echo $CONTENT; ?>
                     </div>
                     <?php echo $NOTE_ATTACHMENT_CONTAINER; ?>
-                    <div class="noteFooter">
+					<div class="noteFooter onDelete" id="onDelete<?php echo $NOTE_ID; ?>">
+						<div class="infoOption">Delete note?</div>
+						<a href="mainpage.php?noteID=<?php echo $NOTE_ID . "&changeType=1"; ?>">
+							<div class="deleteOption" id="confirmButton">Confirm</div>
+						</a>
+						<a href="javascript:onNoteDeleteCancel(<?php echo $NOTE_ID; ?>)">
+							<div class="deleteOption" id="cancelButton">Cancel</div>
+						</a>
+					</div>
+                    <div class="noteFooter standard" id="standard<?php echo $NOTE_ID; ?>">
                         <div class="noteControls">
                             <a href="create_note.php?parent=<?php echo $NOTE_ID; ?>" class="replyIcon noteIcon">Reply</a>
                             <a href="view_note.php?id=<?php echo $NOTE_ID; ?>" class="viewReplyIcon noteIcon">View replies (<?php echo $REPLY_COUNT; ?>)</a>
                         </div>
                         <div class="noteTools">
 						    <?php if ($DISPLAY_EDIT) { ?><a href="create_note.php?edit_id=<?php echo $NOTE_ID; ?>" class="editIcon noteIcon">Edit</a><?php } ?>
-                            <?php if ($DISPLAY_DELETE) { ?><a href="mainpage.php?noteID=<?php echo $NOTE_ID . "&changeType=1"; ?>" class="deleteIcon noteIcon">Delete</a><?php } ?>
+                            <?php if ($DISPLAY_DELETE) { ?><a href="javascript:onNoteDelete(<?php echo $NOTE_ID; ?>)" class="deleteIcon noteIcon">Delete</a><?php } ?>
                             <?php if ($DISPLAY_REPORT) { ?><a href="report_note.php?id=<?php echo $NOTE_ID; ?>" class="reportIcon noteIcon">Report</a><?php } ?>
 							<?php if ($DISPLAY_IGNORE) { ?><a href="report_note.php?noteID=<?php echo $NOTE_ID; ?>&userID=<?php echo $REPORTERID; ?>" class="ignoreIcon noteIcon">Ignore</a><?php } ?>
                         </div>

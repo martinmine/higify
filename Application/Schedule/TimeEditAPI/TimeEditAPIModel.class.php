@@ -243,10 +243,12 @@ class TimeEditAPIModel
 							
 						default:		// Unknown element
 							{
+								/*	Annoing error on localhost:  - Thomas
                                 if (!is_array($rowDefinitions[$j]))
 								    trigger_error('Column ' . $j . '=>' . $rowDefinitions[$j] . ' is unknown');
                                 
 								break;
+								*/
 							}
 					}
                 }
