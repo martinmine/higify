@@ -330,7 +330,7 @@ class ScheduleController
             {
                 $includeObject['results'][] = array('code' => $code,
                                                     'desc' => $desc,
-                                                    'enabled' => in_array($code, $excludeObjects) ? 'false' : 'true');
+                                                    'enabled' => in_array($code, $excludeObjects) ? NULL : 'true');
             }
             
             $resultSet[] = $includeObject;
