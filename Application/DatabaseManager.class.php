@@ -22,7 +22,7 @@ class DatabaseManager
         {
             self::$pdo = new PDO('mysql:host=' . HigifyConfig::DB_HOST . ';dbname=' . HigifyConfig::DB_NAME . ';charset=utf8',
                                  HigifyConfig::DB_USER, HigifyConfig::DB_PSSW);
-            //self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         
         return self::$pdo;
