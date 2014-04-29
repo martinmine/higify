@@ -40,6 +40,15 @@
 							<div class="deleteOption" id="cancelButton">Cancel</div>
 						</a>
 					</div>
+					<div class="onReport vc hc" id="onReport<?php echo $NOTE_ID; ?>">
+						<div class="feedbackArea">
+							<p id="feedbackTitle">Message</p>
+							<p id="message">Note reported, thank your for helping us trying to keep this site clean</p>
+						</div>
+						<div class="buttonWrapper">
+							<button onclick="onReportContinue(<?php echo $NOTE_ID; ?>)">Continue</button>
+						</div>
+					</div>
                     <div class="noteFooter standard" id="standard<?php echo $NOTE_ID; ?>">
                         <div class="noteControls">
                             <a href="create_note.php?parent=<?php echo $NOTE_ID; ?>" class="replyIcon noteIcon">Reply</a>
@@ -48,7 +57,7 @@
                         <div class="noteTools">
 						    <?php if ($DISPLAY_EDIT) { ?><a href="create_note.php?edit_id=<?php echo $NOTE_ID; ?>" class="editIcon noteIcon">Edit</a><?php } ?>
                             <?php if ($DISPLAY_DELETE) { ?><a href="javascript:onNoteDelete(<?php echo $NOTE_ID; ?>)" class="deleteIcon noteIcon">Delete</a><?php } ?>
-                            <?php if ($DISPLAY_REPORT) { ?><a href="report_note.php?id=<?php echo $NOTE_ID; ?>" class="reportIcon noteIcon">Report</a><?php } ?>
+                            <?php if ($DISPLAY_REPORT) { ?><a href="javascript:onReport(<?php echo $NOTE_ID; ?>)" class="reportIcon noteIcon" id="report<?php echo $NOTE_ID; ?>">Report</a><?php } ?>
 							<?php if ($DISPLAY_IGNORE) { ?><a href="report_note.php?noteID=<?php echo $NOTE_ID; ?>&userID=<?php echo $REPORTERID; ?>" class="ignoreIcon noteIcon">Ignore</a><?php } ?>
                         </div>
                     </div>

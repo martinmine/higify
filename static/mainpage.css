@@ -1,4 +1,9 @@
-﻿body 
+﻿html
+{
+	height: 100%;
+}
+
+body 
 {
     margin: 0px;
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
@@ -346,6 +351,22 @@ added by: Thomas
 See: notefeedback.js
 */
 
+.vc 
+{
+	top: 0;
+	margin-top: auto;
+	bottom: 0;
+	margin-bottom: auto;
+}
+
+.hc 
+{
+	left: 0;
+	margin-left: auto;
+	right: 0;
+	margin-right: auto;
+}
+
 .onDelete
 {
 	display: none;
@@ -390,6 +411,38 @@ See: notefeedback.js
 {
 	float: left;
 	margin-left: 2%;
+}
+
+.onReport
+{
+	display: none;
+	background-color: #FFFFFF;
+	border: 1px solid black;
+	position: absolute;
+	z-position: 5px;
+	width: 300px;
+	height: 150px;
+	border-radius: 3px;
+}
+
+.feedbackArea
+{
+	padding: 5px;
+}
+
+#feedbackTitle
+{
+	margin-top: 0px;
+}
+
+#message
+{
+
+}
+
+.buttonWrapper
+{
+	text-align: center;
 }
 
 /*
