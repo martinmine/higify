@@ -30,4 +30,4 @@
 			<li class="cb-slideshowelement"><span></span></li>
 		</ul>
 		<div class="pageContainer">
-			<div class="centerContainer">
+			<div class="centerContainer" id="mainContainer">

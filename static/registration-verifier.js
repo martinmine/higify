@@ -36,6 +36,10 @@ function onRegister(e)
             if (!errorSet) {
                 formSubmission.unbind('submit').submit();
             }
+            else
+            {
+                $("#mainContainer").effect("shake", 500);
+            }
         }
     });
 
