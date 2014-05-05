@@ -1,4 +1,4 @@
-                <div class="noteContainer">
+                <div class="noteContainer" id="<?php echo $NOTE_ID; ?>">
                     <div class="noteHeader">
                         <div class="noteElementWrapper">
                             <div class="voteBox">
@@ -33,7 +33,7 @@
                     <?php echo $NOTE_ATTACHMENT_CONTAINER; ?>
 					<div class="noteFooter onDelete" id="onDelete<?php echo $NOTE_ID; ?>">
 						<div class="infoOption">Delete note?</div>
-						<a href="mainpage.php?noteID=<?php echo $NOTE_ID . "&changeType=1"; ?>">
+						<a href="javascript:onNoteDeleteConfirm(<?php echo $NOTE_ID; ?>)">
 							<div class="deleteOption" id="confirmButton">Confirm</div>
 						</a>
 						<a href="javascript:onNoteDeleteCancel(<?php echo $NOTE_ID; ?>)">

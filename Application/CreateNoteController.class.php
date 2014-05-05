@@ -85,7 +85,7 @@ class CreateNoteController implements IPageController
             $note->setCategory($category);
             
             NoteController::requestEditNote($note);
-            header('Location: mainpage.php');
+            header("Location: mainpage.php?nid=".$_GET['edit_id']);
         }
         else if (!empty($_POST['content']) || !empty($_FILES['file']))
         {
