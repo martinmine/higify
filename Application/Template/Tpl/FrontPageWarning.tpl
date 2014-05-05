@@ -1,3 +1,1 @@
-					<div class="warning">
-						<?php echo $MSG; ?>
-					</div>
+<div class='warning'><?php echo $MSG; ?></div>

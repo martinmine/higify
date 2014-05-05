@@ -1,3 +1,1 @@
-					<div class="error">
-						<?php echo $MSG; ?>
-					</div>
+<div class='error'><?php echo $MSG; ?></div>

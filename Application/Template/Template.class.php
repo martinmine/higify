@@ -78,7 +78,6 @@ class Template
         foreach ($this->templates as $tplURI)
         {
             require('Tpl/' . $tplURI . '.tpl');
-            echo "\n";
         }
     }
 }
