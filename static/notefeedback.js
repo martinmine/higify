@@ -9,10 +9,10 @@ $(document).ready(function() {
 	
 	if ($.get('nid') != null)
 	{
-		var t = '#'+$.get('nid');
+		var notebox = '#'+$.get('nid');
 		
 		$(function() {
-			$(t).effect("highlight", 3000);
+			$(notebox).effect("highlight", 3000);
 		});
 	}
 });
@@ -44,7 +44,7 @@ function onNoteDeleteConfirm(noteID)
 	$.ajax({
 		url: urll,
 		beforeSend: function(note) {
-			$(noteContainer).effect("blind", 500);
+			$(noteContainer).effect("blind", 1000);
 		}
 	});
 }
