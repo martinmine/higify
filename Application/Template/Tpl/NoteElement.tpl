@@ -56,7 +56,7 @@
                     <div class="noteFooter standard" id="standard<?php echo $NOTE_ID; ?>">
                         <div class="noteControls">
                             <a href="create_note.php?parent=<?php echo $NOTE_ID; ?>" class="replyIcon noteIcon">Reply</a>
-                            <a href="view_note.php?id=<?php echo $NOTE_ID; ?>" class="viewReplyIcon noteIcon">View replies (<?php echo $REPLY_COUNT; ?>)</a>
+                            <a href="view_note.php?nid=<?php echo $NOTE_ID; ?>" class="viewReplyIcon noteIcon">View replies (<?php echo $REPLY_COUNT; ?>)</a>
                         </div>
                         <div class="noteTools">
 						    <?php if ($DISPLAY_EDIT) { ?><a href="create_note.php?edit_id=<?php echo $NOTE_ID; ?>" class="editIcon noteIcon">Edit</a><?php } ?>
