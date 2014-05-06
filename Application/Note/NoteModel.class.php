@@ -24,7 +24,7 @@ class NoteModel
    * @uses Note
    * @throws PDOException
    */
-	public static function getNotesFromOwner($ownerID, $condition)
+	public static function getNotesFromOwner($ownerID, $condition, $noteCounter)
 	{
 		if ($condition === NoteType::NONE)
 		{
@@ -50,7 +50,7 @@ class NoteModel
 			}
             
 			$query .= ' ORDER BY Note.noteID DESC';
-			
+			$query .= ' LIMIT ' . $noteCounter . ',3';
 			$stmt = $db->prepare($query);
 			$stmt->bindParam(':ownerID', $ownerID);
 			$stmt->execute();
@@ -173,6 +173,7 @@ class NoteModel
                   LEFT OUTER JOIN Note AS NoteParent ON (NoteReply.parentNoteID = NoteParent.noteID)
                   LEFT OUTER JOIN User AS PosterUser ON (NoteParent.ownerID = PosterUser.userID)
                   WHERE Note.noteID = :noteID';
+
 		$stmt = $db->prepare($query);
 		$stmt->bindParam(':noteID', $noteID);
 		$stmt->execute();

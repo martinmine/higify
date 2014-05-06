@@ -33,13 +33,22 @@ class NoteListView extends WebPageElement
         $userID = SessionController::requestLoggedinID();
         $user = UserController::requestUserByID($userID);
         
+        
         $this->userRank = $user->getRank();
         
 		if ($noteOwnerID !== NULL)
 		{		
 			if ($noteOwnerID === $userID || ($noteOwnerID !== $userID  &&  $noteType === NoteType::PUBLIC_ONLY))
 			{
-				$this->notes = NoteController::requestNotesFromUser($noteOwnerID, $noteType);
+               if(isset($_POST['noteCounter']))
+               {
+                  $this->notes = NoteController::requestNotesFromUser($noteOwnerID, $noteType,$_POST['noteCounter']);  
+               }
+              
+			   else
+               {
+                  $this->notes = NoteController::requestNotesFromUser($noteOwnerID, $noteType);
+               }
 			}
 			else
 			{

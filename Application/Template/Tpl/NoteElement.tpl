@@ -1,4 +1,8 @@
-                <div class="noteContainer" id="<?php echo $NOTE_ID; ?>">
+                
+				<div class="noteContainer" id="<?php echo $NOTE_ID; ?>">
+				    <script>
+						incrementNoteCounter();
+				    </script>
                     <div class="noteHeader">
                         <div class="noteElementWrapper">
                             <div class="voteBox">
