@@ -13,8 +13,8 @@ class ViewNoteController implements IPageController
     {        
         $vals = array();
         
-        $vals['ORIGINAL'] = new NoteListView(NULL, NoteType::NONE, $_GET['id']);
-        $vals['NOTES'] = new NoteListView(NULL, NoteType::REPLY, $_GET['id']);
+        $vals['ORIGINAL'] = new NoteListView(NULL, NoteType::NONE, $_GET['nid']);
+        $vals['NOTES'] = new NoteListView(NULL, NoteType::REPLY, $_GET['nid']);
         
         return $vals;
     }

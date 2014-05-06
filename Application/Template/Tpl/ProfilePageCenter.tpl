@@ -1,5 +1,6 @@
+
 	<div class="pageSideContainer">
-		<div class="pageElement">
+		<div class="pageElement" id="notes">
 				<div class="pageTitle">Notes </div>
 				<?php echo $RESULTS; ?>
 		</div>

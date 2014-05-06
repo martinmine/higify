@@ -182,7 +182,7 @@ class NoteModel
         return self::fetchNote($obj);	
 	}
     
-    public static function getNoteByCategory($category)
+    public static function getNoteByCategory($category, $noteCounter)
     {
         $res = array();
 		$db = DatabaseManager::getDB();
@@ -196,6 +196,8 @@ class NoteModel
                   LEFT OUTER JOIN User AS PosterUser ON (NoteParent.ownerID = PosterUser.userID)
                   WHERE Note.category = :cat
                   ORDER BY Note.noteID DESC';
+        
+		$query .= ' LIMIT ' . $noteCounter . ',3';
                   
 		$stmt = $db->prepare($query);
 		$stmt->bindParam(':cat', $category);

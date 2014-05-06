@@ -28,7 +28,7 @@ class NoteListView extends WebPageElement
 	 * @param int $noteOwnerID ID of the owner of notes to display.
 	 * @param NoteType $noteType desired notes to display.
 	 */
-	public function __construct($noteOwnerID = NULL, $noteType = NoteType::NONE, $parentNoteID = NULL, $category = NULL)
+	public function __construct($noteOwnerID = NULL, $noteType = NoteType::NONE, $parentNoteID = NULL, $category = NULL, $noteCounter = 0)
 	{
         $userID = SessionController::requestLoggedinID();
         $user = UserController::requestUserByID($userID);
@@ -40,16 +40,9 @@ class NoteListView extends WebPageElement
 		{		
 			if ($noteOwnerID === $userID || ($noteOwnerID !== $userID  &&  $noteType === NoteType::PUBLIC_ONLY))
 			{
-               if(isset($_POST['noteCounter']))
-               {
-                  $this->notes = NoteController::requestNotesFromUser($noteOwnerID, $noteType,$_POST['noteCounter']);  
-               }
+               $this->notes = NoteController::requestNotesFromUser($noteOwnerID, $noteType, $noteCounter);
+            }
               
-			   else
-               {
-                  $this->notes = NoteController::requestNotesFromUser($noteOwnerID, $noteType);
-               }
-			}
 			else
 			{
 				header('Location: mainpage.php');
@@ -65,7 +58,7 @@ class NoteListView extends WebPageElement
         }
         else 
         {
-            $this->notes = NoteController::requestNoteByCategory($category);
+           $this->notes = NoteController::requestNoteByCategory($category, $noteCounter);
         }
 	}
 	
