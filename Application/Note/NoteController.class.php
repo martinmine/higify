@@ -133,9 +133,9 @@ require_once('NoteModel.class.php');
          * @param integer $parentNode ID of the parent note
          * @return Array of all the Note childs
          */
-        public static function requestReplies($parentNode)
+        public static function requestReplies($parentNode, $noteCounter)
         {
-           return NoteModel::getReplies($parentNode);
+           return NoteModel::getReplies($parentNode, $noteCounter);
 		}
 
         /**

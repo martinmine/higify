@@ -20,6 +20,13 @@
         $noteView = new noteListView(NULL, NoteType::NONE, NULL, $categoryID, $noteCounter);
     }
     
+    else if (isset($_POST['noteID']) && isset($_POST['noteCounter']))
+    {
+        $noteID = $_POST['noteID'];
+        $noteCounter = $_POST['noteCounter'];
+        $noteView = new noteListView(NULL, NoteType::REPLY, $noteID, NULL, $noteCounter);
+    }
+    
     else 
     {
         $userID = SessionController::requestLoggedinID();

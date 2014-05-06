@@ -113,7 +113,7 @@ class NoteModel
 	}
     
     
-    public static function getReplies($parentNote)
+    public static function getReplies($parentNote, $noteCounter)
     {
         $query = 'SELECT Note.noteID, Note.ownerID, Note.content, Note.isPublic, Note.timePublished, User.username,
                   Note.category, Note.points, PosterUser.username AS OP, NoteParent.noteID as parent
@@ -123,6 +123,8 @@ class NoteModel
                   LEFT OUTER JOIN Note AS NoteParent ON (Reply.parentNoteID = NoteParent.noteID)
                   LEFT OUTER JOIN User AS PosterUser ON (NoteParent.ownerID = PosterUser.userID)
                   WHERE Reply.parentNoteID = :parentNote';
+                  
+        $query .= ' LIMIT ' . $noteCounter . ',3'; 
         
         $db = DatabaseManager::getDB();
         $stmt = $db->prepare($query);

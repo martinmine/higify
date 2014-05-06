@@ -2,6 +2,7 @@
 var noteCounter = 0;
 var profileID;
 var categoryID;
+var noteID;
 
 function incrementNoteCounter()
 {
@@ -27,6 +28,12 @@ $(document).ready(function() {
 		categoryID = $.get('cat');
 		console.log(categoryID);
 	}
+	
+	if ($.get('nid') != null)
+	{
+		noteID = $.get('nid');
+		console.log(noteID);
+	}
 });
 
 				
@@ -35,7 +42,7 @@ $(document).ready(function() {
 		console.log(noteCounter);
 		$.ajax ({
 			url: './get_notes.php',
-			data: {'noteCounter': noteCounter, 'profileID': profileID, 'categoryID': categoryID},
+			data: {'noteCounter': noteCounter, 'profileID': profileID, 'categoryID': categoryID, 'noteID': noteID},
 			type: 'post',
 			async: false,
 			success: function (data) {

@@ -23,12 +23,12 @@
                         <div class="noteTitle">
                             <a href="profile.php?id=<?php echo $USER_ID; ?>" class="noteLink"><?php echo $USERNAME; ?></a> 
 							<?php if (empty($OP)) { ?>posted <?php } 
-							      else { ?> <a href="view_note.php?id=<?php echo $PARENT_ID; ?>" class="noteLink">replied to <?php echo $OP; ?></a><?php } ?>
+							      else { ?> <a href="view_note.php?nid=<?php echo $PARENT_ID; ?>" class="noteLink">replied to <?php echo $OP; ?></a><?php } ?>
 								  <?php if ($CATEGORY) { ?>in <a href="view_category.php?cat=<?php echo $CATEGORY_LINK; ?>" class="noteLink"><?php echo $CATEGORY; ?></a><?php } ?>
 								  <?php if (isset($REPORTER)) { ?>Reported by <a href="profile.php?id=<?php echo $REPORTERID; ?>" class="noteLink"><?php echo $REPORTER; ?></a> <?php } ?>
                         </div>
                         <div class="noteTimeStamp">
-                            <a href="view_note.php?id=<?php echo $NOTE_ID; ?>" class="noteLink"><?php echo $TIME; ?></a>
+                            <a href="view_note.php?Fid=<?php echo $NOTE_ID; ?>" class="noteLink"><?php echo $TIME; ?></a>
                         </div>
                     </div>
                     <div class="noteContent" id="content<?php echo $NOTE_ID; ?>">
@@ -61,6 +61,7 @@
                             <a href="create_note.php?parent=<?php echo $NOTE_ID; ?>" class="replyIcon noteIcon">Reply</a>
                             <a href="view_note.php?nid=<?php echo $NOTE_ID; ?>" class="viewReplyIcon noteIcon">View replies (<?php echo $REPLY_COUNT; ?>)</a>
                         </div>
+			
                         <div class="noteTools">
 						    <?php if ($DISPLAY_EDIT) { ?><a href="create_note.php?edit_id=<?php echo $NOTE_ID; ?>" class="editIcon noteIcon">Edit</a><?php } ?>
                             <?php if ($DISPLAY_DELETE) { ?><a href="javascript:onNoteDelete(<?php echo $NOTE_ID; ?>)" class="deleteIcon noteIcon">Delete</a><?php } ?>

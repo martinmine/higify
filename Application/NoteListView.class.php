@@ -50,7 +50,7 @@ class NoteListView extends WebPageElement
 		}
         else if ($parentNoteID != NULL && $noteType === NoteType::REPLY)
         {
-            $this->notes = NoteController::requestReplies($parentNoteID);
+            $this->notes = NoteController::requestReplies($parentNoteID, $noteCounter);
         }
         else if ($noteOwnerID === NULL && $noteType === NoteType::NONE && $category === NULL)
         {
