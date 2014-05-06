@@ -95,20 +95,22 @@ function formatTimeTable(cellHeight, cellWidth, cellDayHeaderHeight, cellDayPadd
 	setHeightAndWidth('//div[contains(@class, "dayPadding")]', cellWidth, cellDayPaddingHeight);
 	setHeightAndWidth('//div[contains(@class, "weekPadding")]', cellTimeWidth - 4, cellDayPaddingHeight);
 
-	initTimeLine(cellDayHeaderHeight + cellDayPaddingHeight, 8, cellHeight);
+	initTimeLine(cellDayHeaderHeight + cellDayPaddingHeight, 8, 19, cellHeight);
 }
 
 var timeLineOffset; // Height from the top of the schedule and down to the first cell item (first hour)
-var firstHour; // Number of the first hour on the schedule
+var minHour; // Number of the first hour on the schedule
+var maxHour; // The highest hour on the schedule
 var timeCellHeight; // The height of the cells
 
 /**
 * Initlaizes the time line variables and the timer function
 */
-function initTimeLine(offset, firstScheduleHour, cellHeight) {
+function initTimeLine(offset, firstScheduleHour, lastScheduleHour, cellHeight) {
     timeLineOffset = offset + 2;
     timeCellHeight = cellHeight + 1;
-    firstHour = firstScheduleHour;
+    minHour = firstScheduleHour;
+    maxHour = lastScheduleHour;
     window.setInterval(onMinute, 60000);
     onMinute();
 }
@@ -127,11 +129,20 @@ function onMinute()
 */
 function setTimeLine(hour, minute)
 {
-    var totalMinutes = (hour - firstHour) * 60 + minute;
-    var pixelPerMinute = timeCellHeight / 60;
-    var offset = totalMinutes * pixelPerMinute;
+    var timeLineElement = document.getElementById('scheduleTimeLine');
+    if (hour < minHour || hour > maxHour)
+    {
+        timeLineElement.style.display = 'none';
+    }
+    else
+    {
+        var totalMinutes = (hour - minHour) * 60 + minute;
+        var pixelPerMinute = timeCellHeight / 60;
+        var offset = totalMinutes * pixelPerMinute;
 
-    document.getElementById('scheduleTimeLine').style.marginTop = (timeLineOffset + offset) + "px";
+        timeLineElement.style.display = '';
+        timeLineElement.style.marginTop = (timeLineOffset + offset) + "px";
+    }
 }
 
 /**
