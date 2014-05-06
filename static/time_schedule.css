@@ -34,6 +34,7 @@ div.weekIdentifier
 	padding: 0px;		
 	font-weight: bold;
 	text-align: center;
+	font-size: 14px;
 }
 
 div.timeIdentifier
@@ -228,4 +229,24 @@ div.weekScheduleContainer
     background-color: white;
     padding: 20px;
     width: 1037px;
+}
+
+a.leftScheduleLink
+{
+    float: left;
+}
+
+a.rightScheduleLink
+{
+    float: right;
+}
+
+div.scheduleTitle
+{
+    margin-left: auto;
+    margin-right: auto;
+    margin: 5px;
+    color: gray;
+    text-align: center;
+    font-weight: bold;
 }

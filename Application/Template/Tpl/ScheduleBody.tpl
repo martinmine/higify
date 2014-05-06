@@ -17,7 +17,12 @@
 <?php echo $TABLEJS; ?>
 				};
 		</script>
+		<a class="leftScheduleLink scheduleLink" href="display_schedule.php?week=<?php echo $WEEKNUMB-1; ?>">&laquo; Previous week (W<?php echo $WEEKNUMB-1; ?>)</a>
+		
+		<a class="rightScheduleLink scheduleLink" href="display_schedule.php?week=<?php echo $WEEKNUMB+1; ?>">Next week (W<?php echo $WEEKNUMB+1; ?>) &raquo;</a>
+		<div class="scheduleTitle">Schedule for week <?php echo $WEEKNUMB; ?></div>
 		<div id="scheduleContainer" class="scheduleContainer">
+		
 			<div class="timeStamps">
 				<div class="weekIdentifier"></div>
 				<div class="timeIdentifier weekPadding">

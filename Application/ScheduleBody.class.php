@@ -26,6 +26,12 @@ class ScheduleBody extends WebPageElement
     private $hourEnd;
     
     /**
+    * The week number this schedule is for
+    * @var integer
+    */
+    private $weekNumber;
+    
+    /**
      * Which day number the schedule begins on (Monday = 1)
      */
     
@@ -35,11 +41,12 @@ class ScheduleBody extends WebPageElement
      */
     const DAY_END = 5;
     
-    public function __construct($schedule, $hourBegin, $hourEnd)
+    public function __construct($schedule, $hourBegin, $hourEnd, $weekNumber)
     {
         $this->schedule = $schedule;
         $this->hourBegin = $hourBegin;
         $this->hourEnd = $hourEnd;
+        $this->weekNumber = $weekNumber;
     }
     
     /**
@@ -51,6 +58,7 @@ class ScheduleBody extends WebPageElement
         $tpl->appendTemplate('ScheduleBody');
         $tpl->setValue('TABLEJS', new TableJavascriptElement($this->schedule, self::DAY_BEGIN, self::DAY_END));
         $tpl->setValue('HOURBEGIN', $this->hourBegin);
+        $tpl->setValue('WEEKNUMB', $this->weekNumber);
         $tpl->setValue('TIMELABELS', new TimeLabelElement($this->hourBegin, $this->hourEnd));
         $tpl->setValue('DAYS', new ScheduleDayContainerElement($this->schedule, self::DAY_BEGIN, self::DAY_END, $this->hourBegin, $this->hourEnd));
         $tpl->display();
