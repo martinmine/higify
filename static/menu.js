@@ -9,7 +9,7 @@ function setMenuFloaters()
 {
     var left = document.getElementById("bannerFloaterLeft");
     var right = document.getElementById("bannerFloaterRight");
-    var floaterWidth = ($(document).width() - 1000) / 2;
+    var floaterWidth = Math.floor(($(document).width() - 1000) / 2) - 1;
     left.style.width = floaterWidth + "px";
     right.style.width = floaterWidth + "px";
 }
