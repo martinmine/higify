@@ -31,5 +31,6 @@
 <?php echo $TIMELABELS; ?>
 			</div>
 <?php echo $DAYS; ?>
+			<div class="timeLine" id="scheduleTimeLine"></div>
 		</div>
 		</div>

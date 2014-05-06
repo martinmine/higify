@@ -250,3 +250,11 @@ div.scheduleTitle
     text-align: center;
     font-weight: bold;
 }
+
+div.timeLine
+{
+    background: orange; 
+    height: 2px;
+    position: absolute;
+    width: 1050px;
+}

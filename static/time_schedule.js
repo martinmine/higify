@@ -94,6 +94,44 @@ function formatTimeTable(cellHeight, cellWidth, cellDayHeaderHeight, cellDayPadd
 
 	setHeightAndWidth('//div[contains(@class, "dayPadding")]', cellWidth, cellDayPaddingHeight);
 	setHeightAndWidth('//div[contains(@class, "weekPadding")]', cellTimeWidth - 4, cellDayPaddingHeight);
+
+	initTimeLine(cellDayHeaderHeight + cellDayPaddingHeight, 8, cellHeight);
+}
+
+var timeLineOffset; // Height from the top of the schedule and down to the first cell item (first hour)
+var firstHour; // Number of the first hour on the schedule
+var timeCellHeight; // The height of the cells
+
+/**
+* Initlaizes the time line variables and the timer function
+*/
+function initTimeLine(offset, firstScheduleHour, cellHeight) {
+    timeLineOffset = offset + 2;
+    timeCellHeight = cellHeight + 1;
+    firstHour = firstScheduleHour;
+    window.setInterval(onMinute, 60000);
+    onMinute();
+}
+
+/**
+* Function called each minute, moves the time line
+*/
+function onMinute()
+{
+    var now = new Date();
+    setTimeLine(now.getHours(), now.getMinutes());
+}
+
+/**
+* Moves the time line to a given hour/minute on the schedule
+*/
+function setTimeLine(hour, minute)
+{
+    var totalMinutes = (hour - firstHour) * 60 + minute;
+    var pixelPerMinute = timeCellHeight / 60;
+    var offset = totalMinutes * pixelPerMinute;
+
+    document.getElementById('scheduleTimeLine').style.marginTop = (timeLineOffset + offset) + "px";
 }
 
 /**
