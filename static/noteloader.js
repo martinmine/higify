@@ -40,7 +40,8 @@ $(document).ready(function() {
 			async: false,
 			success: function (data) {
 			    $( "#notes" ).append(data);
+				//addReadMoreLess();
 			}
-		})	;
+		});
 	}
 });
