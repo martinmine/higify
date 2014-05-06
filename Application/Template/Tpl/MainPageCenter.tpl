@@ -2,7 +2,7 @@
 
             <div class="pageElement">
                 <a href="javascript:newNoteToggle()" id="newNoteButton">
-					<div class="pageTitle">Create a new note</div>
+					<div class="pageTitle" id="newNoteButton">Create a new note</div>
 				</a>
 				<div class="pageContent">
 					<?php echo $CREATE_NOTE_CATEGORIES; ?>
