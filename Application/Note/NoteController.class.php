@@ -24,9 +24,9 @@ require_once('NoteModel.class.php');
 		 * @param $condition const (enum) for showing desired notes.
 		 * @return Array of note-objects with desired and legal $condition.
 		 */
-		public static function requestNotesFromUser($noteOwnerID, $condition = NoteType::NONE)
+		public static function requestNotesFromUser($noteOwnerID, $condition = NoteType::NONE,$noteCounter = 0)
 		{
-			return NoteModel::getNotesFromOwner($noteOwnerID, $condition);
+			return NoteModel::getNotesFromOwner($noteOwnerID, $condition, $noteCounter);
 		}
 		
 		/**

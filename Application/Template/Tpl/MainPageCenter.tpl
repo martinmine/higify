@@ -4,8 +4,8 @@
                 <div class="pageTitle">Create a new note</div>
                 <?php echo $CREATE_NOTE_CATEGORIES; ?>
             </div>
-
-            <div class="pageElement">
+			
+            <div class="pageElement" id="notes">
                 <div class="pageTitle">
                     Recent notes
                 </div>
