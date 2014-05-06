@@ -170,6 +170,22 @@ div.pageElement
     padding-bottom: 4px;
 }
 
+#newNoteButton
+{
+	text-decoration: none;	
+	color: black;
+}
+
+#newNoteButton:hover
+{
+	background-color: lightgrey;
+}
+
+div.pageContent
+{
+	display: none;
+}
+
 div.pageTitle
 {
     font-size: 35px;

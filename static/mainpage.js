@@ -1,7 +1,4 @@
-$(document).ready(function() {
-	
-	$("#newNoteTitle").click(function() {
-		$("#pageContent").effect();
-	});
-
-});
+function newNoteToggle()
+{
+	$(".pageContent").toggle("fast");
+}

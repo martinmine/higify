@@ -1,8 +1,12 @@
         <div class="pageSideContainer">
 
             <div class="pageElement">
-                <div class="pageTitle">Create a new note</div>
-                <?php echo $CREATE_NOTE_CATEGORIES; ?>
+                <a href="javascript:newNoteToggle()" id="newNoteButton">
+					<div class="pageTitle">Create a new note</div>
+				</a>
+				<div class="pageContent">
+					<?php echo $CREATE_NOTE_CATEGORIES; ?>
+				</div>
             </div>
 			
             <div class="pageElement" id="notes">
