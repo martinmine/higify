@@ -31,9 +31,12 @@
                             <a href="view_note.php?id=<?php echo $NOTE_ID; ?>" class="noteLink"><?php echo $TIME; ?></a>
                         </div>
                     </div>
-                    <div class="noteContent">
+                    <div class="noteContent" id="content<?php echo $NOTE_ID; ?>">
                         <?php echo $CONTENT; ?>
                     </div>
+					<a href="javascript:readMore(<?php echo $NOTE_ID; ?>)" id="readMore<?php echo $NOTE_ID; ?>">
+						<div class="readMore" id="readMore<?php echo $NOTE_ID; ?>">Read more</div>
+					</a>
                     <?php echo $NOTE_ATTACHMENT_CONTAINER; ?>
 					<div class="noteFooter onDelete" id="onDelete<?php echo $NOTE_ID; ?>">
 						<div class="infoOption">Delete note?</div>

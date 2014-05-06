@@ -349,11 +349,7 @@ div.noteContent
     border-top-style: solid;
     border-top-color: darkgray;
     border-top-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: darkgray;
-    border-bottom-width: 1px;
     padding: 3px;
-    margin-top: -1px;
 }
 
 a.noteLink
@@ -548,6 +544,9 @@ div.noteTools
 
 div.noteFooter 
 {
+    border-top-style: solid;
+    border-top-color: darkgray;
+    border-top-width: 1px;
     height: 25px;
 }
 

@@ -15,8 +15,71 @@ $(document).ready(function() {
 			$(notebox).effect("highlight", 3000);
 		});
 	}
+	
+	addReadMoreLess();
 });
 
+function addReadMoreLess() {
+	$(".noteContent").each( function() {
+		
+		var height = $(this).height();
+		var id = '#' + $(this).next().attr('id');
+		
+		console.log(id);
+		
+		if ( height > 100 ) 
+		{
+			$(id).show();
+			$(this).css({
+				height : 100,
+				overflow: 'hidden'
+			});
+		}
+		else
+		{
+			$(id).hide();
+		}
+	});	
+}
+
+function readMore(noteID)
+{
+	var readMore = '#readMore' + noteID;
+	var content = '#content' + noteID;
+	var readLess = 'javascript:readLess(' + noteID + ')';
+	
+	$(readMore).html('Read less');
+	/*
+	$(content).animate({height: }, "slow", function() {
+		console.log(noteID);
+	});*/
+	
+	$(content).css({
+		height : 'auto',
+		overflow : 'visible'
+	});
+	
+	$(readMore).attr("href", readLess);
+}
+
+function readLess(noteID)
+{
+	var readLess = '#readMore' + noteID;
+	var content = '#content' + noteID;
+	var readMore = 'javascript:readMore(' + noteID + ')';
+	
+	$(readLess).html('Read more');
+	$(content).animate({height: 100}, "slow", function() {
+		$(this).css("overflow", "hidden");
+	});
+	/*
+	$(content).css({
+		height: 100,
+		overflow: 'hidden'
+	});
+	*/
+	$(readLess).attr("href", readMore);
+}
 
 function onNoteDelete(noteID) 
 {
