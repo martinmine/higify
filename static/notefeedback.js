@@ -17,17 +17,20 @@ $(document).ready(function() {
 	}
 });
 
+
+// This function is called on each note on loading, this way the feature
+//		also applies on new notes loaded by scrolling:
 function addReadMoreLess(noteID) {
 		
 	var content = '#content' + noteID;
 	var height = $(content).height();
 	var id = '#readMore' + noteID;
 	
-	if ( height > 100 ) 
+	if ( height > 200 ) 
 	{
 		$(id).show();
 		$(content).css({
-			height : 100,
+			height : 200,
 			overflow: 'hidden'
 		});
 	}
@@ -37,6 +40,7 @@ function addReadMoreLess(noteID) {
 	}
 }
 
+//	Expands the content of a note to its auto height by changing css.
 function readMore(noteID)
 {
 	var readMore = '#readMore' + noteID;
@@ -44,19 +48,18 @@ function readMore(noteID)
 	var readLess = 'javascript:readLess(' + noteID + ')';
 	
 	$(readMore).html('Read less');
-	/*
-	$(content).animate({height: }, "slow", function() {
-		console.log(noteID);
-	});*/
 	
-	$(content).css({
-		height : 'auto',
-		overflow : 'visible'
-	});
+	//	Saving current and the auto height. Have to know these to animate it:
+	var curHeight = $(content).height();
+	var autoHeight = $(content).css('height','auto').height();
+	
+	// set height back to current before animateing it to the desired height.
+	$(content).height(curHeight).animate({height: autoHeight}, 1000);
 	
 	$(readMore).attr("href", readLess);
 }
 
+//	Contracts the content to its default.
 function readLess(noteID)
 {
 	var readLess = '#readMore' + noteID;
@@ -64,15 +67,10 @@ function readLess(noteID)
 	var readMore = 'javascript:readMore(' + noteID + ')';
 	
 	$(readLess).html('Read more');
-	$(content).animate({height: 100}, "slow", function() {
+	$(content).animate({height: 200}, "slow", function() {
 		$(this).css("overflow", "hidden");
 	});
-	/*
-	$(content).css({
-		height: 100,
-		overflow: 'hidden'
-	});
-	*/
+	
 	$(readLess).attr("href", readMore);
 }
 

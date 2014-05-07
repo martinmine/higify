@@ -34,7 +34,7 @@
                     <div class="noteContent" id="content<?php echo $NOTE_ID; ?>">
                         <?php echo $CONTENT; ?>
                     </div>
-					<a href="javascript:readMore(<?php echo $NOTE_ID; ?>)" id="readMore<?php echo $NOTE_ID; ?>">
+					<a href="javascript:readMore(<?php echo $NOTE_ID; ?>)" class="readMore" id="readMore<?php echo $NOTE_ID; ?>">
 						<div class="readMore" id="readMore<?php echo $NOTE_ID; ?>">Read more</div>
 					</a>
                     <?php echo $NOTE_ATTACHMENT_CONTAINER; ?>

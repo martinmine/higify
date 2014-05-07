@@ -457,6 +457,13 @@ See: notefeedback.js
 	text-align: center;
 }
 
+a.readMore
+{
+	color: #0000FF;
+	text-decoration: none;
+}
+
+
 /*
 End: feedback css on notes.
 */
