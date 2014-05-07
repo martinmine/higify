@@ -70,3 +70,6 @@
                         </div>
                     </div>
                 </div>
+				<script>
+					addReadMoreLess(<?php echo $NOTE_ID; ?>);
+				</script>

@@ -15,31 +15,26 @@ $(document).ready(function() {
 			$(notebox).effect("highlight", 3000);
 		});
 	}
-	
-	addReadMoreLess();
 });
 
-function addReadMoreLess() {
-	$(".noteContent").each( function() {
+function addReadMoreLess(noteID) {
 		
-		var height = $(this).height();
-		var id = '#' + $(this).next().attr('id');
-		
-		console.log(id);
-		
-		if ( height > 100 ) 
-		{
-			$(id).show();
-			$(this).css({
-				height : 100,
-				overflow: 'hidden'
-			});
-		}
-		else
-		{
-			$(id).hide();
-		}
-	});	
+	var content = '#content' + noteID;
+	var height = $(content).height();
+	var id = '#readMore' + noteID;
+	
+	if ( height > 100 ) 
+	{
+		$(id).show();
+		$(content).css({
+			height : 100,
+			overflow: 'hidden'
+		});
+	}
+	else
+	{
+		$(id).hide();
+	}
 }
 
 function readMore(noteID)
