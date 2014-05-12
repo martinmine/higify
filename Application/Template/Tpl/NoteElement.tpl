@@ -7,13 +7,13 @@
                         <div class="noteElementWrapper">
                             <div class="voteBox">
 								<div class="upvote">
-									<a href="vote.php?noteid=<?php echo $NOTE_ID; ?>&type=1"><img src="static/<?php echo $UPVOTE_IMG; ?>.png" /></a>
+									<a href="javascript:void(0)" onclick="registerVote(<?php echo $NOTE_ID; ?>, 1, this);"><img id="upvote_<?php echo $NOTE_ID; ?>" src="static/<?php echo $UPVOTE_IMG; ?>.png" /></a>
 								</div>
-                                <div class="voteCounter">
+                                <div class="voteCounter" id="votes_<?php echo $NOTE_ID; ?>" >
 									<?php echo $VOTE_BALANCE; ?>
 								</div>
 								<div class="downvote">
-									<a href="vote.php?noteid=<?php echo $NOTE_ID; ?>&type=0"><img src="static/<?php echo $DOWNVOTE_IMG; ?>.png" /></a>
+									<a href="javascript:void(0)" onclick="registerVote(<?php echo $NOTE_ID; ?>, 0, this);"><img id="downvote_<?php echo $NOTE_ID; ?>" src="static/<?php echo $DOWNVOTE_IMG; ?>.png" /></a>
 								</div>
                             </div>
                             <div class="noteProfilePictureContainer">
@@ -34,7 +34,7 @@
                     <div class="noteContent" id="content<?php echo $NOTE_ID; ?>">
                         <?php echo $CONTENT; ?>
                     </div>
-					<a href="javascript:readMore(<?php echo $NOTE_ID; ?>)" id="readMore<?php echo $NOTE_ID; ?>">
+					<a href="javascript:readMore(<?php echo $NOTE_ID; ?>)" class="readMore" id="readMore<?php echo $NOTE_ID; ?>">
 						<div class="readMore" id="readMore<?php echo $NOTE_ID; ?>">Read more</div>
 					</a>
                     <?php echo $NOTE_ATTACHMENT_CONTAINER; ?>

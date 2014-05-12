@@ -3,15 +3,26 @@ require_once('Application/Template/Template.class.php');
 require_once('Application/Note/NoteController.class.php');
 require_once('Application/Session/SessionController.class.php');
 
-
-$userID = SessionController::requestLoggedinID();
 if (isset($_GET['noteid']) && isset($_GET['type']))
 {
-    NoteController::registerVote($_GET['noteid'], $userID, $_GET['type']);
+    $userID = SessionController::requestLoggedinID(true);
+    
+    if ($userID !== NULL)
+    {
+        $statusCode = NoteController::registerVote($_GET['noteid'], $userID, $_GET['type']);
+        $status = 'OK';
+    }
+    else
+    {
+        $statusCode = 0;
+        $status = 'NOSESSION';
+    }
+}
+else
+{
+    $statusCode = 0;
+    $status = 'MISSINGPARM';
 }
 
-$tpl = new Template();
-$tpl->appendTemplate('RedirectBack');
-$tpl->setValue('PAGE_TITLE', 'Vote Registered');
-$tpl->display();
+echo json_encode(array('status' => $status, 'voteresponse' => $statusCode));
 ?>
