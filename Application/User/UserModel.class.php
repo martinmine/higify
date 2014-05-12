@@ -397,7 +397,6 @@ class UserModel
 		{
             $hits[] = $res;  
 		}
-	
 		return $hits;
 	}
 }

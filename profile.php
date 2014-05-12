@@ -21,7 +21,7 @@ $tpl->appendTemplate('MainPageHeader');
 $tpl->setValue('PAGE_TITLE', $title);
 $tpl->setValue('BANNER_TITLE', $title);
 $tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'schedule', 'schedule_mainpage', 'profile', 'editor'));
-$tpl->setValue('JS', array('jquery-latest.min', 'menu', 'notefeedback','noteloader'));
+$tpl->setValue('JS', array('jquery-latest.min', 'menu', 'notefeedback','noteloader', 'searchresults'));
 $tpl->registerController(new BannerController());
 $tpl->registerController(new ProfilePageController());
 $tpl->appendTemplate('ProfilePageCenter');

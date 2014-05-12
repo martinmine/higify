@@ -3,7 +3,7 @@
 						<div class="imgbox">
 							<img class="desaturate" src="display_profile_picture.php?id=<?php echo $USER_ID; ?>" width="50" height="50"/>
 						</div>
-						<div class="name">
+						<div class="name" id=">
 							<?php echo $USERNAME; ?>
 						</div>
 					</a>
