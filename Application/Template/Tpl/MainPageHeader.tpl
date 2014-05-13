@@ -40,12 +40,20 @@
 				<div class="pageControllerContainer">
 					<div class="searchWrapper">
 						<div class="searchContainer">
-							<form class="form-wrapper cf" method="get" action="searchresults.php">
-								<input type="text" name="searchterm" placeholder="Search by username..." required></input>
+							<form class="form-wrapper" id="searchform" onKeyup="getSearchResults(this.searchString.value)"> <!--method="get" action="searchresults.php"-->
+								<input type="text" id="searchString" placeholder="Search by username..." required></input>
 								<button type="submit">Search</button>
-							</form>  
+							</form>
+						
 						</div>
+						<div class="searchmsg">
+						
+						</div>
+						<div class="searchresult" id="searchresult">
+								
+							</div>
 					</div>
+						
 				</div>
 			</div>
 		</div>

@@ -12,7 +12,7 @@ $tpl->appendTemplate('MainPageHeader');
 $tpl->setValue('PAGE_TITLE', 'Mainpage');
 $tpl->setValue('BANNER_TITLE', 'Your Higify');
 $tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'schedule', 'schedule_mainpage', 'editor'));
-$tpl->setValue('JS', array('jquery-latest.min', 'menu', 'notefeedback', 'js/jquery-ui-1.10.4.custom', 'wgxpath.install', 'schedule_updater', 'mainpage', 'noteloader', 'register_vote'));
+$tpl->setValue('JS', array('jquery-latest.min', 'menu', 'notefeedback', 'js/jquery-ui-1.10.4.custom', 'wgxpath.install', 'schedule_updater', 'mainpage', 'noteloader', 'searchresults', 'register_vote'));
 $tpl->registerController(new BannerController());
 $tpl->registerController(new MainPageController());
 $tpl->appendTemplate('MainPageCenter');
