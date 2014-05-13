@@ -400,5 +400,66 @@ class UserModel
 	
 		return $hits;
 	}
+    
+    /*
+    * Fetches the users which an user stalks from the databse
+    * @param  integer userID The ID of the user we want to see who stalks
+    * @return array User objects which the user stalks
+    */
+    public static function fetchStalkers($userID)
+    {
+        $res = array();
+        $query = 'SELECT User.userID, username, email, emailActivated, publicTimeSchedule, rank
+                 FROM Stalker
+                 JOIN User ON (Stalker.target = User.userID)
+                 LEFT OUTER JOIN UserRank ON(UserRank.userID = User.userID)
+                 WHERE Stalker.origin = :userID';        
+                 
+        $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->execute();
+        
+        $result = array();
+        
+        while ($result = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            $res[] = self::fetchUser($result);
+        }
+        
+        return $res;
+    }
+    
+    public static function fetchStalkStatus($targetID, $originID)
+    {
+        $query = 'SELECT COUNT(*) FROM Stalker WHERE origin = :originID AND target = :targetID';
+        
+        $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':originID', $originID);
+        $stmt->bindParam(':targetID', $targetID);
+        $stmt->execute();
+        
+        $res = $stmt->fetch(PDO::FETCH_NUM);
+        return ($res[0] == 1);
+    }
+    
+    public static function triggerStalking($targetID, $originID)
+    {
+        $status = self::fetchStalkStatus($targetID, $originID);
+        
+        if ($status === false)
+            $query = 'INSERT INTO Stalker (origin, target) VALUES (:originID, :targetID)';
+        else
+            $query = 'DELETE FROM Stalker WHERE origin = :originID AND target = :targetID';
+        
+        $db = DatabaseManager::getDB();
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':originID', $originID);
+        $stmt->bindParam(':targetID', $targetID);
+        $stmt->execute();
+        
+        return !$status;
+    }
 }
 ?>
