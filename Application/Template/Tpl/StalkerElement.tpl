@@ -1,0 +1,1 @@
+<a href="profile.php?id=<?php echo $USERID; ?>"><img class="stalkerElement" src="display_profile_picture.php?id=<?php echo $USERID; ?>" alt="<?php echo $USERNAME; ?>"/></a>

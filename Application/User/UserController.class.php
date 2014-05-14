@@ -188,6 +188,21 @@ class UserController
 	{
 		return UserModel::getSearchResults($searchTerm);
 	}
+    
+    public static function requestStalkers($userID)
+    {
+        return UserModel::fetchStalkers($userID);
+    }
+    
+    public static function getStalkingStatus($targetID, $originID)
+    {
+        return UserModel::fetchStalkStatus($targetID, $originID);
+    }
+    
+    public static function triggerStalkingStatus($targetID, $originID)
+    {
+        return UserModel::triggerStalking($targetID, $originID);
+    }
 }
   
 ?>

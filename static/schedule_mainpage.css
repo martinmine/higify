@@ -21,26 +21,38 @@ div.timeObjectContainer
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 5px;
+<<<<<<< HEAD
 	position: relative;
 	z-position: -1;
+=======
+	/*position: relative;*/
+>>>>>>> 86d764c83cac7f68df34b10337f92042c95571a9
     font-size: 14px;
 
 }
 
 div.timeBegin
 {
+	float: right;
+	margin-top: -20px;
+	/*
 	right: 0;
 	top: 0;
 	float: right;
 	margin-right: 2px;
 	position: absolute;
+	*/
 }
 
 div.timeEnd
 {
 	float: right;
+	margin-top: 13px;
+	/*
+	float: right;
 	right: 0;
 	bottom: 0;
 	margin-right: 2px;
 	position: absolute;
+	*/
 }
