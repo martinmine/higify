@@ -50,6 +50,8 @@ function validate(form)
 	    usernameError = "";
 		return false;
 	}
+	else
+		$( "#usernameError" ).empty();
 	
 	if ( passwordError != "") {														// Handling unaccepted password
 		$( "#passwordError" ).text(passwordError);
@@ -57,6 +59,8 @@ function validate(form)
 		passwordError = "";
 		return false;
 	}
+	else
+		$( "#passwordError" ).empty();
 	
 	userExist(username,password, function(response){
 		if (response.ok)
