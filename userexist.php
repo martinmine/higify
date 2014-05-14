@@ -1,5 +1,5 @@
 <?php
-	require_once "Application/user/UserController.class.php";
+	require_once "Application/User/UserController.class.php";
 	
 	$user = UserController::requestUser($_POST['username'],$_POST['password']);
 	$result = array();

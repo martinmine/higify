@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>Higify - <?php echo $PAGE_TITLE; ?></title>
-		<link rel="stylesheet" type="text/css" href="./Static/index.css" />
-		<link rel="stylesheet" type="text/css" href="./Static/slideshow.css" />
+		<link rel="stylesheet" type="text/css" href="./static/index.css" />
+		<link rel="stylesheet" type="text/css" href="./static/slideshow.css" />
 		<?php
 		if (isset($CSS))
 		{

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2014-03-13 20:43:25
+Date: 2014-05-14 22:33:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,7 @@ CREATE TABLE `ActivationToken` (
   `hash` varchar(255) NOT NULL,
   `type` enum('email','password') NOT NULL,
   PRIMARY KEY (`tokenID`,`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for ExludedTimeObject
@@ -63,7 +63,7 @@ CREATE TABLE `Note` (
   `category` varchar(255) DEFAULT NULL,
   `points` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`noteID`,`ownerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=305 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for NoteAttachment
@@ -75,7 +75,7 @@ CREATE TABLE `NoteAttachment` (
   `attachment` mediumblob NOT NULL,
   `attachmentName` text NOT NULL,
   PRIMARY KEY (`attachmentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for NoteReply
@@ -108,6 +108,29 @@ CREATE TABLE `ReportedNote` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for Stalker
+-- ----------------------------
+DROP TABLE IF EXISTS `Stalker`;
+CREATE TABLE `Stalker` (
+  `origin` int(10) unsigned NOT NULL,
+  `target` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`origin`,`target`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for TimeEditResponse
+-- ----------------------------
+DROP TABLE IF EXISTS `TimeEditResponse`;
+CREATE TABLE `TimeEditResponse` (
+  `url` varchar(767) NOT NULL,
+  `requestTime` datetime NOT NULL,
+  `response` blob NOT NULL,
+  PRIMARY KEY (`url`),
+  UNIQUE KEY `url` (`url`),
+  KEY `requestTime` (`requestTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
 -- Table structure for User
 -- ----------------------------
 DROP TABLE IF EXISTS `User`;
@@ -120,7 +143,7 @@ CREATE TABLE `User` (
   `publicTimeSchedule` tinyint(1) unsigned zerofill DEFAULT NULL,
   `profilePicture` mediumblob,
   PRIMARY KEY (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for UserRank

@@ -1,5 +1,5 @@
 <?php
-    require_once('Application/noteListView.class.php');
+    require_once('Application/NoteListView.class.php');
     require_once('Application/Session/SessionController.class.php');
     require_once('Application/Note/NoteType.class.php');
  
