@@ -189,16 +189,33 @@ class UserController
 		return UserModel::getSearchResults($searchTerm);
 	}
     
+    /**
+     * Gets the list of users which a user is stalking
+     * @param  integer $userID ID of the user we want to find who stalks
+     * @return array           Array of User
+     */
     public static function requestStalkers($userID)
     {
         return UserModel::fetchStalkers($userID);
     }
     
+    /**
+     * Finds out if one user is stalking another user
+     * @param  integer $targetID Target User ID  
+     * @param  integer $originID Target User ID
+     * @return boolean           True if is stalking, otherwise false
+     */
     public static function getStalkingStatus($targetID, $originID)
     {
         return UserModel::fetchStalkStatus($targetID, $originID);
     }
     
+    /**
+     * Triggers the stalking status of one user
+     * @param  integer $targetID User ID
+     * @param  integer $originID User ID
+     * @return boolean           The new staling status (true = is stalkig)
+     */
     public static function triggerStalkingStatus($targetID, $originID)
     {
         return UserModel::triggerStalking($targetID, $originID);

@@ -5,6 +5,10 @@ function onDocumentReady()
     $("#registerForm").submit(onRegister);
 }
 
+/*
+ * Function called when the user submits the registration forms, display 
+ * error messages if needed and forwards the user if no error appeared
+ */
 function onRegister(e)
 {
     var formSubmission = $(this);

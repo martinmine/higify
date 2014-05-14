@@ -1,3 +1,6 @@
+/*
+ * Triggers stalking for a user, pergorms the ajax call and triggers the state of the button
+ */
 function triggerStalking(userID)
 {
     $.ajax({

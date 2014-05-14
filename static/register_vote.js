@@ -42,13 +42,14 @@ function registerVote(noteID, type, linkNode)
         }
     });
 
-    // Update the images:
+    // Update the image (arrow) being clicked:
     var imageNode = linkNode.firstChild;
     var imageStatus = imageNode.src.split('_');
     var suffix = (imageStatus[1] == SELECTED + '.png') ? NOT_SELECTED : SELECTED;
     var prefix = imageStatus[0];
     imageNode.src = prefix + '_' + suffix + '.png';
 
+    // Update the other image/arrow
     var otherNode = document.getElementById((type == 0 ? 'upvote' : 'downvote') + '_' + noteID);
     var imageStatus = otherNode.src.split('_');
     otherNode.src = imageStatus[0] + '_' + NOT_SELECTED + '.png';

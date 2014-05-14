@@ -427,6 +427,12 @@ class UserModel
         return $res;
     }
     
+    /**
+     * Finds out if $targetID stalks $originID
+     * @param  integer $targetID ID of the current (session) user
+     * @param  integer $originID ID of the user which we want to check if we are stalking
+     * @return boolean           True if is stalking, otherwise false
+     */
     public static function fetchStalkStatus($targetID, $originID)
     {
         $query = 'SELECT COUNT(*) FROM Stalker WHERE origin = :originID AND target = :targetID';
@@ -441,6 +447,12 @@ class UserModel
         return ($res[0] == 1);
     }
     
+    /**
+     * Triggers the stalk status between two users (target and origin)
+     * @param  integer $targetID ID of the triggering user
+     * @param  integer $originID ID of the target which the user is triggering
+     * @return boolean           The new stalking status (true=stalking)
+     */
     public static function triggerStalking($targetID, $originID)
     {
         $status = self::fetchStalkStatus($targetID, $originID);
