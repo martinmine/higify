@@ -644,6 +644,7 @@ div.searchresult
 	width: 240px;
 	position: absolute;
 	background-color: #C2C2FF;
+	z-position: 1;
 }
 
 div.hit
@@ -653,7 +654,8 @@ div.hit
 	border: solid 1px;
 	text-align: left;
 	font-family: Georgia;
-	
+	position: relative;
+	z-position: 1;
 }
 
 div.hit:hover

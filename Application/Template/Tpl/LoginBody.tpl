@@ -1,11 +1,13 @@
-				<form action="login.php" method="POST">
+				<form action="" method="POST" onsubmit="return validate(this)">
 					<div class="pageTitle">Sign in to Higify</div>
 					<div class="loginContainer">
-						<?php if (isset($ERROR_MSG)) echo $ERROR_MSG; ?>
+						<?php if(isset($ERROR_MSG)) echo $ERROR_MSG; ?>
+						<div id="usernameError"></div>
 						<label for="username">Username</label><br/>
-						<input class="inputfield" type="text" id="username" name="username"/><br/>
+						<input class="inputfield" type="text" id="username" name="username" required/><br/>
+						<div id="passwordError"></div>
 						<label for="password">Password</label><br/>
-						<input class="inputfield" type="password" id="password" name="password"/><br/>
+						<input class="inputfield" type="password" id="password" name="password" required/><br/>
 						<input type="checkbox" name="rememberPassword" id="rememberPassword" value="true"/> 
 						<label for="rememberPassword">Remember password</label><br/>
 						<a href="forgotten.php" class="reglink">Forgotten password&raquo;</a><br/>

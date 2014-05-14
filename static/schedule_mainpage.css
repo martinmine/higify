@@ -22,6 +22,7 @@ div.timeObjectContainer
 	margin-right: auto;
 	margin-top: 5px;
 	position: relative;
+	z-position: -1;
     font-size: 14px;
 
 }

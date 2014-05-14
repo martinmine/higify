@@ -51,8 +51,6 @@ class UserModel
                       LEFT OUTER JOIN UserRank ON(UserRank.userID = User.userID)
                       WHERE username = :username";
             
-          
-           
             $db = DatabaseManager::getDB();
             $stmt = $db->prepare($query);                                                        // Preparing query
             $stmt->bindparam(':username', $username);                                   
