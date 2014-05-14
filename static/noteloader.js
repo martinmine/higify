@@ -9,6 +9,12 @@ function incrementNoteCounter()
 {
 	noteCounter++;
 }
+var append = function append(result) {  					//  Result contains three notes as HTML
+	if(results.length > 0)
+	{
+		$( "#notes" ).append(result);
+	}
+}
 
 var noteCounter = 0;
 var profileID;
@@ -50,18 +56,26 @@ $(document).ready(function() {
 /*
 	Loading notes on scroll
 */
- $(window).scroll(function() {
-	if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-		console.log(noteCounter);
-		$.ajax ({
-			url: './get_notes.php',
-			data: {'noteCounter': noteCounter, 'profileID': profileID, 'categoryID': categoryID, 'noteID': noteID},
-			type: 'post',
-			async: false,
-			success: function (data) {		// Contains three notes as HTML
-			    $( "#notes" ).append(data);	// Appends html
-			},
-			error: function(){console.log("failed to load notes");}
-		});
-	}
+var loadingItems = false;
+$(window).scroll(function () {
+    if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+        console.log(noteCounter);
+        if (loadingItems == false) {
+            loadingItems = true;
+            $.ajax({
+                url: './get_notes.php',
+                data: { 'noteCounter': noteCounter, 'profileID': profileID, 'categoryID': categoryID, 'noteID': noteID },
+                type: 'post',
+                success: function (result) {
+                    if (result.length > 0) {
+                        $("#notes").append(result);
+                    }
+                },
+                error: function () { console.log("failed to load notes"); },
+                complete: function (jqXHR, textStatus) {
+                    loadingItems = false;
+                }
+            });
+        }
+    }
 });
