@@ -12,7 +12,7 @@ function userExist(uname, pwd, callback)
 		type: 'post',
 		dataType: 'json',
 		success: callback,									
-		error: function(console.log("could not connect");}
+		error: function(){console.log("could not connect");}
 	});
 }
 
@@ -51,7 +51,7 @@ function validate(form)
 		return false;
 	}
 	
-	if (passwordError != "") {														// Handling unaccepted password
+	if ( passwordError != "") {														// Handling unaccepted password
 		$( "#passwordError" ).text(passwordError);
 		$( "#passwordError" ).effect("highlight", {color: '#DB4D4D'}, 500);
 		passwordError = "";
