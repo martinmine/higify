@@ -28,7 +28,7 @@
 								  <?php if (isset($REPORTER)) { ?>Reported by <a href="profile.php?id=<?php echo $REPORTERID; ?>" class="noteLink"><?php echo $REPORTER; ?></a> <?php } ?>
                         </div>
                         <div class="noteTimeStamp">
-                            <a href="view_note.php?Fid=<?php echo $NOTE_ID; ?>" class="noteLink"><?php echo $TIME; ?></a>
+                            <a href="view_note.php?nid=<?php echo $NOTE_ID; ?>" class="noteLink"><?php echo $TIME; ?></a>
                         </div>
                     </div>
                     <div class="noteContent" id="content<?php echo $NOTE_ID; ?>">

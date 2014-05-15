@@ -23,7 +23,7 @@ $tpl->appendTemplate('MainPageHeader');
 $tpl->setValue('PAGE_TITLE', $title);
 $tpl->setValue('BANNER_TITLE', $title);
 $tpl->setValue('CSS', array('mainpage', 'search', 'menu', 'schedule', 'schedule_mainpage', 'profile', 'editor'));
-$tpl->setValue('JS', array('jquery-latest.min', 'menu', 'notefeedback', 'js/jquery-ui-1.10.4.custom', 'noteloader', 'searchresults', 'stalk'));
+$tpl->setValue('JS', array('jquery-latest.min', 'menu', 'notefeedback', 'js/jquery-ui-1.10.4.custom', 'noteloader', 'searchresults', 'stalk', 'register_vote'));
 $tpl->registerController(new BannerController());
 $tpl->registerController(new ProfilePageController());
 $tpl->appendTemplate('ProfilePageCenter');
